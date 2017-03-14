@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="编程、技术、生活"><title>设计模式初涉一 | 学习之路</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">设计模式初涉一</h1><a id="logo" href="/.">学习之路</a><p class="description">Yunz's Blog</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">设计模式初涉一</h1><div class="post-meta">Mar 14, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><blockquote>
+<p>最近在刷题的时候总是遇到设计模式相关的题，以前看过一点但不系统，所以准备细致来学一遍。</p>
+</blockquote>
+<h1 id="何为设计模式？"><a href="#何为设计模式？" class="headerlink" title="何为设计模式？"></a>何为设计模式？</h1><blockquote>
+<p>设计模式（Design Pattern）是一套被反复使用、多数人知晓、经过分类编目的优秀代码设计经验的总结。</p>
+</blockquote>
+<p>设计模式所贯彻的原理是：面向接口编程，而非面向实现。其目标原则是：降低代码耦合，增强灵活性。</p>
+<p>常见的设计模式可概括为23种，按特点可划分为三大类：创建型，结构型以及行为型。</p>
+<p><img src="/2017/03/14/设计模式初涉一/分类.png" alt="设计模式分类"></p>
+<p>如你所见，设计模式种类实在很多，一一详解，任重道远。我们本篇主要从简单的理论方面聊聊创建型的几种模式。想要真正理解和使用设计模式，还需要在项目的实践中慢慢体会。</p>
+<p>每种设计模式，根据一种其适用场景，进行阐述。其中涉及我的理解也许有些谬误的地方，欢迎指正，不胜感激。</p>
+<h2 id="六大原则"><a href="#六大原则" class="headerlink" title="六大原则"></a>六大原则</h2><p><img src="/2017/03/14/设计模式初涉一/六大原则.png" alt="六大原则"></p>
+<h3 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h3><blockquote>
+<p>There should never be more than one reason for a class to change.</p>
+<p>一个类应当只有一个引起它变化的原因。即一个类只有一个职责。</p>
+</blockquote>
+<p>专注，保证对象的高内聚；单一，保证对象的细粒度。</p>
+<p>举个简单的例子来说，一个音乐播放器app中，我们在 MusicPlayer 类中定义一组音乐播放的方法，open、play、close等，如果这时我们再在其中定义音乐上传下载的方法，很明显就违反了单一职责原则。</p>
+<p>Java EE 的分层框架就很好地体现了单一职责原则。</p>
+<h3 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h3><blockquote>
+<p>If for each object o1 of type S there is an object o2 of type T such that all programs P defined in terms of S, the behavior of P is unchanged when o1 is substituted for o2 then T is a subtype of S.</p>
+<p>如果对一个类型为 S 地对象 o1，都有类型为 T 的对象 o2，使得以 S 定义的所有程序 P 中所有的对象 o1 都替换成 02 时，程序 P 的行为没有发生变化，那么类型 T 是是类型 S 的子类型。</p>
+</blockquote>
+<p>里氏替换原则要求凡是适用基类的地方，子类一定适用，因此子类必须具备基类的全部接口，而且可能更宽。Java 编译器在编译时，会检查程序是否符合里氏替换原则。</p>
+<p>该原则为实现良好的继承定义了规范：</p>
+<ul>
+<li>子类必须完全实现父类的方法。</li>
+<li>子类可以拥有自己的个性。</li>
+<li>子类覆盖或实现父类的方法时输入参数可以被放大。</li>
+<li>子类覆盖或实现父类的方法时输出结果可以被缩小。</li>
+</ul>
+<p>利用里氏替换原则可以很好的理解多态中<strong>父类引用指向子类对象</strong>的概念。</p>
+<h3 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h3><blockquote>
+<p>High level modules should not be depend upon low level modules.Both should depend upon abstractions. Abstractions should not depend upon details. Details should depend upon abstractions.</p>
+<p>高层模块不应该依赖底层模块，两者都应依赖其抽象。</p>
+<p>抽象不应依赖细节。</p>
+<p>细节应该依赖于抽象。（细节就是具体实现类）</p>
+</blockquote>
+<p>即实现类之间不发生直接的依赖关系，其依赖关系通过接口或抽象类产生。</p>
+<p>依赖倒置原则更精确来说就是“面向接口编程”——OOD的精髓之一。可以减少类间的耦合性，提高系统稳定性，降低并发开发引起的风险。</p>
+<h3 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h3><blockquote>
+<p>The dependency of one class to another one should depend on the smallest possible interface.</p>
+<p>类间的依赖关系应当建立在最小的接口之上。</p>
+</blockquote>
+<p>例如，一个电商网站，未登录状态下只有查询订单的功能，登录状态下，拥有查询、添加和删除订单的功能，后台管理员拥有添加、查询、修改、删除订单的功能，这时候应当适用三个不同的接口进行隔离。使得每个应用都建立在最小接口之上。</p>
+<p>接口隔离需要进行精心的设计，提高设计的灵活性，并降低项目的风险。</p>
+<h3 id="迪米特原则"><a href="#迪米特原则" class="headerlink" title="迪米特原则"></a>迪米特原则</h3><blockquote>
+<p>又叫最小知识原则。</p>
+</blockquote>
+<ul>
+<li>只与你直接的朋友通信。</li>
+<li>不要和陌生人说话。</li>
+<li>每个软件单元对其他单位都应只有最少的了解。</li>
+</ul>
+<p>如果两个类不必发生彼此直接通信，那么这两个类就不应当发生直接的相互作用。</p>
+<p>如果你想和陌生人说话，你可让你的朋友代为转达。</p>
+<h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><blockquote>
+<p>Software entities should not be open for extension, but closed for modification.</p>
+<p>软件应当对拓展开放，对修改关闭。</p>
+</blockquote>
+<p>在设计一个模块的时候，应当使这个模块可以在不被修改的前提下进行扩展。</p>
+<p>在面向对象的编程中，开闭原则谁最基础的原则，其他原则都是开闭原则的具体形态。</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yunz.space/2017/03/14/设计模式初涉一/" data-id="cj09f2jhu0003bgh2kpvzv4e2" class="article-share-link">分享到</a><div class="tags"><a href="/tags/设计模式/">设计模式</a></div><div class="post-nav"><a href="/2017/03/14/设计模式初涉二-单例模式/" class="next">设计模式初涉一</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yunz.space"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/14/设计模式初涉一/">设计模式初涉一</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/14/设计模式初涉二-单例模式/">设计模式初涉一</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/Git-学习/">Git 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/Linux下-hexo及github-pages-安装配置/">Linux下 hexo及github-pages 安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/hello-world/">Hello World</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">学习之路.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
