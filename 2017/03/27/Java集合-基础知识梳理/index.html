@@ -43,12 +43,8 @@
 <p>先分别简单介绍一下 Set 和Map 集合。</p>
 <h1 id="Set-集合"><a href="#Set-集合" class="headerlink" title="Set 集合"></a>Set 集合</h1><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>Set 集合中的元素是唯一的，不可重复（取决于 hashCode 和 equals 方法），也就是说具有唯一性。<br>Set 集合中元素不保证存取顺序，并不存在索引。</p>
 <h3 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h3><p>Collection</p>
-<pre><code>|--Set：元素唯一，不保证存取顺序，只可以用迭代器获取元素。
-    |--HashSet：哈希表结构，非线程安全，查询速度较快。元素唯一性取决于 hashCode 和 equals 方法。
-        |--LinkedHashSet：带有双向链表的哈希表结构，非线程安全，保持存取顺序，保持了查询速度较快特点。
-    |--TreeSet：平衡排序二叉树（红黑树）结构，非线程安全，按自然排序或比较器存入元素以保证元素有序。
-                元素唯一性取决于 ComparaTo 方法或 Comparator 比较器。
-</code></pre><h3 id="常用方法-1"><a href="#常用方法-1" class="headerlink" title="常用方法"></a>常用方法</h3><p>Set 集合的方法和 Collection 集合的方法几乎一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">|--Set：元素唯一，不保证存取顺序，只可以用迭代器获取元素。</div><div class="line"></div><div class="line">    |--HashSet：哈希表结构，非线程安全，查询速度较快。元素唯一性取决于 hashCode 和 equals 方法。</div><div class="line">    </div><div class="line">        |--LinkedHashSet：带有双向链表的哈希表结构，非线程安全，保持存取顺序，保持了查询速度较快特点。</div><div class="line">        </div><div class="line">    |--TreeSet：平衡排序二叉树（红黑树）结构，非线程安全，按自然排序或比较器存入元素以保证元素有序。</div><div class="line">                元素唯一性取决于 ComparaTo 方法或 Comparator 比较器。</div></pre></td></tr></table></figure>
+<h3 id="常用方法-1"><a href="#常用方法-1" class="headerlink" title="常用方法"></a>常用方法</h3><p>Set 集合的方法和 Collection 集合的方法几乎一致。</p>
 <h2 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h2><h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ul>
 <li>元素具有唯一性，取决于 hashCode 和 equals 方法。</li>
 <li>元素不保证存取顺序。</li>
