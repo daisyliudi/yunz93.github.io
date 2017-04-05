@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="编程、技术、生活"><title>Java NIO | 学习之路</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Java NIO</h1><a id="logo" href="/.">学习之路</a><p class="description">Yunz's Blog 穷且益坚，不坠青云之志。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Java NIO</h1><div class="post-meta">Apr 5, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><blockquote>
+<p>一个节过得都完全忘记学习了，这么嗨下去药丸，还是要加油干！@</p>
+</blockquote>
+<p>今天写什么呢？感觉 Java NIO 在面试中的重要性还是挺高的，来学学 Java NIO 吧。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Java NIO(New IO) 是一个可以替代标准 Java IO API 的 IO API（从 Java 1.4 开始)，Java NIO 提供了与标准 IO 不同的 IO 工作方式。Java7 则改进为 NIO.2，提供了全面的文件 IO 以及基于异步的 Channel 的 IO。</p>
+<p>NIO 的主要特性有以下三个：</p>
+<ul>
+<li><p><strong>Channels and Buffers（通道和缓冲区）</strong></p>
+<p>标准的 IO 基于字节流和字符流进行操作的，而 NIO 是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p>
+</li>
+<li><p><strong>Non-blocking IO（非阻塞 IO）</strong></p>
+<p>Java NIO 可以让你非阻塞的使用 IO，例如：当线程从通道读取数据到缓冲区时，线程还是可以进行其他事情。当数据被写入到缓冲区时，线程可以继续处理它。从缓冲区写入通道也类似。</p>
+</li>
+<li><p><strong>Selectors（选择器）</strong></p>
+<p>Java NIO 引入了选择器的概念，选择器用于监听多个通道的事件（比如：连接打开，数据到达）。因此，单个的线程可以监听多个数据通道。</p>
+</li>
+</ul>
+<h2 id="I-O-模型"><a href="#I-O-模型" class="headerlink" title="I/O 模型"></a>I/O 模型</h2><p>首先，需要了解 I/O MO 模型的基本概念。</p>
+<p>何为同步？何为异步？何为阻塞？何为非阻塞？</p>
+<p>何为同步 IO？何为异步 IO？何为阻塞 IO？何为非阻塞 IO？</p>
+<p>这里有一篇写得很好的博文：<a href="Java NIO：浅析 I/O 模型">Java NIO：浅析 I/O 模型</a></p>
+<p>Java NIO 实际上就是多路复用 IO。如图所示：</p>
+<p><img src="/2017/04/05/Java-NIO/selectors.png" alt=""></p>
+<p>在 Java NIO 中，是通过 selector.select() 去查询每个通道是否有到达事件，如果没有事件，则一直阻塞在那里，因此这种方式会导致用户线程的阻塞。</p>
+<p>而 Java7 的 NIO.2 则进行了改进：</p>
+<ul>
+<li>提供了全面的文件 IO 和 文件系统访问支持</li>
+<li>基于异步 Channel 的 IO</li>
+</ul>
+<h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><p>Java NIO 由以下几个核心部分组成：</p>
+<ul>
+<li>Channels</li>
+<li>Buffers</li>
+<li>Selectors</li>
+</ul>
+<p>Buffer，故名思意，缓冲区，实际上是一个容器，是一个连续数组。Channel 提供从文件、网络读取数据的渠道，但是读取或写入的数据都必须经由 Buffer。</p>
+<p>关系可以表示为下图：<img src="/2017/04/05/Java-NIO/relation.jpg" alt=""></p>
+<p>其他细节性的问题我就不写了，写来写去感觉写得没有抓住精髓，推荐一系列博文。源自并发编程网。</p>
+<p>Java NIO Pipe<br>Java NIO 与 IO</p>
+<p><a href="http://ifeve.com/java-nio-all/" target="_blank" rel="external">Java NIO 系列教程</a></p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://blog.yunz.space/2017/04/05/Java-NIO/" data-id="cj151jgeh0003swh2c27iyoul" class="article-share-link">分享到</a><div class="tags"><a href="/tags/Java-NIO/">Java NIO</a></div><div class="post-nav"><a href="/2017/03/30/Java流水账/" class="next">Java流水账</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://blog.yunz.space"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/Java-NIO/" style="font-size: 15px;">Java NIO</a> <a href="/tags/JavaWeb/" style="font-size: 15px;">JavaWeb</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/java基础/" style="font-size: 15px;">java基础</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/Java-NIO/">Java NIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/30/Java流水账/">Java流水账</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/JavaWeb基础-JSP/">JavaWeb基础-JSP</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/27/Java集合-基础知识梳理/">Java集合-基础知识梳理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/26/Java内存模型/">Java 内存模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/26/Java-实习面试总结/">Java 实习面试总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/17/剑指offer通关大作战/">剑指offer通关大作战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/设计模式初涉三-工厂模式/">设计模式初涉三-工厂模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/14/设计模式初涉二-单例模式/">设计模式初涉二——单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/14/设计模式初涉一/">设计模式初涉一</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">学习之路.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
