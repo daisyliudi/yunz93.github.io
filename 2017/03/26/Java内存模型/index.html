@@ -95,16 +95,14 @@
 
 <meta name="description" content="一直想写这篇文章，想通过这篇文章深刻地认识一下 Java 的内存模型。可是每次写到一半就放弃了。基础功力太弱，感觉虚得很。今天这篇文章，放弃了自己完整阐述的想法，通过资料整合的方式来进行。
 
-同样的，本文依然先通过思维导图来理清思路，然后再逐一阐述。
-Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在计算机内存（RAM）中的工作方式。JVM 是整">
+同样的，本文依然先通过思维导图来理清思路，然后再逐一阐述。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 内存模型">
 <meta property="og:url" content="http://blog.yunz.space/2017/03/26/Java内存模型/index.html">
 <meta property="og:site_name" content="学习之路">
 <meta property="og:description" content="一直想写这篇文章，想通过这篇文章深刻地认识一下 Java 的内存模型。可是每次写到一半就放弃了。基础功力太弱，感觉虚得很。今天这篇文章，放弃了自己完整阐述的想法，通过资料整合的方式来进行。
 
-同样的，本文依然先通过思维导图来理清思路，然后再逐一阐述。
-Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在计算机内存（RAM）中的工作方式。JVM 是整">
+同样的，本文依然先通过思维导图来理清思路，然后再逐一阐述。">
 <meta property="og:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/计算机硬件内存架构.png">
 <meta property="og:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/指令重排序.png">
 <meta property="og:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/顺序一致性.png">
@@ -113,13 +111,12 @@ Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在
 <meta property="og:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/通信过程.png">
 <meta property="og:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/JMM设计示意图.png">
 <meta property="og:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/JMM顺序一致性.png">
-<meta property="og:updated_time" content="2017-03-26T11:49:40.134Z">
+<meta property="og:updated_time" content="2017-06-15T15:35:34.041Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 内存模型">
 <meta name="twitter:description" content="一直想写这篇文章，想通过这篇文章深刻地认识一下 Java 的内存模型。可是每次写到一半就放弃了。基础功力太弱，感觉虚得很。今天这篇文章，放弃了自己完整阐述的想法，通过资料整合的方式来进行。
 
-同样的，本文依然先通过思维导图来理清思路，然后再逐一阐述。
-Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在计算机内存（RAM）中的工作方式。JVM 是整">
+同样的，本文依然先通过思维导图来理清思路，然后再逐一阐述。">
 <meta name="twitter:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/计算机硬件内存架构.png">
 
 
@@ -220,7 +217,7 @@ Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -230,7 +227,7 @@ Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -300,7 +297,7 @@ Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-26T13:17:47+08:00">
                 2017-03-26
@@ -341,6 +338,7 @@ Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在
 <p>一直想写这篇文章，想通过这篇文章深刻地认识一下 Java 的内存模型。可是每次写到一半就放弃了。基础功力太弱，感觉虚得很。今天这篇文章，放弃了自己完整阐述的想法，通过资料整合的方式来进行。</p>
 </blockquote>
 <p>同样的，本文依然先通过思维导图来理清思路，然后再逐一阐述。</p>
+<a id="more"></a>
 <p>Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在计算机内存（RAM）中的工作方式。JVM 是整个计算机虚拟模型，所以 JMM 是隶属于 JVM 的。</p>
 <p>理解 JMM，是学习并发编程的基础。JMM 定义了多线程之间共享变量的可见性以及如何在需要的时候对共享变量进行同步。</p>
 <h2 id="关于并发编程"><a href="#关于并发编程" class="headerlink" title="关于并发编程"></a>关于并发编程</h2><p>并发编程有两个关键问题：如何进行线程间的通信和同步？</p>
@@ -665,10 +663,10 @@ Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -689,7 +687,7 @@ Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -702,7 +700,7 @@ Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -768,7 +766,7 @@ Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

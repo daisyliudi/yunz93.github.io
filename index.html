@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -285,7 +285,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-06T23:17:04+08:00">
                 2017-06-06
@@ -396,7 +396,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-07T11:46:53+08:00">
                 2017-05-07
@@ -507,7 +507,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-01T22:56:33+08:00">
                 2017-05-01
@@ -545,276 +545,19 @@
 
       
         
-          
-            <h2 id="一、系统结构与需求分析"><a href="#一、系统结构与需求分析" class="headerlink" title="一、系统结构与需求分析"></a>一、系统结构与需求分析</h2><p>很明显，订餐系统应当分为前台和后台两部分。</p>
+          <h2 id="一、系统结构与需求分析"><a href="#一、系统结构与需求分析" class="headerlink" title="一、系统结构与需求分析"></a>一、系统结构与需求分析</h2><p>很明显，订餐系统应当分为前台和后台两部分。</p>
 <p>前台为客户端，客户需要先登录或注册，然后选择自己喜欢的食物加入购物车，然后进入购物车管理所选菜品，提交订单并付款。</p>
 <p>后台为管理员登录后台可以对菜品信息以及订单信息进行管理和查询。对比饿了么之类的外卖网站，这里应当是商家对自己店铺的管理功能，而网站后台则应该提供对商家的管理功能。</p>
 <p>作为一个练手的demo，我不想做的过于复杂，后面反而实现不了，这里的后台就简单一点了==。</p>
 <p>因此简单罗列一下各部分的功能：</p>
 <p><img src="/2017/05/01/网上订餐系统的设计与实现/系统设计.png" alt=""></p>
-<h2 id="二、数据库设计"><a href="#二、数据库设计" class="headerlink" title="二、数据库设计"></a>二、数据库设计</h2><p>数据库设计是整个系统设计的重中之重，如果前期数据库设计不合理，后期项目实现起来可能会有很大的问题。</p>
-<p>这里我们根据对系统设计的分析，确定了6张表。</p>
-<ul>
-<li>用户信息表（users）</li>
-<li>管理员信息表（admin）</li>
-<li>菜品分类表（mealseries）</li>
-<li>菜品信息表（meal）</li>
-<li>订单主表（orders）</li>
-<li>订单子表（orderdts）</li>
-</ul>
-<h3 id="用户信息表（users）"><a href="#用户信息表（users）" class="headerlink" title="用户信息表（users）"></a>用户信息表（users）</h3><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Id</td>
-<td>int(4)</td>
-<td>用户编号，主键，自增</td>
-</tr>
-<tr>
-<td>LoginName</td>
-<td>varchar(20)</td>
-<td>登录名</td>
-</tr>
-<tr>
-<td>LoginPwd</td>
-<td>varchar(20)</td>
-<td>密码</td>
-</tr>
-<tr>
-<td>TrueName</td>
-<td>varchar(20)</td>
-<td>真实姓名</td>
-</tr>
-<tr>
-<td>Email</td>
-<td>varchar(20)</td>
-<td>邮箱</td>
-</tr>
-<tr>
-<td>Phone</td>
-<td>varchar(20)</td>
-<td>联系电话</td>
-</tr>
-<tr>
-<td>Address</td>
-<td>varchar(50)</td>
-<td>送货地址</td>
-</tr>
-</tbody>
-</table>
-<h3 id="管理员信息表（admin）"><a href="#管理员信息表（admin）" class="headerlink" title="管理员信息表（admin）"></a>管理员信息表（admin）</h3><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Id</td>
-<td>int(4)</td>
-<td>主键，自增</td>
-</tr>
-<tr>
-<td>LoginName</td>
-<td>varchar(20)</td>
-<td>登录名</td>
-</tr>
-<tr>
-<td>LoginPwd</td>
-<td>varchar(20)</td>
-<td>密码</td>
-</tr>
-</tbody>
-</table>
-<h3 id="菜品种类（mealseries）"><a href="#菜品种类（mealseries）" class="headerlink" title="菜品种类（mealseries）"></a>菜品种类（mealseries）</h3><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SeriesId</td>
-<td>int(4)</td>
-<td>序号</td>
-</tr>
-<tr>
-<td>SeriesName</td>
-<td>varchar(10)</td>
-<td>名称</td>
-</tr>
-</tbody>
-</table>
-<h3 id="菜品信息表"><a href="#菜品信息表" class="headerlink" title="菜品信息表"></a>菜品信息表</h3><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MealId</td>
-<td>int(4)</td>
-<td>序号，主键，自增</td>
-</tr>
-<tr>
-<td>MealSeriesId</td>
-<td>int(4)</td>
-<td>所属菜系，外键，与mealseries表中SeriesId字段关联</td>
-</tr>
-<tr>
-<td>MealName</td>
-<td>varchar(20)</td>
-<td>菜名</td>
-</tr>
-<tr>
-<td>MealSummarize</td>
-<td>varchar(250)</td>
-<td>摘要</td>
-</tr>
-<tr>
-<td>MealDescription</td>
-<td>varchar(250)</td>
-<td>详细介绍</td>
-</tr>
-<tr>
-<td>MealPrice</td>
-<td>decimal(8,2)</td>
-<td>价格</td>
-</tr>
-<tr>
-<td>MealImage</td>
-<td>varchar(20)</td>
-<td>图片文件名</td>
-</tr>
-</tbody>
-</table>
-<h3 id="订单主表"><a href="#订单主表" class="headerlink" title="订单主表"></a>订单主表</h3><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>OId</td>
-<td>int(4)</td>
-<td>序号，主键，自增</td>
-</tr>
-<tr>
-<td>UserId</td>
-<td>int(4)</td>
-<td>订单用户编号与user表Id字段关联</td>
-</tr>
-<tr>
-<td>OrderTime</td>
-<td>datetime</td>
-<td>订单产生的时间</td>
-</tr>
-<tr>
-<td>OrderState</td>
-<td>varchar(20)</td>
-<td>订单状态</td>
-</tr>
-<tr>
-<td>OrderPrice</td>
-<td>decimal(8,2)</td>
-<td>订单合计</td>
-</tr>
-</tbody>
-</table>
-<h3 id="订单子表"><a href="#订单子表" class="headerlink" title="订单子表"></a>订单子表</h3><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ODId</td>
-<td>int(4)</td>
-<td>略</td>
-</tr>
-<tr>
-<td>OID</td>
-<td>int(4)</td>
-<td>所属订单编号，与order表OId字段关联</td>
-</tr>
-<tr>
-<td>MealId</td>
-<td>int(4)</td>
-<td>餐品编号，与meal表MealId字段关联</td>
-</tr>
-<tr>
-<td>MealPrice</td>
-<td>decimal(8,2)</td>
-<td>餐品单价</td>
-</tr>
-<tr>
-<td>MealCount</td>
-<td>int(4)</td>
-<td>餐品数量</td>
-</tr>
-</tbody>
-</table>
-<p>根据表项之间相关联的情况来看，不算特别复杂，没有多对多的情况。但如果有很多家店铺，就应当有更复杂的对应关系了，但这还是以后有可能再考虑吧。</p>
-<h2 id="三、项目结构"><a href="#三、项目结构" class="headerlink" title="三、项目结构"></a>三、项目结构</h2><p>本项目中，纯粹出于练习的目的，我们在这里使用Maven + Struts2 + Hibernate + Spring的框架集合来实现。虽然按理说这么简单的项目完全用不着使用框架。==</p>
-<p>项目结构如图：</p>
-<p><img src="/2017/05/01/网上订餐系统的设计与实现/项目结构.png" alt=""></p>
-<table>
-<thead>
-<tr>
-<th>package</th>
-<th>function</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>com.eleme.pojo</td>
-<td>存放实体类</td>
-</tr>
-<tr>
-<td>com.eleme.dao</td>
-<td>数据访问层</td>
-</tr>
-<tr>
-<td>com.eleme.biz</td>
-<td>业务逻辑层</td>
-</tr>
-<tr>
-<td>com.eleme.action</td>
-<td>存放action类</td>
-</tr>
-<tr>
-<td>com.eleme.filter</td>
-<td>存放过滤器类</td>
-</tr>
-<tr>
-<td>com.eleme.interceptor</td>
-<td>存放拦截器类</td>
-</tr>
-</tbody>
-</table>
-<p>ok，前期工作完成。</p>
-<p>项目地址：<a href="https://github.com/yunz93/EleMe，欢迎关注。" target="_blank" rel="external">https://github.com/yunz93/EleMe，欢迎关注。</a></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/01/网上订餐系统的设计与实现/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -885,7 +628,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-25T22:51:22+08:00">
                 2017-04-25
@@ -923,199 +666,20 @@
 
       
         
-          
-            <p>本文用以总结一下Hibernate基础知识。</p>
+          <p>本文用以总结一下Hibernate基础知识。</p>
 <p><img src="/2017/04/25/Hibernate学习笔记/Hibernate.png" alt=""></p>
 <h2 id="一、what"><a href="#一、what" class="headerlink" title="一、what?"></a>一、what?</h2><p>何为Hibernate？</p>
 <p>Hibernate框架也许是是当今最流行的ORM(Object Relational Mapping 对象-关系型数据映射)工具。用来做什么呢？不知道你有没有只用servlet写网站的经历，各种CRUD操作，getString\getInt语句对每个字段进行处理，写得手断。</p>
 <p>何为持久化？持久化是指把数据保存到可持久保存的存储设备中，这里指将内存中的数据存储在关系型数据库中。所以数据访问层也称持久化层。</p>
 <p>Hibernate 作为数据访问层，通过配置文件和映射文件将持久化对象映射到数据库表中，然后通过操作持久化对象，对数据库进行各种操作。这就使得我们操作数据库就像写sql语句一样方便，不过还没到ibatis那样简单的程度。</p>
 <p>介绍完毕，接下来文章的主要部分只写一些我认为比较重要的部分，不重要的内容都在文章前面的思维导图中罗列了出来。</p>
-<h2 id="二、Hibernate初步"><a href="#二、Hibernate初步" class="headerlink" title="二、Hibernate初步"></a>二、Hibernate初步</h2><h3 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h3><ul>
-<li>创建Configuration实例</li>
-<li>创建SessionFactory</li>
-<li>打开Session</li>
-<li>开始一个Transaction （事务中包含所执行的CRUD操作）</li>
-<li>提交Transaction</li>
-<li>关闭Session</li>
-</ul>
-<h3 id="IDE支持"><a href="#IDE支持" class="headerlink" title="IDE支持"></a>IDE支持</h3><p>MyEclipse和Intellij IDEA都提供对Hibernate的支持，可以根据数据库自动生成实体类和映射文件，但需要根据数据库中的映射关系加以适当修改。</p>
-<h2 id="三、关联映射"><a href="#三、关联映射" class="headerlink" title="三、关联映射"></a>三、关联映射</h2><p>以图书以出版社为例，books 数据表项publisherId为外键，指向publishers表Id项。</p>
-<h3 id="单向多对一"><a href="#单向多对一" class="headerlink" title="单向多对一"></a>单向多对一</h3><p>图书与出版社的单向多对一映射配置如下：</p>
-<p>实体类配置如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//private Integer publisherId;</span></div><div class="line"><span class="keyword">private</span> Integer publisher;</div><div class="line">省略构造方法，set/get方法</div></pre></td></tr></table></figure>
-<p>映射文件中配置如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">many-to-one</span> <span class="attr">name</span>=<span class="string">"publishers"</span> <span class="attr">column</span>=<span class="string">"publisherId"</span></span></div><div class="line">             <span class="attr">class</span>=<span class="string">*.*.pojo.publishers</span>"/&gt;</div></pre></td></tr></table></figure>
-<h3 id="单向一对多"><a href="#单向一对多" class="headerlink" title="单向一对多"></a>单向一对多</h3><p>图书与出版社的单向一对多映射配置如下：</p>
-<p>实体类配置如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Set bks = <span class="keyword">new</span> HashSet();</div><div class="line">省略构造方法，set/get方法</div></pre></td></tr></table></figure>
-<p>映射文件中配置如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">name</span>=<span class="string">"bks"</span> <span class="attr">lazy</span>=<span class="string">"false"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">key</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">column</span> <span class="attr">name</span>=<span class="string">"publisherId"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">one-to-many</span> <span class="attr">class</span>=<span class="string">"*.*.pojo.books"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div></pre></td></tr></table></figure>
-<h3 id="双向多对一"><a href="#双向多对一" class="headerlink" title="双向多对一"></a>双向多对一</h3><h4 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h4><p>但单向映射会比较麻烦，因为如果要操作数据库时，需要在多个地方进行操作。</p>
-<p>例如，此时我们需要添加西安电子科技大学出版社到publishers表中，并在该出版社下添加两本图书信息。</p>
-<p>按上面的单向映射，我们需要先加载西安电子科技大学出版社对象，然后创建图书对象，再将西安电子科技大学出版社对象设置关联到图书对象的publisher属性中，最后将图书对象持久化。</p>
-<p>太麻烦了！</p>
-<p>这时候就需要配置双向映射，可以同时完成出版社和相应图书信息的添加。</p>
-<p>配置双向映射，可以有两种方法，即分别选取“一”方或“多”方管理关联关系。</p>
-<p>set元素有两个比较重要的属性：</p>
-<ul>
-<li>inverse 反转<ul>
-<li>false 表示由自己（“一”方）管理双方关联关系</li>
-<li>true 表示由对方（“多”方）管理</li>
-</ul>
-</li>
-<li>cascade 级联，当主控方执行操作时，被动方是否同步执行同一操作<ul>
-<li>all 任何情况下都进行级联操作</li>
-<li>none 任何情况下都不</li>
-<li>save-update 在执行save或update时执行</li>
-<li>dalete 执行delete时执行</li>
-</ul>
-</li>
-</ul>
-<p>通常来说，将“多”方设置为主控方，效率会比较高。</p>
-<h4 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h4><p>同样存在从两个方向删除数据的情况。</p>
-<ul>
-<li>从“多”方删除：删除books中的项，并不会影响publishers中数据。</li>
-<li>从“一方”删除：因为“多”方的外键指向，所以删除publishers表中记录时，同时会将books中关联的数据同时删除。</li>
-</ul>
-<h4 id="更改数据"><a href="#更改数据" class="headerlink" title="更改数据"></a>更改数据</h4><p>类似</p>
-<h3 id="双向一对一映射"><a href="#双向一对一映射" class="headerlink" title="双向一对一映射"></a>双向一对一映射</h3><h4 id="基于外键"><a href="#基于外键" class="headerlink" title="基于外键"></a>基于外键</h4><p>基于外键的一对一映射，与多对一关联实质相同，是多对一的一个实例。</p>
-<p><many-to-one>中增加 unique=”true”属性，并用name属性指定关联属性的属性名。</many-to-one></p>
-<p>另一端使用<one-to-one>元素，同样使用name属性来指定关联属性的属性名。</one-to-one></p>
-<h4 id="基于主键"><a href="#基于主键" class="headerlink" title="基于主键"></a>基于主键</h4><p>基于主键的一对一映射，即限制两个数据表的主键使用相同的值，通过主键形成一对一的映射关系。</p>
-<p>使用 foreign 策略生成主键，任何一方使用 foreign 策略，表明根据对方主键生成自己的主键。双方均使用<one-to-one>元素映射关联属性。</one-to-one></p>
-<h3 id="多对多关联映射"><a href="#多对多关联映射" class="headerlink" title="多对多关联映射"></a>多对多关联映射</h3><p>多对多的映射关系比较复杂，程序设计中一般不建议直接在两表之间建立多对多关联，否则会造成两者之间的过分依赖。</p>
-<p>可以采用通过一个中间表来维护两者之间的多对多关联，中间表分别与两表构成多对一关联。</p>
-<p>例如：students 与 courses，一个学生可以选多门课，一门课也可以由多个学生选。</p>
-<p>建立一个中间表sc，如下：</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>sid</td>
-<td>外键，指向 studentId</td>
-</tr>
-<tr>
-<td>cid</td>
-<td>外键，指向 courseId</td>
-</tr>
-</tbody>
-</table>
-<p>students 映射文件配置：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">name</span>=<span class="string">"courses"</span> <span class="attr">table</span>=<span class="string">"sc"</span> <span class="attr">lazy</span>=<span class="string">"false"</span> <span class="attr">inverse</span>=<span class="string">"false"</span> <span class="attr">cascade</span>=<span class="string">"save-update"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">key</span> <span class="attr">column</span>=<span class="string">"sid"</span> <span class="attr">not-null</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">many-to-many</span> <span class="attr">column</span>=<span class="string">"cid"</span> <span class="attr">class</span>=<span class="string">"*.*.pojo.course"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>courses 映射文件配置：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">name</span>=<span class="string">"students"</span> <span class="attr">table</span>=<span class="string">"sc"</span> <span class="attr">lazy</span>=<span class="string">"false"</span> <span class="attr">inverse</span>=<span class="string">"false"</span> <span class="attr">cascade</span>=<span class="string">"save-update"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">key</span> <span class="attr">column</span>=<span class="string">"cid"</span> <span class="attr">not-null</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">many-to-many</span> <span class="attr">column</span>=<span class="string">"cid"</span> <span class="attr">class</span>=<span class="string">"*.*.pojo.student"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="四、检索方式"><a href="#四、检索方式" class="headerlink" title="四、检索方式"></a>四、检索方式</h2><h3 id="HQL查询"><a href="#HQL查询" class="headerlink" title="HQL查询"></a>HQL查询</h3><p>直接针对实体类和属性进行查询，不用编写繁琐的SQL语句；查询结果是直接保存在List中的对象，不用再次封装。</p>
-<ol>
-<li>获得 session</li>
-<li>编写 HQL 语句</li>
-<li>创建 Query 对象</li>
-<li>执行查询，获得结果</li>
-</ol>
-<h3 id="QBC查询"><a href="#QBC查询" class="headerlink" title="QBC查询"></a>QBC查询</h3><p>采用面向对象的方式封装查询条件，Criteria API 提供了 Criteria 和 Criterion 接口以及 Example 和 Restrictions 类作为辅助。</p>
-<ol>
-<li>获得 session</li>
-<li>创建 Criteria 对象</li>
-<li>使用 Restrictions 对象编写查询条件，并将查询条件加入 Criteria 对象</li>
-<li>执行查询，获得结果</li>
-</ol>
-<h2 id="五、批量处理"><a href="#五、批量处理" class="headerlink" title="五、批量处理"></a>五、批量处理</h2><p>因为 Hibernate 是对 JDBC的轻量级封装</p>
-<h3 id="批量插入"><a href="#批量插入" class="headerlink" title="批量插入"></a>批量插入</h3><ul>
-<li>通过 Hibernate 缓存</li>
-<li>绕过 Hibernate，直接调用 JDBC API</li>
-</ul>
-<h3 id="批量更新"><a href="#批量更新" class="headerlink" title="批量更新"></a>批量更新</h3><ul>
-<li>通过 Hibernate 直接进行批量更新</li>
-<li>绕过 Hibernate，直接调用 JDBC API</li>
-</ul>
-<h3 id="批量删除"><a href="#批量删除" class="headerlink" title="批量删除"></a>批量删除</h3><ul>
-<li>通过 Hibernate 直接进行批量删除</li>
-<li>绕过 Hibernate，直接调用 JDBC API</li>
-</ul>
-<h2 id="六、Hibernate事务"><a href="#六、Hibernate事务" class="headerlink" title="六、Hibernate事务"></a>六、Hibernate事务</h2><h3 id="何为事务？"><a href="#何为事务？" class="headerlink" title="何为事务？"></a>何为事务？</h3><p>事务具有原子性，要么全部执行，要么全部不执行，不存在事务执行一半的情况，执行失败会采取回滚操作。</p>
-<p>一致性，事务在完成时，必须保证所有的数据保持一致状态。</p>
-<p>隔离性，并发事务所作的修改必须与任何其他事物所作的修改相隔离，查看数据时，事务要么处在被另一并发事务修改之前的状态，要么处在被修改之后的状态。即事务不会查看由另一并发事务正在修改的数据，这种隔离性也叫可串行性。</p>
-<p>持久性，事务完成后，其对系统的影响是永久的。</p>
-<h3 id="并发问题"><a href="#并发问题" class="headerlink" title="并发问题"></a>并发问题</h3><p>多个事物同时使用相同数据可能发生以下问题：</p>
-<ul>
-<li><p>第一类丢失更新</p>
-<p>当多个事务同时操作同一个数据，撤销其中一个事物时，把其他事物已经提交的更新数据覆盖了，对其它事务来说造成了数据丢失。</p>
-</li>
-<li><p>第二类丢失更新</p>
-<p>事务A将修改结果提交成功后，覆盖了事务B提交的修改结果，对事务B来说造成了数据丢失。</p>
-</li>
-<li><p>脏读</p>
-<p>事务A读到了事务B未提交的更新数据，且对数据进行操作，如果事务B撤销更新后，事务A所操作的数据变成了脏数据。</p>
-</li>
-<li><p>不可重复读</p>
-<p>事务A对同一组数据重复读取两次的结果不同，可能期间原始数据被其他事物修改了。</p>
-</li>
-<li><p>幻象读</p>
-<p>事务A执行两次查询，第二次查询结果比第一次查询多出一行，因为两次查询之间事务B插入了新数据。</p>
-</li>
-</ul>
-<h3 id="并发处理"><a href="#并发处理" class="headerlink" title="并发处理"></a>并发处理</h3><p>为了避免上述问题，标准SQL规范中提出了4个事务隔离级别。</p>
-<ul>
-<li><p>序列化（8级）</p>
-<p>最严格的事务隔离。该级别不允许事务并发执行，只允许串行执行。</p>
-<p>此级别可有效防止脏读、不可重复读和幻象读。</p>
-</li>
-<li><p>可重复读取（4级）</p>
-<p>一个事务在执行过程中可以访问其他事务成功提交的新插入的数据，但不能访问成功修改的数据。</p>
-<p>读取数据的事务将会禁止写事务，但允许读事务。写事务则禁止其他事务。</p>
-<p>此级别可有效防止不可重复读和脏读。</p>
-</li>
-<li><p>读已提交数据（2级）</p>
-<p>一个事务在执行过程中可以访问其他事务成功提交的新插入的数据，也可以访问成功修改的数据。</p>
-<p>读取数据的事务允许其他事务继续访问该行数据，但未提交的写事务将会禁止其他事务访问该数据。</p>
-<p>此级别可有效防止脏读。</p>
-</li>
-<li><p>读未提交数据（1级）</p>
-<p>一个事务在执行过程中可以访问其他事务未提交的新插入的数据，也可以访问未提交的修改数据。</p>
-<p>写事务不允许其他写事务同时操作，但允许读事务。</p>
-<p>此级别仅可防止第一类丢失更新。</p>
-</li>
-</ul>
-<p>隔离级别越高，虽然数据完整性和一致性越好，但并发性能越糟。</p>
-<p><strong>一般将数据库的隔离级别设为2级。</strong>该级别存在的问题可以在程序中采用悲观锁或乐观锁加以控制。</p>
-<h3 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h3><h4 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h4><p>悲观锁，是指每次操作数据时，总是悲观地认为会有其他事务来操作同一数据，因此在整个数据处理的过程中，将数据处于锁定状态。</p>
-<p>悲观锁由数据库来实现，锁定期间其他事务不对数据进行操作。</p>
-<p>Hibernate 中，用户显式地设定要锁定的表或字段及锁模式。</p>
-<p>锁模式如下：</p>
-<ul>
-<li>LockMode.NONE 默认</li>
-<li>LockMode.READ</li>
-<li>LockMode.UPGRADE</li>
-<li>LockMode.UPGRADE_NOWAIT</li>
-<li>LockMode.WRITE</li>
-<li>LockMode.FORCE</li>
-</ul>
-<h4 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h4><p>相比于悲观锁，乐观锁就积极的多了。乐观锁通常认为多个事物同时操作同一数据的情况很少发生，因此乐观锁不做数据库层次上的锁定，而是基于数据版本标识来实现应用程序级别的锁定机制。</p>
-<p>数据版本标识，就是为数据表增加一个 version 字段，更新数据时将版本标识加1。提交数据的版本号如果大于数据表中的版本号，则接受更新，否则禁止更新。</p>
-<p>Hibernate 中为乐观锁提供了两种基于版本控制的实现。</p>
-<ul>
-<li>基于 version </li>
-<li>基于 timestamp</li>
-</ul>
-<h2 id="七、Hibernate-缓存"><a href="#七、Hibernate-缓存" class="headerlink" title="七、Hibernate 缓存"></a>七、Hibernate 缓存</h2><h3 id="缓存的范围"><a href="#缓存的范围" class="headerlink" title="缓存的范围"></a>缓存的范围</h3><ul>
-<li>事务范围</li>
-<li>进程范围</li>
-<li>集群范围</li>
-</ul>
-<h3 id="第一级缓存"><a href="#第一级缓存" class="headerlink" title="第一级缓存"></a>第一级缓存</h3><p>由 session 提供，只存在于 session 生命周期中。</p>
-<p>当应用程序调用 Session 接口的 save()、update()、saveOrUpdate()、get()、load()或者Query和Criteria实例的list()、iterate()等方法时，如果 session 缓存中没有相应对象，Hibernate 就会把对象加入到第一级缓存中。</p>
-<p>当 session 关闭时，该 session 所管理的一级缓存也会被立即清除。</p>
-<h3 id="第二级缓存"><a href="#第二级缓存" class="headerlink" title="第二级缓存"></a>第二级缓存</h3><p>二级缓存是一个可插拔的缓存插件，由 SessionFactory 负责管理。</p>
-<p>由于 SessionFactory 对象的生命周期与应用程序的整个过程对应，因此，二级缓存是在进程或者集群范围的缓存。</p>
-<h3 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h3><p>查询缓存将查询结果存储在第二级缓存中。</p>
-<p>查询缓存的生命周期，如果当前关联的表发生修改，那么查询缓存生命周期结束。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/25/Hibernate学习笔记/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1186,7 +750,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-20T22:42:48+08:00">
                 2017-04-20
@@ -1224,54 +788,18 @@
 
       
         
-          
-            <blockquote>
+          <blockquote>
 <p>折腾了两天，终于弄懂了在IntelliJ idea 里用maven来配置SSH项目的流程了，记录一下，话说我是不是有一个月没写过博客了==</p>
 </blockquote>
 <p>先说说为什么要使用maven，因为我都快被IDEA自动配置的SSH框架给弄疯了，自动配置的lib往往不全，需要一个个去找齐所有的lib。（不得不说这一点MyEclipse做得比IDEA要好，自动配置的环境往往没有缺这缺那的问题，但Eclipse的代码提示功能太弱了，写起程序来没有快感），然后我就发现了原来还有Maven这种一套pom.xml走天下的神器。</p>
 <p>但网上的maven配置SSH框架的教程都缺胳膊少腿的，我参照多个教程才摸索出以下的内容，应该说是比较正确的和容易理解的。</p>
-<h2 id="一、安装Maven"><a href="#一、安装Maven" class="headerlink" title="一、安装Maven"></a>一、安装Maven</h2><p>这块不多说，网上的教程很多。如果只使用IDEA的话，因为内部集成了，所以可以跳过这一步。</p>
-<p><img src="/2017/04/20/MavenSSH/1.png" alt="1"></p>
-<h2 id="二、创建Maven项目"><a href="#二、创建Maven项目" class="headerlink" title="二、创建Maven项目"></a>二、创建Maven项目</h2><p>Maven提供了大量的模版可供使用，这里我们选择web app模版，然后设置GroupId（类似于包名结构）、ArtifactId（即项目名），然后一路next，出现finished提示，选择enable auto-import，这将允许maven即时根据pom.xml文件的修改更新配置。<img src="/2017/04/20/MavenSSH/5.png" alt="5"></p>
-<p>此时的项目文件夹结构如图：</p>
-<p><img src="/2017/04/20/MavenSSH/6.png" alt="6"></p>
-<h2 id="三、调整项目结构"><a href="#三、调整项目结构" class="headerlink" title="三、调整项目结构"></a>三、调整项目结构</h2><p>Maven 将项目划分为 main 和 test 两部分，main 中存放实际项目资源，test 存放测试项目资源，二者内部同时又划分为 source 和 resource 两部分，source 存放源代码，习惯上我们将该文件夹命名为 java，resource 存放资源配置文件。因此我们需要调整 Maven模版自动配置的项目结构如下，target 为输出文件夹。</p>
-<p><img src="/2017/04/20/MavenSSH/7.png" alt="7"></p>
-<h2 id="四、配置-pom-xml"><a href="#四、配置-pom-xml" class="headerlink" title="四、配置 pom.xml"></a>四、配置 pom.xml</h2><p>前面说到我之所以选择使用 Maven 的原因在于 IDEA 自动配置 SSH 框架太难用了，Maven 将所有依赖全写在 pom.xml 文件夹中，管理起来非常方便。所以我们需要在 pom.xml 中配置 SSH 的依赖，配置文件如下。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span>&gt;</div><div class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.yunz.bao<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>MavenSSH<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>war<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>MavenSSH Maven Webapp<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.apache.org<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>$&#123;artifactId&#125;<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filtering</span>&gt;</span>true<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.7<span class="tag">&lt;/<span class="name">source</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.7<span class="tag">&lt;/<span class="name">target</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">spring.version</span>&gt;</span>4.0.3.RELEASE<span class="tag">&lt;/<span class="name">spring.version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">hibernate.version</span>&gt;</span>4.3.5.Final<span class="tag">&lt;/<span class="name">hibernate.version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">struts.version</span>&gt;</span>2.3.16.1<span class="tag">&lt;/<span class="name">struts.version</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line"></div><div class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 添加SSH依赖 --&gt;</span></div><div class="line">    <span class="comment">&lt;!-- Struts2 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.struts<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>struts2-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;struts.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javassist<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javassist<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.struts<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>struts2-spring-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;struts.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>taglibs<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>standard<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0-alpha-1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 添加json支持 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.struts<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>struts2-json-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;struts.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>net.sf.json-lib<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>json-lib<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">classifier</span>&gt;</span>jdk15<span class="tag">&lt;/<span class="name">classifier</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 添加Hibernate依赖 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hibernate<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hibernate-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;hibernate.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-dbcp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-dbcp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 添加Log4J依赖  解决maven传递依赖中的版本冲突  --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.15<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.mail<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mail<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.jms<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jms<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.sun.jdmk<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jmxtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.sun.jmx<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jmxri<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 添加javassist --&gt;</span></div><div class="line">    <span class="comment">&lt;!--     &lt;dependency&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--         &lt;groupId&gt;javassist&lt;/groupId&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--         &lt;artifactId&gt;javassist&lt;/artifactId&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--         &lt;version&gt;3.11.0.GA&lt;/version&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--     &lt;/dependency&gt; --&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 添加Spring依赖 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--     &lt;dependency&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--         &lt;groupId&gt;org.springframework&lt;/groupId&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--         &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--         &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--         &lt;scope&gt;runtime&lt;/scope&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--     &lt;/dependency&gt; --&gt;</span></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line">        Bean Factory and JavaBeans utilities (depends on spring-core)</div><div class="line">        Define this if you use Spring Bean APIs (org.springframework.beans.*)</div><div class="line">    --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-beans<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line">        Aspect Oriented Programming (AOP) Framework (depends on spring-core, spring-beans)</div><div class="line">        Define this if you use Spring AOP APIs (org.springframework.aop.*)</div><div class="line">    --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 面向切面使用aspectj, cglib的作用是当对没有实现接口的类使用aspect的时候，可以使用CGLIB</span></div><div class="line">        &lt;aop:aspectj-autoproxy proxy-target-class="true"/&gt;</div><div class="line">    --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.aspectj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aspectjtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.6.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cglib<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>cglib<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line">        Application Context (depends on spring-core, spring-expression, spring-aop, spring-beans)</div><div class="line">        This is the central artifact for Spring's Dependency Injection Container and is generally always defined</div><div class="line">    --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line">        Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, and iBatis.</div><div class="line">        (depends on spring-core, spring-beans, spring-context, spring-tx)</div><div class="line">        Define this if you need ORM (org.springframework.orm.*)</div><div class="line">    --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-orm<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line">        Transaction Management Abstraction (depends on spring-core, spring-beans, spring-aop, spring-context)</div><div class="line">        Define this if you use Spring Transactions or DAO Exception Hierarchy</div><div class="line">        (org.springframework.transaction.*/org.springframework.dao.*)</div><div class="line">    --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-tx<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line">        JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, spring-tx)</div><div class="line">        Define this if you use Spring's JdbcTemplate API (org.springframework.jdbc.*)</div><div class="line">    --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="五、添加SSH支持"><a href="#五、添加SSH支持" class="headerlink" title="五、添加SSH支持"></a>五、添加SSH支持</h2><p>在前面配置pom.xml 之后，maven 自动为我们添加了相关的SSH依赖包，但我们还需要在 resource 文件中添加相关配置文件。</p>
-<ol>
-<li><p>Spring配置</p>
-<p>新建 Spring配置文件 applicationContext.xml，因为后面需要将 Hibernate的配置置于其中，我们将文件命名为 spring-hibernate.xml。</p>
-<p><img src="/2017/04/20/MavenSSH/8.png" alt="8"></p>
-<p>然后将该文件添加到 Project structure-Modules-Spring-Fileset 中</p>
-<p><img src="/2017/04/20/MavenSSH/9.png" alt="9"></p>
-</li>
-<li><p>Hibernate 配置</p>
-<p>Project structure-Modules 点 + 号，添加 Hibernate support</p>
-<p><img src="/2017/04/20/MavenSSH/10.png" alt="10"></p>
-<p>然后点Description 右上角加号，将 spring-hibernate.xml 添加到其 Configuration 中。</p>
-<p><img src="/2017/04/20/MavenSSH/11.png" alt="11"></p>
-</li>
-<li><p>Struts2 配置</p>
-<p>新建 Struts2 配置文件 struts.xml，然后类似与前面，将配置文件添加到Project structure-Modules-Struts2-Fileset 中，同时选中struts-default.xml和struct-plugin.xml。</p>
-<p><img src="/2017/04/20/MavenSSH/12.png" alt="12"></p>
-<p>至此，SSH 的环境配置基本完成，上述配置文件的内容我省略了，就是一般SSH整合项目的配置内容。</p>
-</li>
-</ol>
-<p>此时项目结构如图：</p>
-<p><img src="/2017/04/20/MavenSSH/13.png" alt="13"></p>
-<h2 id="六、测试及一些问题"><a href="#六、测试及一些问题" class="headerlink" title="六、测试及一些问题"></a>六、测试及一些问题</h2><p>测试上面的框架，我们写一个简单的登录 Demo，如图。</p>
-<p><img src="/2017/04/20/MavenSSH/14.png" alt="14"></p>
-<p>注意：在使用 Hibernate  向导自动生成 实体类时，spring-hibernate.xml 自动生成配置。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"annotatedClasses"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.com.mahe.entity.Users<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">list</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mappingLocations"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>classpath:com.mahe.entity/Users.hbm.xml<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">list</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>Maven 项目中默认的资源路径根目录为 resource 文件夹，而自动生成的实体类 entity.xml 在 java entity文件夹中，所以这里 mappingLocation 的属性值是有问题的。解决方法有两种，一种是改属性值，一种是在 resource 文件夹中建立和 java entity文件夹一样的结构，将 entity.xml 文件拷贝过来。</p>
-<p>过程中还遇到两个问题，折腾了好久，但莫名其妙又消失了，真是玄学。</p>
-<p>运行成功。</p>
-<p><img src="/2017/04/20/MavenSSH/15.png" alt="15"></p>
-<p><img src="/2017/04/20/MavenSSH/16.png" alt="16"></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/20/MavenSSH/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1342,7 +870,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-14T00:19:51+08:00">
                 2017-04-14
@@ -1380,35 +908,16 @@
 
       
         
-          
-            <blockquote>
+          <blockquote>
 <p>Hibernate 版本更新有点快啊，还老是改API，版本兼容问题很严重啊！</p>
 </blockquote>
-<p>今天使用 Hibernate 时报了一个这样的错误org.hibernate.MappingException: Unknown entity: com.mahe.entity.Users，Users 是项目的一个实体，也就是说映射不成功，然后我就去搜呗。</p>
-<p>所有前面的回答都是注解的包导入错误什么的，可我没有使用注解啊，然后第二个可能性就是没有在 hibernate.cfg.xml 文件中加载 Users.hbm.xml。</p>
-<p>我查了下我的 hibernate.cfg.xml，发现使用了 mapping resource 加载了，并且文件名也没有问题，然后我估计就是 Hibernate 版本的问题了，因为前面也遇到了Hibernate 版本导致的问题，因为 Intellij Idea 默认下载的是最新的5.1.5 版本的。</p>
-<p>然后在知乎查到了解决方法 <a href="https://www.zhihu.com/question/35419808" target="_blank" rel="external">https://www.zhihu.com/question/35419808</a><br>好吧就是加上 addClass()，但是很不解，难不成我的 mapping resource 不起作用？于是我就从 hibernate.cfg.xml 中把这句话删了，加上 addClass()，发现能运行成功！我去 mapping resource 真不起作用。。。<br>那么5.1版本怎么使用 resource 方式加载呢？<br><a href="http://jishu.y5y.com.cn/sinat_32873711/article/details/52979914" target="_blank" rel="external">http://jishu.y5y.com.cn/sinat_32873711/article/details/52979914</a><br>于是按照这位博主的方法，重新换了获取 Seeeion Factory 的方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()</div><div class="line">.configure().build();</div><div class="line">// 创建会话工厂</div><div class="line">sessionFactory = new MetadataSources( serviceRegistry ).buildMetadata().buildSessionFactory();</div><div class="line">// 会话对象</div><div class="line">session = sessionFactory.openSession();123456123456</div></pre></td></tr></table></figure>
-<p>这次删除 addClass 使用 mapping resource 总算成功了。</p>
-<p>总结 org.hibernate.MappingException: Unknown entity 异常可能的原因：</p>
-<ol>
-<li>如果采用的是注解方式</li>
-</ol>
-<ul>
-<li>实体上有没有添加 Entity 注解</li>
-<li>实体所在 package 是否在扫描路径内</li>
-<li>所使用的 SessionFactoryBean 是否支持注解方式，Spring 3.X 需要注意</li>
-</ul>
-<ol>
-<li>如果采用的是 XML 方式</li>
-</ol>
-<ul>
-<li>实体对应的 hbm 文件是否映射正确</li>
-<li>是否将 hbm 文件作为 resource 添加到 hibernate 主配</li>
-</ul>
-<p>不过最保险的，还是使用低版本的，因为你不知道还会遇见什么坑，所以我决定换成4.1.4了。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/14/Hibernate-Unknown-entity-错误/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1479,7 +988,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-06T19:00:14+08:00">
                 2017-04-06
@@ -1517,97 +1026,17 @@
 
       
         
-          
-            <blockquote>
+          <blockquote>
 <p>每天还是得写点东西，不要让自己松懈下来。哒哒哒！</p>
 </blockquote>
 <p>今天讲什么呢？补一下设计模式的部分吧，今天说说创建型模式剩下的两种：建造者模式&amp;原型模式。</p>
-<h2 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h2><p>先看定义</p>
-<blockquote>
-<p>Separate the construction of a complex objext from its representaion so that the same construction process can create different representations.</p>
-<p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
-</blockquote>
-<p>怎么理解呢？举个简单的例子。现在大家都离不开手机对吧，手机行业发展到目前的程度，所有手机的装配过程应该都差不多，那为什么不同品牌的手机差别很大呢，因为配置不同。</p>
-<p>同样的装配过程，生产出了不同的手机，这就是典型的建造者模式。</p>
-<h3 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h3><p>建造者模式通常包括下面几个角色：</p>
-<ul>
-<li>builder：给出一个抽象接口，以规范产品对象的各个组成成分的建造。这个接口规定要实现复杂对象的哪些部分的创建，并不涉及具体的对象部件的创建。</li>
-<li>ConcreteBuilder：实现 Builder 接口，针对不同的商业逻辑，具体化复杂对象的各部分的创建。 在建造过程完成后，提供产品的实例。</li>
-<li>Director：调用具体建造者来创建复杂对象的各个部分，在指导者中不涉及具体产品的信息，只负责保证对象各部分完整创建或按某种顺序创建。</li>
-<li>Product：要创建的复杂对象。</li>
-</ul>
-<p>结构图</p>
-<p><img src="/2017/04/06/设计模式-建造者模式-原型模式/builder.jpg" alt=""></p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>我们以手机生产为例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 手机抽象类</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CellPhone</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> String cpu;   <span class="comment">// cpu</span></div><div class="line">    <span class="keyword">private</span> String ram;   <span class="comment">// 内存</span></div><div class="line">    <span class="keyword">private</span> String screen;<span class="comment">// 屏幕</span></div><div class="line">    <span class="keyword">private</span> String battery; <span class="comment">// 电池</span></div><div class="line">    <span class="keyword">private</span> String others; <span class="comment">// 其他</span></div><div class="line">  ... 省略get/set方法</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Mate9产品类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mate9</span> <span class="keyword">extends</span> <span class="title">CellPhone</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mate9</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"这是华为Mate9"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"具体配置： CPU： "</span> + <span class="keyword">this</span>.getCpu() + <span class="string">"\n 内存： "</span> + <span class="keyword">this</span>.getRam()</div><div class="line">                + <span class="string">"\n 屏幕大小： "</span> + <span class="keyword">this</span>.getScreen() + <span class="string">"\n 电池容量： "</span> + <span class="keyword">this</span>.getBattery()</div><div class="line">                + <span class="string">"\n 其他： "</span> + <span class="keyword">this</span>.getOthers();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//MX6产品类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mx6Pro</span> <span class="keyword">extends</span> <span class="title">CellPhone</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mx6Pro</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"这是魅族Pro6"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"具体配置： CPU： "</span> + <span class="keyword">this</span>.getCpu() + <span class="string">"\n 内存： "</span> + <span class="keyword">this</span>.getRam()</div><div class="line">                + <span class="string">"\n 屏幕大小： "</span> + <span class="keyword">this</span>.getScreen() + <span class="string">"\n 电池容量： "</span> + <span class="keyword">this</span>.getBattery()</div><div class="line">                + <span class="string">"\n 其他： "</span> + <span class="keyword">this</span>.getOthers();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 手机建造者 抽象</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CellPhoneBuilder</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildCPU</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRam</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildScreen</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildBattery</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildOthers</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> CellPhone <span class="title">getPhone</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Mate9建造者 具体</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mate9Build</span> <span class="keyword">implements</span> <span class="title">CellPhoneBuilder</span> </span>&#123;</div><div class="line">    CellPhone mate9 = <span class="keyword">new</span> Mate9();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildCPU</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setCpu(<span class="string">"麒麟935"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRam</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setRam(<span class="string">"使用3G内存"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildScreen</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setScreen(<span class="string">"6英寸IPS屏幕"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildBattery</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setBattery(<span class="string">"4100毫安超大电池"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildOthers</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setOthers(<span class="string">"采用后背指纹按压技术"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CellPhone <span class="title">getPhone</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mate9;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// MX6建造者 具体</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mx6ProBuild</span> <span class="keyword">implements</span> <span class="title">CellPhoneBuilder</span> </span>&#123;</div><div class="line">    CellPhone mx6Pro = <span class="keyword">new</span> Mx6Pro();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildCPU</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setCpu(<span class="string">"三星9660"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRam</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setRam(<span class="string">"4G内存"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildScreen</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setScreen(<span class="string">"5.5寸superAmoled屏幕"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildBattery</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setBattery(<span class="string">"3300毫安大电池"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildOthers</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setOthers(<span class="string">"前置指纹按压识别"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CellPhone <span class="title">getPhone</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mx6Pro;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 手机建造指导者</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CellPhoneDirector</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> CellPhoneBuilder cellPhoneBuilder;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Mate9 <span class="title">buildMate9</span><span class="params">()</span> </span>&#123;</div><div class="line">        cellPhoneBuilder = <span class="keyword">new</span> Mate9Build();</div><div class="line">        cellPhoneBuilder.buildCPU();</div><div class="line">        cellPhoneBuilder.buildRam();</div><div class="line">        cellPhoneBuilder.buildScreen();</div><div class="line">        cellPhoneBuilder.buildBattery();</div><div class="line">        cellPhoneBuilder.buildOthers();</div><div class="line">        <span class="keyword">return</span> (Mate9)cellPhoneBuilder.getPhone();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Mx6Pro <span class="title">buildMx6Pro</span><span class="params">()</span> </span>&#123;</div><div class="line">        cellPhoneBuilder = <span class="keyword">new</span> Mx6ProBuild();</div><div class="line">        cellPhoneBuilder.buildCPU();</div><div class="line">        cellPhoneBuilder.buildRam();</div><div class="line">        cellPhoneBuilder.buildScreen();</div><div class="line">        cellPhoneBuilder.buildBattery();</div><div class="line">        cellPhoneBuilder.buildOthers();</div><div class="line">        <span class="keyword">return</span> (Mx6Pro)cellPhoneBuilder.getPhone();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 测试</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CellPhoneTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        CellPhoneDirector director = <span class="keyword">new</span> CellPhoneDirector();</div><div class="line">        <span class="comment">// 华为手机定制生产</span></div><div class="line">        System.out.println(<span class="string">"开始制造华为手机："</span>);</div><div class="line">        Mate9 mate9 = director.buildMate9();</div><div class="line">        System.out.println(mate9);</div><div class="line">        <span class="comment">// 魅族手机定制生产</span></div><div class="line">        System.out.println(<span class="string">"开始制造魅族手机： "</span>);</div><div class="line">        Mx6Pro mx6Pro = director.buildMx6Pro();</div><div class="line">        System.out.println(mx6Pro);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 结果</span></div><div class="line">开始制造华为手机：</div><div class="line">这是华为Mate9</div><div class="line">具体配置： CPU： 麒麟<span class="number">935</span></div><div class="line"> 内存： 使用<span class="number">3</span>G内存</div><div class="line"> 屏幕大小： <span class="number">6</span>英寸IPS屏幕</div><div class="line"> 电池容量： <span class="number">4100</span>毫安超大电池</div><div class="line"> 其他： 采用后背指纹按压技术</div><div class="line">开始制造魅族手机： </div><div class="line">这是魅族Pro6</div><div class="line">具体配置： CPU： 三星<span class="number">9660</span></div><div class="line"> 内存： <span class="number">4</span>G内存</div><div class="line"> 屏幕大小： <span class="number">5.5</span>寸superAmoled屏幕</div><div class="line"> 电池容量： <span class="number">3300</span>毫安大电池</div><div class="line"> 其他： 前置指纹按压识别</div></pre></td></tr></table></figure>
-<p>建造者模式和工厂模式非常相似，建造者模式注重零部件的组装过程，而工厂方法模式更注重零部件的创建过程。两者也有结合使用：比如众神造人，女娲利用建造者模式负责把灵魂、耳目、手臂等组合成一个完整的人，而皇帝、桑林等人各自利用工厂方法模式创造出灵魂，耳目，手臂等。女娲不必考虑灵魂、耳目、手臂是什么样子的，怎么创造出来的，这就成为了一个由建造者模式和工厂方法模式组合而成的系统。</p>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
-<li>封装性，使用建造者模式可以使客户端不必知道产品的内部组成的细节</li>
-<li>建造者独立，易于扩展</li>
-<li>便于控制细节风险，由于具体建造者是独立的，因此可以对建造者过程逐步细化，而不对其他模块产生影响</li>
-</ul>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li>当采用相同的方法，不同的执行顺序会产生不同的结果时</li>
-<li>多个部件或零件都可以装配到一个对象中，但产生的运行结果又不相同时</li>
-<li>当产品类非常复杂，或者产品类中的方法调用顺序不同产生不同的效能时</li>
-<li>创建一些复杂的对象时，这些对象的内部组成构件间的建造顺序是稳定的，但是对象的内部组成构件面临着复杂的变化。</li>
-<li>要创建的复杂对象的算法，独立于该对象的组成部分，也独立于组成部分的装配方法时。</li>
-</ul>
-<h2 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h2><p>照例先看定义</p>
-<blockquote>
-<p>Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.</p>
-<p>用原型对象指定创建对象的种类，并且通过复制这些原型创建新的对象。</p>
-</blockquote>
-<p>微信的群功能大家肯定都用过，尤其是逢年过节的时候群发祝福短信，最忌讳别人发现是群发的，显得没有诚意。因此微信群发有个贴心的功能，就是根据备注，在消息前面添加上每个人的姓名，这样就显得诚意满满了。</p>
-<p>这里就很类似于原型模式了，以祝福短信为原型创建了N条祝福短信发给N个好友。</p>
-<h3 id="角色-1"><a href="#角色-1" class="headerlink" title="角色"></a>角色</h3><ul>
-<li><p>客户（Client）角色：使用原型对象的客户程序</p>
-</li>
-<li><p>抽象原型（Prototype）角色：规定了具体原型对象必须实现的接口</p>
-</li>
-<li><p>具体原型（ConcretePrototype）：从抽象原型派生而来，是客户程序使用的对象，即被复制的对象。此角色需要实现抽象原型角色所要求的接口。</p>
-<p>​</p>
-</li>
-</ul>
-<p><img src="/2017/04/06/设计模式-建造者模式-原型模式/prototype.gif" alt=""></p>
-<p>Java 内置了克隆机制。Object 类具有一个 clone() 方法，能够实现对象的克隆，使一个类支持克隆只需两步：</p>
-<ul>
-<li>实现 Cloneable 接口</li>
-<li>覆盖 Object 的 clone() 方法</li>
-</ul>
-<p>因此，在 Java 中实现原型模式非常简单。</p>
-<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>以群发邮件为例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 邮件原型</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mail</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String receicer;  <span class="comment">// 收件人</span></div><div class="line">    <span class="keyword">private</span> String subject;   <span class="comment">// 邮件标题</span></div><div class="line">    <span class="keyword">private</span> String appellation; <span class="comment">// 称谓</span></div><div class="line">    <span class="keyword">private</span> String context;     <span class="comment">// 邮件内容</span></div><div class="line">    <span class="keyword">private</span> String tail;       <span class="comment">//  邮件尾部</span></div><div class="line"></div><div class="line">    <span class="comment">// 构造函数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mail</span> <span class="params">(String subject, String context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.subject = subject;</div><div class="line">        <span class="keyword">this</span>.context = context;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 克隆方法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Mail <span class="title">clone</span><span class="params">()</span> </span>&#123;</div><div class="line">        Mail mail = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            mail = (Mail)<span class="keyword">super</span>.clone();</div><div class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> mail;</div><div class="line">    &#125;</div><div class="line">  ...<span class="comment">// 省略get/set方法</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 测试类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendMailDemo</span> </span>&#123;</div><div class="line">    Map students = <span class="keyword">new</span> LinkedHashMap();</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Mail mail = <span class="keyword">new</span> Mail(<span class="string">"参加座谈会"</span>, <span class="string">"2017年4月6号，233教室开会，所有人必须到场，不得迟到。"</span>);</div><div class="line">        mail.setTail(<span class="string">"请各位同学相互通知"</span>);</div><div class="line">        SendMailDemo sendMailDemo = <span class="keyword">new</span> SendMailDemo();</div><div class="line">        Map student = sendMailDemo.getStudents();</div><div class="line">        <span class="keyword">for</span> (Object name:student.keySet()) &#123;</div><div class="line">            Mail cloneMail = mail.clone();</div><div class="line">            cloneMail.setAppellation(name.toString());</div><div class="line">            cloneMail.setReceicer(student.get(name).toString());</div><div class="line">            sendMailDemo.sendMail(cloneMail);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sendMail</span><span class="params">(Mail mail)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"标题： "</span> + mail.getSubject() + <span class="string">"\t 收件人： "</span> + mail.getReceicer()</div><div class="line">        + <span class="string">"\n 正文： "</span> + mail.getContext() + <span class="string">"... ... 已发送！"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Map <span class="title">getStudents</span><span class="params">()</span> </span>&#123;</div><div class="line">        students.put(<span class="string">"李一"</span>, <span class="string">"liyi@gmail.com"</span>);</div><div class="line">        students.put(<span class="string">"王二"</span>, <span class="string">"wanger@gmail.com"</span>);</div><div class="line">        students.put(<span class="string">"张三"</span>, <span class="string">"zhangsan@gmail.com"</span>);</div><div class="line">        students.put(<span class="string">"李四"</span>, <span class="string">"lisi@gmail.com"</span>);</div><div class="line">        students.put(<span class="string">"赵武"</span>, <span class="string">"zhaowu@gmail.com"</span>);</div><div class="line">        <span class="keyword">return</span> students;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 结果</span></div><div class="line">标题： 参加座谈会	 收件人： liyi<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div><div class="line">标题： 参加座谈会	 收件人： wanger<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div><div class="line">标题： 参加座谈会	 收件人： zhangsan<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div><div class="line">标题： 参加座谈会	 收件人： lisi<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div><div class="line">标题： 参加座谈会	 收件人： zhaowu<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div></pre></td></tr></table></figure>
-<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ul>
-<li>性能优良：原型模式是对内存中二进制流的拷贝，要比直接new一个对象性能好，特别是当一个循环体中产生大量对象是，原型模式可以更好的体现其优点。</li>
-<li>逃避构造函数的约束。</li>
-</ul>
-<h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li>资源优化场景，类初始化时需要消耗非常多的资源。</li>
-<li>性能和安全性要求的场景，如果通过new产生一个对象需要非常繁琐的数据准备和访问权限，则可以考虑使用原型模式。</li>
-<li>一个对象多个修改者的场景，一个对象需要提供给其他对象访问，而且各个调用者可能都需要修改其值时，可以考虑使用原型模式拷贝多个对象供调用者使用。</li>
-</ul>
-<p>在实际项目中，原型模式很少单独出现，一般是和工厂方法模式一起出现。原型模式通过clone()创建一个对象，然后由工厂方法提供给调用者。</p>
-<h3 id="深拷贝-amp-浅拷贝"><a href="#深拷贝-amp-浅拷贝" class="headerlink" title="深拷贝&amp;浅拷贝"></a>深拷贝&amp;浅拷贝</h3><h4 id="原型模式的原理图："><a href="#原型模式的原理图：" class="headerlink" title="原型模式的原理图："></a>原型模式的原理图：</h4><p><img src="/2017/04/06/设计模式-建造者模式-原型模式/clone.png" alt=""></p>
-<h4 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h4><p>被拷贝对象的所有变量都含有与原对象相同的值，而且对其他对象的引用仍然是指向原来的对象。即浅拷贝只负责当前对象实例，对引用的对象不做拷贝。<br>浅复制后的对象和对象副本的情况：</p>
-<p><img src="/2017/04/06/设计模式-建造者模式-原型模式/q_clone.png" alt=""></p>
-<h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><p>被拷贝对象的所有的变量都含有与原来对象相同的值，除了那些引用其他对象的变量。那些引用其他对象的变量将指向一个被拷贝的新对象，而不再是原有那些被引用对象。即 深拷贝把要拷贝的对象所引用的对象也都拷贝了一次，而这种对被引用到的对象拷贝叫做间接拷贝。<br>深复制的对象和对象副本的情况：</p>
-<p><img src="/2017/04/06/设计模式-建造者模式-原型模式/s_clone.jpg" alt=""></p>
-<p>深拷贝要深入到多少层，是一个不确定的问题。<br>在决定以深拷贝的方式拷贝一个对象的时候，必须决定对间接拷贝的对象是采取浅拷贝还是深拷贝还是继续采用深拷贝。<br>因此，在采取深拷贝时，需要决定多深才算深。此外，在深拷贝的过程中，很可能会出现循环引用的问题。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
-<li><p>使用原型模式复制对象不会调用类的构造方法。因为对象的复制是通过调用 Object 类的 clone 方法来完成的，它直接在内存中复制数据，因此不会调用到类的构造方法。不但构造方法中的代码不会执行，甚至连访问权限都对原型模式无效。还记得单例模式吗？单例模式中，只要将构造方法的访问权限设置为 private 型，就可以实现单例。但是 clone 方法直接无视构造方法的权限，所以，单例模式与原型模式是冲突的，在使用时要特别注意。</p>
-</li>
-<li><p>深拷贝与浅拷贝。Object 类的 clone 方法只会拷贝对象中的基本的数据类型，对于数组、容器对象、引用对象等都不会拷贝，这就是浅拷贝。如果要实现深拷贝，必须将原型模式中的数组、容器对象、引用对象等另行拷贝。例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Prototype</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;  </div><div class="line">    <span class="keyword">private</span> ArrayList list = <span class="keyword">new</span> ArrayList();  </div><div class="line">    <span class="function"><span class="keyword">public</span> Prototype <span class="title">clone</span><span class="params">()</span></span>&#123;  </div><div class="line">        Prototype prototype = <span class="keyword">null</span>;  </div><div class="line">        <span class="keyword">try</span>&#123;  </div><div class="line">            prototype = (Prototype)<span class="keyword">super</span>.clone();  </div><div class="line">            prototype.list = (ArrayList) <span class="keyword">this</span>.list.clone();  </div><div class="line">        &#125;<span class="keyword">catch</span>(CloneNotSupportedException e)&#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> prototype;   </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>​        由于 ArrayList 不是基本类型，所以成员变量 list，不会被拷贝，需要我们自己实现深拷贝，幸运的是 Java 提供的大部分的容器类都实现了 Cloneable 接口。所以实现深拷贝并不是特别困难。</p>
-<p><strong>PS：深拷贝与浅拷贝问题中，会发生深拷贝的有 java 中的 8 中基本类型以及他们的封装类型，另外还有 String 类型。其余的都是浅拷贝。</strong></p>
-<p>ok，至此创建者模式全部说完，后面会讲一下几种重点设计模式，不会再一个个聊了。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/06/设计模式-建造者模式-原型模式/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1678,7 +1107,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-05T21:08:13+08:00">
                 2017-04-05
@@ -1716,49 +1145,17 @@
 
       
         
-          
-            <blockquote>
+          <blockquote>
 <p>一个节过得都完全忘记学习了，这么嗨下去药丸，还是要加油干！@</p>
 </blockquote>
 <p>今天写什么呢？感觉 Java NIO 在面试中的重要性还是挺高的，来学学 Java NIO 吧。</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Java NIO(New IO) 是一个可以替代标准 Java IO API 的 IO API（从 Java 1.4 开始)，Java NIO 提供了与标准 IO 不同的 IO 工作方式。Java7 则改进为 NIO.2，提供了全面的文件 IO 以及基于异步的 Channel 的 IO。</p>
-<p>NIO 的主要特性有以下三个：</p>
-<ul>
-<li><p><strong>Channels and Buffers（通道和缓冲区）</strong></p>
-<p>标准的 IO 基于字节流和字符流进行操作的，而 NIO 是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p>
-</li>
-<li><p><strong>Non-blocking IO（非阻塞 IO）</strong></p>
-<p>Java NIO 可以让你非阻塞的使用 IO，例如：当线程从通道读取数据到缓冲区时，线程还是可以进行其他事情。当数据被写入到缓冲区时，线程可以继续处理它。从缓冲区写入通道也类似。</p>
-</li>
-<li><p><strong>Selectors（选择器）</strong></p>
-<p>Java NIO 引入了选择器的概念，选择器用于监听多个通道的事件（比如：连接打开，数据到达）。因此，单个的线程可以监听多个数据通道。</p>
-</li>
-</ul>
-<h2 id="I-O-模型"><a href="#I-O-模型" class="headerlink" title="I/O 模型"></a>I/O 模型</h2><p>首先，需要了解 I/O MO 模型的基本概念。</p>
-<p>何为同步？何为异步？何为阻塞？何为非阻塞？</p>
-<p>何为同步 IO？何为异步 IO？何为阻塞 IO？何为非阻塞 IO？</p>
-<p>这里有一篇写得很好的博文：<a href="Java NIO：浅析 I/O 模型">Java NIO：浅析 I/O 模型</a></p>
-<p>Java NIO 实际上就是多路复用 IO。如图所示：</p>
-<p><img src="/2017/04/05/Java-NIO/selectors.png" alt=""></p>
-<p>在 Java NIO 中，是通过 selector.select() 去查询每个通道是否有到达事件，如果没有事件，则一直阻塞在那里，因此这种方式会导致用户线程的阻塞。</p>
-<p>而 Java7 的 NIO.2 则进行了改进：</p>
-<ul>
-<li>提供了全面的文件 IO 和 文件系统访问支持</li>
-<li>基于异步 Channel 的 IO</li>
-</ul>
-<h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><p>Java NIO 由以下几个核心部分组成：</p>
-<ul>
-<li>Channels</li>
-<li>Buffers</li>
-<li>Selectors</li>
-</ul>
-<p>Buffer，故名思意，缓冲区，实际上是一个容器，是一个连续数组。Channel 提供从文件、网络读取数据的渠道，但是读取或写入的数据都必须经由 Buffer。</p>
-<p>关系可以表示为下图：<img src="/2017/04/05/Java-NIO/relation.jpg" alt=""></p>
-<p>其他细节性的问题我就不写了，写来写去感觉写得没有抓住精髓，推荐一系列博文。源自并发编程网。</p>
-<p>Java NIO Pipe<br>Java NIO 与 IO</p>
-<p><a href="http://ifeve.com/java-nio-all/" target="_blank" rel="external">Java NIO 系列教程</a></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/05/Java-NIO/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1829,7 +1226,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-30T16:57:47+08:00">
                 2017-03-30
@@ -1949,7 +1346,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T20:21:41+08:00">
                 2017-03-28
@@ -1987,13 +1384,15 @@
 
       
         
-          
-            <blockquote>
-<p>花了点时间，整理了一下 JSP 的基础内容，也算复习了一下。</p>
-</blockquote>
-<p><img src="/2017/03/28/JavaWeb基础-JSP/JSP.png" alt=""></p>
-
-          
+          <blockquote>
+<p>花了点时间，整理了一下 JSP 的基础内容，也算复习了一下。</p></blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/28/JavaWeb基础-JSP/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2076,7 +1475,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -2089,7 +1488,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -2139,7 +1538,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

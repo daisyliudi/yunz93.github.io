@@ -95,42 +95,21 @@
 
 <meta name="description" content="前面两篇设计模式写的不清晰，感觉还是欠实战，需要整个项目做一做。
 好吧，开始今天这篇，讲第二个创建者模式——工厂模式。
-前些天室友面阿里的实习生，被问到了这个，回答的不怎么好。希望我这篇文章能说明白。
-工厂模式工厂模式，顾名思义，就是工厂的模式。
-工厂是做什么的？生产产品的。
-工厂是如何生产产品的？这就是工厂的生产模式。
-工厂模式类似于工厂的生产模式。
-工厂模式的原话是：
-
-Define an i">
+前些天室友面阿里的实习生，被问到了这个，回答的不怎么好。希望我这篇文章能说明白。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式初涉三-工厂模式">
 <meta property="og:url" content="http://blog.yunz.space/2017/03/16/设计模式初涉三-工厂模式/index.html">
 <meta property="og:site_name" content="学习之路">
 <meta property="og:description" content="前面两篇设计模式写的不清晰，感觉还是欠实战，需要整个项目做一做。
 好吧，开始今天这篇，讲第二个创建者模式——工厂模式。
-前些天室友面阿里的实习生，被问到了这个，回答的不怎么好。希望我这篇文章能说明白。
-工厂模式工厂模式，顾名思义，就是工厂的模式。
-工厂是做什么的？生产产品的。
-工厂是如何生产产品的？这就是工厂的生产模式。
-工厂模式类似于工厂的生产模式。
-工厂模式的原话是：
-
-Define an i">
+前些天室友面阿里的实习生，被问到了这个，回答的不怎么好。希望我这篇文章能说明白。">
 <meta property="og:image" content="http://blog.yunz.space/2017/03/16/设计模式初涉三-工厂模式/工厂模式.png">
-<meta property="og:updated_time" content="2017-03-16T16:04:02.237Z">
+<meta property="og:updated_time" content="2017-06-15T15:33:19.333Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式初涉三-工厂模式">
 <meta name="twitter:description" content="前面两篇设计模式写的不清晰，感觉还是欠实战，需要整个项目做一做。
 好吧，开始今天这篇，讲第二个创建者模式——工厂模式。
-前些天室友面阿里的实习生，被问到了这个，回答的不怎么好。希望我这篇文章能说明白。
-工厂模式工厂模式，顾名思义，就是工厂的模式。
-工厂是做什么的？生产产品的。
-工厂是如何生产产品的？这就是工厂的生产模式。
-工厂模式类似于工厂的生产模式。
-工厂模式的原话是：
-
-Define an i">
+前些天室友面阿里的实习生，被问到了这个，回答的不怎么好。希望我这篇文章能说明白。">
 <meta name="twitter:image" content="http://blog.yunz.space/2017/03/16/设计模式初涉三-工厂模式/工厂模式.png">
 
 
@@ -231,7 +210,7 @@ Define an i">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -241,7 +220,7 @@ Define an i">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -311,7 +290,7 @@ Define an i">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-16T22:41:11+08:00">
                 2017-03-16
@@ -351,6 +330,7 @@ Define an i">
         <p>前面两篇设计模式写的不清晰，感觉还是欠实战，需要整个项目做一做。</p>
 <p>好吧，开始今天这篇，讲第二个创建者模式——工厂模式。</p>
 <p>前些天室友面阿里的实习生，被问到了这个，回答的不怎么好。希望我这篇文章能说明白。</p>
+<a id="more"></a>
 <h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><p>工厂模式，顾名思义，就是工厂的模式。</p>
 <p>工厂是做什么的？生产产品的。</p>
 <p>工厂是如何生产产品的？这就是工厂的生产模式。</p>
@@ -496,10 +476,10 @@ Define an i">
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -520,7 +500,7 @@ Define an i">
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -533,7 +513,7 @@ Define an i">
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -599,7 +579,7 @@ Define an i">
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

@@ -93,25 +93,16 @@
 
 
 
-<meta name="description" content="Hibernate 版本更新有点快啊，还老是改API，版本兼容问题很严重啊！
-
-今天使用 Hibernate 时报了一个这样的错误org.hibernate.MappingException: Unknown entity: com.mahe.entity.Users，Users 是项目的一个实体，也就是说映射不成功，然后我就去搜呗。
-所有前面的回答都是注解的包导入错误什么的，可我没有使用注解啊">
+<meta name="description" content="Hibernate 版本更新有点快啊，还老是改API，版本兼容问题很严重啊！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hibernate Unknown entity 异常">
 <meta property="og:url" content="http://blog.yunz.space/2017/04/14/Hibernate-Unknown-entity-错误/index.html">
 <meta property="og:site_name" content="学习之路">
-<meta property="og:description" content="Hibernate 版本更新有点快啊，还老是改API，版本兼容问题很严重啊！
-
-今天使用 Hibernate 时报了一个这样的错误org.hibernate.MappingException: Unknown entity: com.mahe.entity.Users，Users 是项目的一个实体，也就是说映射不成功，然后我就去搜呗。
-所有前面的回答都是注解的包导入错误什么的，可我没有使用注解啊">
-<meta property="og:updated_time" content="2017-05-24T14:46:10.710Z">
+<meta property="og:description" content="Hibernate 版本更新有点快啊，还老是改API，版本兼容问题很严重啊！">
+<meta property="og:updated_time" content="2017-06-15T15:34:29.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hibernate Unknown entity 异常">
-<meta name="twitter:description" content="Hibernate 版本更新有点快啊，还老是改API，版本兼容问题很严重啊！
-
-今天使用 Hibernate 时报了一个这样的错误org.hibernate.MappingException: Unknown entity: com.mahe.entity.Users，Users 是项目的一个实体，也就是说映射不成功，然后我就去搜呗。
-所有前面的回答都是注解的包导入错误什么的，可我没有使用注解啊">
+<meta name="twitter:description" content="Hibernate 版本更新有点快啊，还老是改API，版本兼容问题很严重啊！">
 
 
 
@@ -211,7 +202,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -221,7 +212,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -291,7 +282,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-14T00:19:51+08:00">
                 2017-04-14
@@ -331,6 +322,7 @@
         <blockquote>
 <p>Hibernate 版本更新有点快啊，还老是改API，版本兼容问题很严重啊！</p>
 </blockquote>
+<a id="more"></a>
 <p>今天使用 Hibernate 时报了一个这样的错误org.hibernate.MappingException: Unknown entity: com.mahe.entity.Users，Users 是项目的一个实体，也就是说映射不成功，然后我就去搜呗。</p>
 <p>所有前面的回答都是注解的包导入错误什么的，可我没有使用注解啊，然后第二个可能性就是没有在 hibernate.cfg.xml 文件中加载 Users.hbm.xml。</p>
 <p>我查了下我的 hibernate.cfg.xml，发现使用了 mapping resource 加载了，并且文件名也没有问题，然后我估计就是 Hibernate 版本的问题了，因为前面也遇到了Hibernate 版本导致的问题，因为 Intellij Idea 默认下载的是最新的5.1.5 版本的。</p>
@@ -472,7 +464,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -485,7 +477,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -535,7 +527,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
