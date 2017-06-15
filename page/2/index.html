@@ -1,25 +1,2476 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="编程、技术、生活"><title>学习之路 | Yunz's Blog 穷且益坚，不坠青云之志。</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">学习之路</h1><a id="logo" href="/.">学习之路</a><p class="description">Yunz's Blog 穷且益坚，不坠青云之志。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h2 class="post-title"><a href="/2017/03/27/Java集合-基础知识梳理/">Java集合-基础知识梳理</a></h2><div class="post-meta">2017-03-27</div><div class="post-content"><blockquote>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="编程、技术、生活">
+<meta property="og:type" content="website">
+<meta property="og:title" content="学习之路">
+<meta property="og:url" content="http://blog.yunz.space/page/2/index.html">
+<meta property="og:site_name" content="学习之路">
+<meta property="og:description" content="编程、技术、生活">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习之路">
+<meta name="twitter:description" content="编程、技术、生活">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.yunz.space/page/2/"/>
+
+
+
+
+
+  <title>学习之路</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习之路</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Yunz's Blog 穷且益坚，不坠青云之志。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/27/Java集合-基础知识梳理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/27/Java集合-基础知识梳理/" itemprop="url">Java集合-基础知识梳理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-27T20:08:47+08:00">
+                2017-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
 <p>前面那篇面试总结的第二部分强调了Java集合的细节问题，这部分当时只是简单看了下用法，没有思考细节问题，还是得好好分析一下。</p>
 </blockquote>
-<p>本系列文章主要参考李刚《Java程序员的基本素养》和谢宇《Java特种兵》，写得挺好，推荐一下。</p></div><p class="readmore"><a href="/2017/03/27/Java集合-基础知识梳理/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2017/03/26/Java内存模型/">Java 内存模型</a></h2><div class="post-meta">2017-03-26</div><div class="post-content"><blockquote>
+<p>本系列文章主要参考李刚《Java程序员的基本素养》和谢宇《Java特种兵》，写得挺好，推荐一下。</p>
+<p>本文主要对 Java 集合的基础知识进行梳理，后面陆续会谈一些细节性问题。</p>
+<p>首先还是让先我们对 Java 集合的大体框架有初步的认识。如下图所示：</p>
+<p><img src="/2017/03/27/Java集合-基础知识梳理/Java集合框架.png" alt=""></p>
+<ul>
+<li>Collection 接口是集合类的根接口，Java 中没有提供这个接口的直接的实现类。但是却让其被继承产生了两个接口，就是 Set 和 List。Set 中不能包含重复的元素。List 是一个有序的集合，可以包含重复的元素，提供了按索引访问的方式。Array 是 Java 提供的队列实现，有些类似于 List。</li>
+<li>Map 是 Java.util 包中的另一个接口，它和 Collection 接口没有关系，是相互独立的，但是都属于集合类的一部分。Map 包含了 key-value 对。Map 不能包含重复的 key，但是可以包含相同的 value。</li>
+<li>Iterator，所有的集合类，都实现了 Iterator 接口，这是一个用于遍历集合中元素的接口，主要包含以下四种方法：<ul>
+<li>boolean hasNext() 是否还有下一个元素。</li>
+<li>Object next() 返回下一个元素。</li>
+<li>void remove() 删除当前元素。</li>
+<li>void forEachRemaining(Consumer action)  Java8新增的默认方法，可以使用 Lambda 表达式来遍历集合元素。</li>
+</ul>
+</li>
+</ul>
+<h3 id="集合的特点"><a href="#集合的特点" class="headerlink" title="集合的特点"></a>集合的特点</h3><ul>
+<li>集合中的每一个元素都是对象，存储的实际上是对象的引用。</li>
+<li>集合长度可扩展，并且是自动的。</li>
+<li>根据数据结构的不同，集合分为很多种，每一种都有各自的特点。</li>
+<li>集合的最上层是 Collection 接口，集合最基本的增删改查方法均在该接口中有所体现。</li>
+<li>集合中如果没有使用泛型，则默认存储的是 Object 类，所有的对象均向上转型存入集合，取出使用时需要向下转型，并可能有类型转换异常。所以建议配合泛型使用集合。</li>
+</ul>
+<h1 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h1><h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><ul>
+<li><p>添加<br>boolean  add(E e)<br>boolean  addAll(Collection&lt;? extends E&gt; c)</p>
+</li>
+<li><p>删除<br>boolean  remove(Object o)<br>boolean  removeAll(Collection&lt;?&gt; c)<br>boolean  retainAll(Collection&lt;?&gt; c)</p>
+</li>
+<li><p>判断是否包含<br>boolean  contains(Object o)<br>boolean  containsAll(Collection&lt;?&gt; c)</p>
+</li>
+<li><p>清空<br>void  clear()</p>
+</li>
+<li><p>获取迭代器<br>Iterator<e>  iterator()</e></p>
+</li>
+<li><p>判断空和获取大小<br>boolean  isEmpty()<br>int  size()</p>
+</li>
+<li><p>将集合转换为数组</p>
+<p>Object[] toArray()</p>
+</li>
+</ul>
+<p>先分别简单介绍一下 Set 和Map 集合。</p>
+<h1 id="Set-集合"><a href="#Set-集合" class="headerlink" title="Set 集合"></a>Set 集合</h1><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>Set 集合中的元素是唯一的，不可重复（取决于 hashCode 和 equals 方法），也就是说具有唯一性。<br>Set 集合中元素不保证存取顺序，并不存在索引。</p>
+<h3 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h3><p>Collection</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">|--Set：元素唯一，不保证存取顺序，只可以用迭代器获取元素。</div><div class="line"></div><div class="line">    |--HashSet：哈希表结构，非线程安全，查询速度较快。元素唯一性取决于 hashCode 和 equals 方法。</div><div class="line">    </div><div class="line">        |--LinkedHashSet：带有双向链表的哈希表结构，非线程安全，保持存取顺序，保持了查询速度较快特点。</div><div class="line">        </div><div class="line">    |--TreeSet：平衡排序二叉树（红黑树）结构，非线程安全，按自然排序或比较器存入元素以保证元素有序。</div><div class="line">                元素唯一性取决于 ComparaTo 方法或 Comparator 比较器。</div></pre></td></tr></table></figure>
+<h3 id="常用方法-1"><a href="#常用方法-1" class="headerlink" title="常用方法"></a>常用方法</h3><p>Set 集合的方法和 Collection 集合的方法几乎一致。</p>
+<h2 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h2><h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>元素具有唯一性，取决于 hashCode 和 equals 方法。</li>
+<li>元素不保证存取顺序。</li>
+<li>由于采用哈希表数据结构，所以查询较快。</li>
+<li>与 List 一样，建议使用多态的方式，创建 HashSet 集合并使用 Set 接口方法。</li>
+</ul>
+<h3 id="关于-hashCode-和-equals-方法"><a href="#关于-hashCode-和-equals-方法" class="headerlink" title="关于 hashCode 和 equals 方法"></a>关于 hashCode 和 equals 方法</h3><ul>
+<li>在以哈希表为数据结构的容器中，其存放地址取决于 hashCode 方法计算的值，如果 hashCode 的值相同，则用 equals 方法判断是否相同，如果都相同则判定为相同元素。</li>
+<li>在以哈希表为数据结构的容器使用过程中，已经加入的元素不可以变更 hashCode 方法所依赖的域的值，否则会导致元素 hashCode 值已变化，但是其在容器中的位置却没有变化，后果是接下来的 remove 等操作将因为无法找到该元素而移除失败，进一步导致内存泄露。</li>
+</ul>
+<p>HashSet 集合判断两个元素相等的标准是：两个对象通过 equals() 方法比较相等，并且 hashCode() 方法返回值也相等。</p>
+<h2 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h2><h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>HashSet 集合具有的优点 LinkedHashSet 集合都具有。</li>
+<li>LinkedHashSet 集合在 HashSet 查询速度快的前提下，能够保持元素存取顺序。</li>
+</ul>
+<h2 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h2><h3 id="特点-3"><a href="#特点-3" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>元素具有唯一性，取决于 Comparable.compareTo 方法或比较器 Comparator。</li>
+<li>元素不保证存取顺序。</li>
+<li><strong>由于采用平衡排序二叉树，所以保存的元素均有序。</strong></li>
+<li>与 List 一样，建议使用多态的方式，创建 TreeSet 集合并使用 Set 接口方法。</li>
+<li>创建 TreeSet 集合时，必须保证元素已经实现 Comparable 接口或者传入比较器 Comparator。</li>
+</ul>
+<h3 id="比较器"><a href="#比较器" class="headerlink" title="比较器"></a>比较器</h3><ol>
+<li><p>Comparable 接口</p>
+<p>自定义类如果实现该接口，那么重写该接口唯一的方法 compareTo(E)，可以让该类具有可比较性。</p>
+</li>
+<li><p>Comparator 接口</p>
+<p>实现该接口的类被称之为比较器，一般只具有一个方法，就是重写的这个接口的 compare(E o1, E o2) 方法，实现两个对象之间的比较。</p>
+<p>TreeSet 集合判断两个对象相等的唯一标准是：两个对象通过 compareTo() 方法比较返回值是否为 0，如果是，则认为它们相等。</p>
+</li>
+</ol>
+<p><strong>如果希望 TreeSet 正常工作，TreeSet 只能添加同一类型的对象。</strong></p>
+<h2 id="EnumSet"><a href="#EnumSet" class="headerlink" title="EnumSet"></a>EnumSet</h2><h3 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>EnumSet 是专门为枚举类设计的集合类，其中所有元素必须是指定枚举类型的枚举值。</li>
+<li>EnumSet 在内部以位向量的形式存储，运行效率高。</li>
+<li>EnumSet 不允许加入 null 元素。</li>
+</ul>
+<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><ul>
+<li>HashSet 的性能总是优于 TreeSet，因为 TreeSet 需要额外的红黑树来维护集合元素的次序。</li>
+<li>LinkedHashSet 对于普通的插入删除操作要慢于 HashSet，因为要维护链表，但也因此遍历更快。</li>
+<li>EnumSet 性能最优，但只能保存同一枚举类的枚举值为集合元素。</li>
+<li>Set 的三个实现类都是线程不安全的。多线程操作 Set 集合时，需要手动保证同步性。</li>
+</ul>
+<p>好了，说完 Set 让我们开始聊 Map，为什么 Map 会和 Set 放在一起呢？让我们先看一张图</p>
+<p><img src="/2017/03/27/Java集合-基础知识梳理/比较.jpg" alt=""></p>
+<p>比较 Set 和 Map 部分，发现没有？继承结构很相似。这种相似性肯定是有原因的，这点我们后面会说到。</p>
+<h1 id="Map-集合"><a href="#Map-集合" class="headerlink" title="Map 集合"></a>Map 集合</h1><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Map<k, v=""> 集合是一个接口，和 Collection 集合不同的是，它是双列集合，也就是说它所存储的是键值对。</k,></p>
+<h3 id="特点-5"><a href="#特点-5" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>Map 集合存储的是键值对，其中键要求唯一。</li>
+<li>Map 集合的键对应一个值，值不要求唯一，但是一个键不能对应对个值。</li>
+<li>Map 集合没有 Iterator 迭代器，如果需要迭代需要转化为单列集合间接迭代。</li>
+</ul>
+<h3 id="继承关系-1"><a href="#继承关系-1" class="headerlink" title="继承关系"></a>继承关系</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Map</div><div class="line"></div><div class="line">|--Hashtable：哈希表结构，不保证存取顺序，不允许 null 键或者 null 值，线程安全，效率较低，已被 HashMap 替代</div><div class="line"></div><div class="line">	|--Propertise：键值对均是 String 类型的 Map 集合，包括直接对流操作的方法，专为配置文件而生</div><div class="line"></div><div class="line">|--HashMap：哈希表结构，不保证存取顺序，允许 null 键和 null 值，非线程安全，效率较高</div><div class="line"></div><div class="line">	|--LinkedHashMap：带双向链表的哈希表结构，保持存取顺序，允许 null 键和 null 值，非线程安全，效率较高。</div><div class="line"></div><div class="line">|--TreeMap：平衡排序二叉树（红黑树）结构，按自然排序或比较器存入元素以保证元素有序，非线程安全。</div></pre></td></tr></table></figure>
+<p>元素唯一性取决于 ComparaTo 方法或 Comparator 比较器。</p>
+<h3 id="常用方法-2"><a href="#常用方法-2" class="headerlink" title="常用方法"></a>常用方法</h3><p>Map 集合的方法一部分和 Set 集合类似。</p>
+<ul>
+<li>添加键值对<br>V  put(K key, V value)</li>
+<li>根据键获取值<br>V  get(Object key)</li>
+<li>判断是否包含键或者值<br>boolean  containsKey(Object key)<br>boolean  containsValue(Object value)</li>
+<li>删除对应键值对<br>V  remove(Object key)<br>default boolean  remove(Object key, Object value)</li>
+<li>替换新值<br>default V  replace(K key, V value) // 返回老值<br>default boolean  replace(K key, V oldValue, V newValue)</li>
+<li>获取 entrySet（包含所有键值对的 Map 对象的 Set 集合）<br>Set<map.entry<k,v>&gt;  entrySet()</map.entry<k,v></li>
+<li>获取包含所有键的 Set 集合<br>Set<k>  keySet()</k></li>
+<li>获取包含所有值的 Collection 集合<br>Collection<v>  values()</v></li>
+</ul>
+<p>Map.Entry 是 Map 接口中的内部接口，因为依托 Map 集合存在而存在，并且由于该接口能够获取 Map 集合中的所有键值对，所以定义在内部。</p>
+<h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><ul>
+<li>使用 entrySet 集合</li>
+<li>使用 keySet 集合</li>
+</ul>
+<h2 id="HashMap-amp-TreeMap"><a href="#HashMap-amp-TreeMap" class="headerlink" title="HashMap &amp; TreeMap"></a>HashMap &amp; TreeMap</h2><h3 id="特点-6"><a href="#特点-6" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>其方法和思想均和 HashSet 以及 TreeSet 高度类似，可以参照。</li>
+<li>HashMap 的键保持唯一性，取决于 hashCode 以及 equals 方法。<br>TreeMap 的键保持唯一性，取决于比较方法和比较器。</li>
+</ul>
+<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><h3 id="特点-7"><a href="#特点-7" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>Properties 集合表示了一个持久的属性集。</li>
+<li>Properties 集合键值对均是 String 类型。</li>
+<li>Properties 集合可以直接从一个流中读取数据，也可以直接保存到一个流中。</li>
+<li>强烈建议 Properties 集合只存储 String 类型的数据，尽管可以利用其父类方法存储其他类型数据。</li>
+</ul>
+<h3 id="常用方法-3"><a href="#常用方法-3" class="headerlink" title="常用方法"></a>常用方法</h3><ul>
+<li><p>添加属性值</p>
+<p>Object  setProperty(String key, String value)</p>
+</li>
+<li><p>获取属性值</p>
+<p>String  getProperty(String key)<br>String  getProperty(String key, String defaultValue)</p>
+</li>
+<li><p>获取所有属性</p>
+<p>Set<string>  stringPropertyNames()</string></p>
+</li>
+<li><p>打印所有属性和属性值</p>
+<p>void  list(PrintStream out)<br>void  list(PrintWriter out)</p>
+</li>
+<li><p>将属性集存储到流中（可以使用 XML 方式）</p>
+<p>void  store(OutputStream out, String comments)<br>void  store(Writer writer, String comments)<br>void  storeToXML(OutputStream os, String comment)<br>void  storeToXML(OutputStream os, String comment, String encoding)</p>
+</li>
+<li><p>从流中读取属性集（可以使用 XML 方式）</p>
+<p>void  load(InputStream inStream)<br>void  load(Reader reader)<br>void  loadFromXML(InputStream in)</p>
+<p>​</p>
+</li>
+</ul>
+<p>现在我们谈谈 Set 和 Map 的关系。</p>
+<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>Set 和 Map 之间的关系非常密切。虽然 Map 中存放的元素是 key-value 对，Set 中放的元素是单个对象，但如果把 key-value 对中的 value 当成 key 的附庸，那么就可以像对待 Set 一样对待 Map 了。</p>
+<p>事实上， Map 提供了一个 Entry 内部类来封装 key-value 对，而计算 Entry 存储时只考虑 Entry 封装的 key。</p>
+<p>从 Java 源码来看，Java 是先实现了 Map，然后通过包装一个所有 value 值都为 null 的 Map 就实现了 Set 集合。</p>
+<h1 id="List-集合"><a href="#List-集合" class="headerlink" title="List 集合"></a>List 集合</h1><h3 id="特点-8"><a href="#特点-8" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>List 集合支持修改方法，该方法 Collection 不具备。</li>
+<li>List 集合中元素按存取顺序存储，即保持存取顺序。</li>
+<li>List 集合是自带索引的，所以除了迭代器获取元素方法外，还可以使用遍历 + get(int index) 方法来获取元素。</li>
+<li>List 集合元素可重复。</li>
+</ul>
+<h3 id="继承关系-2"><a href="#继承关系-2" class="headerlink" title="继承关系"></a>继承关系</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Collection</div><div class="line"></div><div class="line">|--List</div><div class="line"></div><div class="line">	|--ArrayList：数组结构，非线程安全，查询较快，增删较慢。</div><div class="line"></div><div class="line">	|--LinkedList：双向链表结构，非线程安全，增删较快，查询较慢（按序号索引数据需要进行向前或向后遍历）。</div><div class="line"></div><div class="line">	|--Vector：数组结构，线程安全，效率较低，已被 ArrayList 替代。</div><div class="line"></div><div class="line">		|--Stack：栈</div></pre></td></tr></table></figure>
+<h3 id="常用方法-4"><a href="#常用方法-4" class="headerlink" title="常用方法"></a>常用方法</h3><p>由于继承了Collection 接口，所以可以使用 Collection 接口的所有方法。又因为 List 是有序集合，所以额外增加了一些根据索引操作集合的方法。</p>
+<ul>
+<li><p>插入元素</p>
+<p>void  add(int index, E element)<br>boolean  addAll(int index, Collection&lt;? extends E&gt; c)</p>
+</li>
+<li><p>按索引获取元素</p>
+<p>​E  get(int index)</p>
+</li>
+<li><p>获取指定元素的索引</p>
+<p>int  indexOf(Object o)<br>int  lastIndexOf(Object o)</p>
+</li>
+<li><p>获取 ListIterator 迭代器</p>
+<p>ListIterator<e>  listIterator()</e></p>
+</li>
+<li><p>按索引删除元素</p>
+<p>E  remove(int index)</p>
+</li>
+<li><p>修改元素</p>
+<p>E  set(int index, E element)</p>
+</li>
+<li><p>对元素排序，需要元素实现 Comparator 接口以具有可比性</p>
+<p>default void  sort(Comparator&lt;? super E&gt; c)</p>
+</li>
+<li><p>按索引获取子集合</p>
+<p>List<e>  subList(int fromIndex, int toIndex)</e></p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="listIterator-迭代器"><a href="#listIterator-迭代器" class="headerlink" title="listIterator 迭代器"></a>listIterator 迭代器</h2><h3 id="常用方法-5"><a href="#常用方法-5" class="headerlink" title="常用方法"></a>常用方法</h3><ul>
+<li><p>添加元素</p>
+<p>void  add(E e)</p>
+</li>
+<li><p>判断集合中是否有下一个元素</p>
+<p>boolean  hasNext()</p>
+</li>
+<li><p>判断集合中是否有上一个元素</p>
+<p>boolean  hasPrevious()</p>
+</li>
+<li><p>获取下一个元素</p>
+<p>E  next()</p>
+</li>
+<li><p>获取下一个元素的索引</p>
+<p>int  nextIndex()</p>
+</li>
+<li><p>获取上一个元素</p>
+<p>E  previous()</p>
+</li>
+<li><p>获取上一个元素的索引</p>
+<p>int  previousIndex()</p>
+</li>
+<li><p>移除元素</p>
+<p>void  remove()</p>
+</li>
+<li><p>修改元素</p>
+<p>void  set(E e)</p>
+</li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ul>
+<li><p>Iterator 迭代器中只有获取方法，没有增删改方法。而 ListIterator 支持增删改操作，并支持向前遍历。</p>
+</li>
+<li><p>在迭代过程中，使用了集合的方法对元素进行操作，导致迭代器并不知道集合中的变化，引发数据的不确定性。<br>例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (Iterator it = list.iterator(); it.hasNext();) &#123;  </div><div class="line">	<span class="keyword">if</span> (<span class="string">"heima2"</span>.equals(it.next())) &#123;    </div><div class="line">		list.add(<span class="string">"java"</span>);  </div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>报 java.util.ConcurrentModificationException 异常。<br>所以在迭代时，不要使用集合的方法操作元素，可以使用迭代器的方法操作。ListIterator 支持增删改可以解决该问题。<br>注意：该列表迭代器只有 List 接口有，而且这个迭代器可以完成在迭代过程中的增删改查动作。</p>
+</li>
+<li><p>迭代过程中，增删改动作最多只能有 1 个，不可以两个同时进行。否则迭代器迭代序列可能出错，报 java.lang.IllegalStateException 异常。</p>
+</li>
+</ul>
+<h2 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h2><h3 id="特点-9"><a href="#特点-9" class="headerlink" title="特点"></a>特点</h3><p>是 List 接口的实现类，用以替代 Vector 集合，并且具有比后者更高的效率，但是不保证线程安全。</p>
+<h3 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h3><ul>
+<li>List 是接口，ArrayList 是实现类。</li>
+<li>一般使用多态的方式创建集合，如：<br>List<e> list = new ArrayList<e>();<br>这样使得集合具有更高的适用性。</e></e></li>
+</ul>
+<h2 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h2><h3 id="特点-10"><a href="#特点-10" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>是 List 接口的实现类，双向链表结构，所以增删效率较高，可以用以实现队列或栈的数据结构。</li>
+<li>LinkedList 动作特点均可以围绕头和尾展开。</li>
+</ul>
+<h3 id="队列实现"><a href="#队列实现" class="headerlink" title="队列实现"></a>队列实现</h3><p>特点是先进先出 FIFO 数据结构，可以选择头插尾取，也可以选择尾插头取。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> collection.structure;</div><div class="line"> </div><div class="line"><span class="keyword">import</span> java.util.LinkedList;</div><div class="line"><span class="keyword">import</span> java.util.ListIterator;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Queue</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">  <span class="keyword">private</span> LinkedList&lt;E&gt; link;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Queue</span><span class="params">()</span> </span>&#123;</div><div class="line">    link = <span class="keyword">new</span> LinkedList&lt;E&gt;();</div><div class="line">  &#125;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> link.isEmpty();</div><div class="line">  &#125;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> (ListIterator&lt;E&gt; it = link.listIterator(link .size()); it .hasPrevious();) &#123;</div><div class="line">      System.out.println( it.previous());</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enQueue</span><span class="params">(E obj)</span> </span>&#123;</div><div class="line">    link.addFirst( obj);</div><div class="line">  &#125;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> E <span class="title">deQueue</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> link.removeLast();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="栈实现"><a href="#栈实现" class="headerlink" title="栈实现"></a>栈实现</h3><p>特点是先进后出 FILO 数据结构，可以选择头插头取，也可以选择尾插尾取。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> collection.structure;</div><div class="line"> </div><div class="line"><span class="keyword">import</span> java.util.LinkedList;</div><div class="line"><span class="keyword">import</span> java.util.ListIterator;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Stack</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> LinkedList&lt;E&gt; link;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Stack</span><span class="params">()</span> </span>&#123;</div><div class="line">        link = <span class="keyword">new</span> LinkedList&lt;E&gt;();</div><div class="line">    &#125;</div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> link .isEmpty();</div><div class="line">    &#125;</div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (ListIterator&lt;E&gt; it = link.listIterator(link .size()); it .hasPrevious();) &#123;</div><div class="line">            System. out.println(it .previous());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(E obj)</span> </span>&#123;</div><div class="line">        link.addFirst( obj);</div><div class="line">    &#125;</div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">pop</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> link.removeFirst ();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Vector"><a href="#Vector" class="headerlink" title="Vector"></a>Vector</h2><p>只需要知道其是线程安全的即可，由于比较古老，性能较差，目前已被 ArrayList 取代。</p>
+<p>事实上，即使在需要保证 List 集合线程安全的情况下，我们也不推荐使用 Vector 实现类，Collections 工具类可以将一个 ArrayList 变成线程安全的。</p>
+<h3 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h3><p>Vector 提供了一个 Stack 子类，用于模拟栈。</p>
+<p>由于其继承了 Vector ，所以它也是一个古老的集合类，线程安全但性能较差。目前也已经被 ArrayDeque 取代。</p>
+<h2 id="Deque-集合类"><a href="#Deque-集合类" class="headerlink" title="Deque 集合类"></a>Deque 集合类</h2><h3 id="Deque"><a href="#Deque" class="headerlink" title="Deque"></a>Deque</h3><h3 id="ArrayDeque"><a href="#ArrayDeque" class="headerlink" title="ArrayDeque"></a>ArrayDeque</h3><h3 id="LinkedList-1"><a href="#LinkedList-1" class="headerlink" title="LinkedList"></a>LinkedList</h3><h2 id="线性表性能分析"><a href="#线性表性能分析" class="headerlink" title="线性表性能分析"></a>线性表性能分析</h2><p>一般来说，由于数组以一块连续内存区域来保存所有的数组元素，所以数组在随机访问时性能最好。</p>
+<ul>
+<li>所有内部以数组作为底层实现的集合在随机访问时性能都比较好。</li>
+<li>内部以链表作为底层实现的集合在执行插入、删除操作时有比较好的性能。</li>
+</ul>
+<p>但总体来说，ArrayList 的性能比 LinkedList 的性能要好，因此大部分时候应考虑使用 ArrayList。</p>
+<h2 id="使用建议"><a href="#使用建议" class="headerlink" title="使用建议"></a>使用建议</h2><ul>
+<li>如果需要遍历 List 集合元素，对于 ArrayList、Vector 集合，应该使用随机访问方法（get）来遍历集合元素；对于 LinkedList 集合，则应该采用迭代器（Iterator）来遍历。</li>
+<li>如果经常要执行插入 、删除操作来改变包含大量数据的 List 集合的大小，可以考虑使用 LinkedList。</li>
+<li>如果有多个线程需要同时访问 List 集合元素，可以考虑使用 Collections 工具类将集合包装成线程安全的集合。</li>
+</ul>
+<p>OK，终于写完了，开心！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/26/Java内存模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/26/Java内存模型/" itemprop="url">Java 内存模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-26T13:17:47+08:00">
+                2017-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
 <p>一直想写这篇文章，想通过这篇文章深刻地认识一下 Java 的内存模型。可是每次写到一半就放弃了。基础功力太弱，感觉虚得很。今天这篇文章，放弃了自己完整阐述的想法，通过资料整合的方式来进行。</p>
 </blockquote>
-<p>同样的，本文依然先通过思维导图来理清思路，然后再逐一阐述。</p></div><p class="readmore"><a href="/2017/03/26/Java内存模型/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2017/03/26/Java-实习面试总结/">Java 实习面试总结</a></h2><div class="post-meta">2017-03-26</div><div class="post-content"><p>这是知乎专栏<a href="https://zhuanlan.zhihu.com/p/25725929" target="_blank" rel="external">【编程之路】</a>的一篇文章，感觉不错，收录一下。</p>
-<p>看完之后，深觉自己还有很多不足，最近的学习也很乱，感觉没有章法。后面会按这个列表逐一地解决。</p></div><p class="readmore"><a href="/2017/03/26/Java-实习面试总结/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2017/03/17/剑指offer通关大作战/">剑指offer通关大作战</a></h2><div class="post-meta">2017-03-17</div><div class="post-content"><p>最近在看《剑指offer》，书中讲解和源码都是用 C++ 和 C# 实现的，所以打算自己用 Java 实现一遍。</p>
+<p>同样的，本文依然先通过思维导图来理清思路，然后再逐一阐述。</p>
+<p>Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在计算机内存（RAM）中的工作方式。JVM 是整个计算机虚拟模型，所以 JMM 是隶属于 JVM 的。</p>
+<p>理解 JMM，是学习并发编程的基础。JMM 定义了多线程之间共享变量的可见性以及如何在需要的时候对共享变量进行同步。</p>
+<h2 id="关于并发编程"><a href="#关于并发编程" class="headerlink" title="关于并发编程"></a>关于并发编程</h2><p>并发编程有两个关键问题：如何进行线程间的通信和同步？</p>
+<h4 id="线程间通信机制"><a href="#线程间通信机制" class="headerlink" title="线程间通信机制"></a>线程间通信机制</h4><ul>
+<li>共享内存：线程之间共享程序的公共状态，线程之间通过写 - 读内存中的公共状态来隐式进行通信。</li>
+<li>消息传递：线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信。</li>
+</ul>
+<h4 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h4><p>同步是指程序用于控制不同线程之间操作发生相对顺序的机制。</p>
+<p>在共享内存并发模型里，同步是显式进行的。程序员必须显式指定某个方法或某段代码需要在线程之间互斥执行。</p>
+<p>在消息传递的并发模型里，由于消息的发送必须在消息的接收之前，因此同步是隐式进行的。</p>
+<p>讲 Java 内存模型之前，我们首先需要理解几个相关的概念。</p>
+<h2 id="现代计算机内存架构"><a href="#现代计算机内存架构" class="headerlink" title="现代计算机内存架构"></a>现代计算机内存架构</h2><p>首先我们需要了解现代计算机的内存架构，如下图：</p>
+<p><img src="/2017/03/26/Java内存模型/计算机硬件内存架构.png" alt=""></p>
+<p>现代计算机一般都有 2 个以上 CPU，而且每个 CPU 还有可能包含多个核心。因此，如果我们的应用是多线程的话，这些线程可能会在各个 CPU 核心中并行运行。</p>
+<p>在 CPU 内部有一组 CPU 寄存器，也就是 CPU 的储存器。CPU 操作寄存器的速度要比操作计算机主存快的多。在主存和 CPU 寄存器之间还存在一个 CPU 缓存，CPU 操作 CPU 缓存的速度快于主存但慢于 CPU 寄存器。某些 CPU 可能有多个缓存层（一级缓存和二级缓存）。计算机的主存也称作 RAM，所有的 CPU 都能够访问主存，而且主存比上面提到的缓存和寄存器大很多。</p>
+<p>当一个 CPU 需要访问主存时，会先读取一部分主存数据到 CPU 缓存，进而在读取 CPU 缓存到寄存器。当 CPU 需要写数据到主存时，同样会先 flush 寄存器到 CPU 缓存，然后再在某些节点把缓存数据 flush 到主存。</p>
+<p>现代的处理器使用写缓冲区来临时保存向内存写入的数据。写缓冲区可以保证指令流水线持续运行，它可以避免由于处理器停顿下来等待向内存写入数据而产生的延迟。</p>
+<p>同时，通过以批处理的方式刷新写缓冲区，以及合并写缓冲区中对同一内存地址的多次写，可以减少对内存总线的占用。虽然写缓冲区有这么多好处，但每个处理器上的写缓冲区，仅仅对它所在的处理器可见。这个特性会对内存操作的执行顺序产生重要的影响：处理器对内存的读 / 写操作的执行顺序，不一定与内存实际发生的读 / 写操作顺序一致！</p>
+<p>由于写缓冲区仅对自己的处理器可见，它会导致处理器执行内存操作的顺序可能会与内存实际的操作执行顺序不一致。由于现代的处理器都会使用写缓冲区，因此现代的处理器都会允许对写 - 读操做重排序。</p>
+<h2 id="指令重排序"><a href="#指令重排序" class="headerlink" title="指令重排序"></a>指令重排序</h2><p>在执行程序时，为了提高性能，编译器和处理器会对指令做重排序。分为三种：</p>
+<ol>
+<li>编译器优化的重排序。编译器在不改变单线程程序语义的前提下，可以重新安排语句的执行顺序。</li>
+<li>指令级并行的重排序。现代处理器采用了指令级并行技术（Instruction-Level Parallelism， ILP）来将多条指令重叠执行。如果不存在数据依赖性，处理器可以改变语句对应机器指令的执行顺序。</li>
+<li>内存系统的重排序。由于处理器使用缓存和读 / 写缓冲区，这使得加载和存储操作看上去可能是在乱序执行。</li>
+</ol>
+<p>从 java 源代码到最终实际执行的指令序列，会分别经历下面三种重排序：</p>
+<p><img src="/2017/03/26/Java内存模型/指令重排序.png" alt=""></p>
+<p>上述的 1 属于编译器重排序，2 和 3 属于处理器重排序。这些重排序都可能会导致多线程程序出现内存可见性问题。对于编译器，JMM 的编译器重排序规则会禁止特定类型的编译器重排序（不是所有的编译器重排序都要禁止）。</p>
+<p>那么如何禁止特定类型的处理器重排序呢？为了保证内存可见性，java 编译器在生成指令序列的适当位置会插入内存屏障指令来禁止特定类型的处理器重排序。</p>
+<h2 id="内存屏障"><a href="#内存屏障" class="headerlink" title="内存屏障"></a>内存屏障</h2><blockquote>
+<p>内存屏障，又称内存栅栏，是一个 CPU 指令，基本上它是一条这样的指令：<br>1、保证特定操作的执行顺序。<br>2、影响某些数据（或则是某条指令的执行结果）的内存可见性。</p>
+</blockquote>
+<p>编译器和 CPU 能够重排序指令，保证最终相同的结果，尝试优化性能。插入一条 Memory Barrier 会告诉编译器和 CPU：不管什么指令都不能和这条 Memory Barrier 指令重排序。</p>
+<p>Memory Barrier 所做的另外一件事是强制刷出各种 CPU cache，如一个 Write-Barrier（写入屏障）将刷出所有在 Barrier 之前写入 cache 的数据，因此，任何 CPU 上的线程都能读取到这些数据的最新版本。</p>
+<p>下面是常见处理器允许的重排序类型的列表：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">Load-Load</th>
+<th style="text-align:center">Load-Store</th>
+<th style="text-align:center">Store-Store</th>
+<th style="text-align:center">Store-Load</th>
+<th style="text-align:center">数据依赖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sparc-TSO</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">N</td>
+</tr>
+<tr>
+<td>x86</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">N</td>
+</tr>
+<tr>
+<td>ia64</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">N</td>
+</tr>
+<tr>
+<td>PowerPC</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">N</td>
+</tr>
+</tbody>
+</table>
+<p>上面表格中的各种处理器内存模型，从上到下，模型由强变弱。越是追求性能的处理器，内存模型设计的会越弱。因为这些处理器希望内存模型对它们的束缚越少越好，这样它们就可以做尽可能多的优化来提高性能。</p>
+<p>对应的，JMM 把内存屏障指令分为下列四类：</p>
+<table>
+<thead>
+<tr>
+<th>屏障类型</th>
+<th>指令示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LoadLoad Barriers</td>
+<td>Load1; LoadLoad; Load2</td>
+<td>确保 Load1 数据的装载，之前于 Load2 及所有后续装载指令的装载。</td>
+</tr>
+<tr>
+<td>StoreStore Barriers</td>
+<td>Store1; StoreStore; Store2</td>
+<td>确保 Store1 数据对其他处理器可见（刷新到内存），之前于 Store2 及所有后续存储指令的存储。</td>
+</tr>
+<tr>
+<td>LoadStore Barriers</td>
+<td>Load1; LoadStore; Store2</td>
+<td>确保 Load1 数据装载，之前于 Store2 及所有后续的存储指令刷新到内存。</td>
+</tr>
+<tr>
+<td>StoreLoad Barriers</td>
+<td>Store1; StoreLoad; Load2</td>
+<td>确保 Store1 数据对其他处理器变得可见（指刷新到内存），之前于 Load2 及所有后续装载指令的装载。StoreLoad Barriers 会使该屏障之前的所有内存访问指令（存储和装载指令）完成之后，才执行该屏障之后的内存访问指令。</td>
+</tr>
+</tbody>
+</table>
+<p>这和 java 有什么关系？volatile 是基于 Memory Barrier 实现的。</p>
+<p>如果一个变量是 volatile 修饰的，JMM 会在写入这个字段之后插进一个 Write-Barrier 指令，并在读这个字段之前插入一个 Read-Barrier 指令。</p>
+<p>这意味着，如果写入一个 volatile 变量 a，可以保证：</p>
+<ol>
+<li>一个线程写入变量 a 后，任何线程访问该变量都会拿到最新值。</li>
+<li>在写入变量 a 之前的写入操作，其更新的数据对于其他线程也是可见的。因为 Memory Barrier 会刷出 cache 中的所有先前的写入。</li>
+</ol>
+<h2 id="as-if-serial-语义"><a href="#as-if-serial-语义" class="headerlink" title="as-if-serial 语义"></a><code>as-if-serial</code> 语义</h2><h3 id="数据依赖性"><a href="#数据依赖性" class="headerlink" title="数据依赖性"></a>数据依赖性</h3><p>如果两个操作访问同一个变量，且这两个操作中有一个为写操作，此时这两个操作之间就存在数据依赖性。数据依赖分下列三种类型：</p>
+<ul>
+<li>写后读</li>
+<li>写后写</li>
+<li>读后写</li>
+</ul>
+<p>上面三种情况，只要重排序两个操作的执行顺序，程序的执行结果将会被改变。</p>
+<h3 id="as-if-serial-语义-1"><a href="#as-if-serial-语义-1" class="headerlink" title="as-if-serial 语义"></a><code>as-if-serial</code> 语义</h3><p>不管怎么重排序（编译器和处理器为了提高并行度），（单线程）程序的执行结果不能被改变。编译器，runtime 和处理器都必须遵守 <code>as-if-serial</code> 语义。</p>
+<p>为了遵守 as-if-serial 语义，编译器和处理器不会对存在数据依赖关系的操作做重排序，因为这种重排序会改变执行结果。但是，如果操作之间不存在数据依赖关系，这些操作可能被编译器和处理器重排序。</p>
+<p>但是请注意：这里所说的数据依赖性仅针对单个处理器中执行的指令序列和单个线程中执行的操作，不同处理器之间和不同线程之间的数据依赖性不被编译器和处理器考虑。</p>
+<h2 id="顺序一致性"><a href="#顺序一致性" class="headerlink" title="顺序一致性"></a>顺序一致性</h2><h3 id="数据竞争"><a href="#数据竞争" class="headerlink" title="数据竞争"></a>数据竞争</h3><p>当程序未正确同步时，就会存在数据竞争。java 内存模型规范对数据竞争的定义如下：</p>
+<ul>
+<li>在一个线程中写一个变量，</li>
+<li>在另一个线程读同一个变量，</li>
+<li>而且写和读没有通过同步来排序。</li>
+</ul>
+<p>当代码中包含数据竞争时，程序的执行往往产生违反直觉的结果。如果一个多线程程序能正确同步，这个程序将是一个没有数据竞争的程序。</p>
+<h3 id="顺序一致性内存模型"><a href="#顺序一致性内存模型" class="headerlink" title="顺序一致性内存模型"></a>顺序一致性内存模型</h3><p>顺序一致性内存模型是一个被计算机科学家理想化了的理论参考模型，它为程序员提供了极强的内存可见性保证。顺序一致性内存模型有两大特性：</p>
+<ul>
+<li>一个线程中的所有操作必须按照程序的顺序来执行。</li>
+<li>（不管程序是否同步）所有线程都只能看到一个单一的操作执行顺序。在顺序一致性内存模型中，每个操作都必须原子执行且立刻对所有线程可见。</li>
+</ul>
+<p>顺序一致性内存模型为程序员提供的视图如下：</p>
+<p><img src="/2017/03/26/Java内存模型/顺序一致性.png" alt=""></p>
+<p>在概念上，顺序一致性模型有一个单一的全局内存，这个内存通过一个左右摆动的开关可以连接到任意一个线程。同时，每一个线程必须按程序的顺序来执行内存读 / 写操作。从上图我们可以看出，在任意时间点最多只能有一个线程可以连接到内存。当多个线程并发执行时，图中的开关装置能把所有线程的所有内存读 / 写操作串行化。</p>
+<p>顺序一致性内存模型是一个理论参考模型，JMM 和处理器内存模型在设计时通常会把顺序一致性内存模型作为参照。JMM 和处理器内存模型在设计时会对顺序一致性模型做一些放松，因为如果完全按照顺序一致性模型来实现处理器和 JMM，那么很多的处理器和编译器优化都要被禁止，这对执行性能将会有很大的影响。</p>
+<p>根据对不同类型读 / 写操作组合的执行顺序的放松，可以把常见处理器的内存模型划分为下面几种类型：</p>
+<ol>
+<li>放松程序中写 - 读操作的顺序，由此产生了 total store ordering 内存模型（简称为 TSO）。</li>
+<li>在前面 1 的基础上，继续放松程序中写 - 写操作的顺序，由此产生了 partial store order 内存模型（简称为 PSO）。</li>
+<li>在前面 1 和 2 的基础上，继续放松程序中读 - 写和读 - 读操作的顺序，由此产生了 relaxed memory order 内存模型（简称为 RMO）和 PowerPC 内存模型。</li>
+</ol>
+<p>注意，这里处理器对读 / 写操作的放松，是以两个操作之间不存在数据依赖性为前提的（因为处理器要遵守 as-if-serial 语义，处理器不会对存在数据依赖性的两个内存操作做重排序）。</p>
+<p>为了在不同的处理器平台向程序员展示一个一致的内存模型，JMM 在不同的处理器中需要插入的内存屏障的数量和种类也不相同。</p>
+<p>下图展示了 JMM 在不同处理器内存模型中需要插入的内存屏障的示意图：</p>
+<p><img src="/2017/03/26/Java内存模型/内存模型.png" alt=""></p>
+<p>如上图所示，JMM 屏蔽了不同处理器内存模型的差异，它在不同的处理器平台之上为 java 程序员呈现了一个一致的内存模型。</p>
+<p>好了，到这里终于谈到 Java 内存模型了。</p>
+<p>从 JMM 设计者的角度来说，在设计 JMM 时，需要考虑两个关键因素：</p>
+<ul>
+<li>程序员对内存模型的使用。程序员希望内存模型易于理解，易于编程。程序员希望基于一个强内存模型来编写代码。</li>
+<li>编译器和处理器对内存模型的实现。编译器和处理器希望内存模型对它们的束缚越少越好，这样它们就可以做尽可能多的优化来提高性能。编译器和处理器希望实现一个弱内存模型。</li>
+</ul>
+<p>由于这两个因素互相矛盾，所以 JSR-133 专家组在设计 JMM 时的核心目标就是找到一个好的平衡点：一方面要为程序员提供足够强的内存可见性保证；另一方面，对编译器和处理器的限制要尽可能的放松。</p>
+<h2 id="Java内存抽象模型"><a href="#Java内存抽象模型" class="headerlink" title="Java内存抽象模型"></a>Java内存抽象模型</h2><p>Java 线程之间的通信由 Java 内存模型（本文简称为 JMM）控制，JMM 决定一个线程对共享变量的写入何时对另一个线程可见。</p>
+<p>从抽象的角度来看，JMM 定义了线程和主内存之间的抽象关系：线程之间的共享变量存储在主内存（main memory）中，每个线程都有一个私有的本地内存（local memory），本地内存中存储了该线程以读 / 写共享变量的副本。本地内存是 JMM 的一个抽象概念，并不真实存在。它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译器优化。</p>
+<p>Java 内存模型的抽象示意图如下：</p>
+<p><img src="/2017/03/26/Java内存模型/Java内存抽象模型.png" alt=""></p>
+<p>Java多线程利用共享内存实现通信，过程如图所示：</p>
+<p><img src="/2017/03/26/Java内存模型/通信过程.png" alt=""></p>
+<p>如上图所示，本地内存 A 和 B 有主内存中共享变量 x 的副本。假设初始时，这三个内存中的 x 值都为 0。线程 A 在执行时，把更新后的 x 值（假设值为 1）临时存放在自己的本地内存 A 中。当线程 A 和线程 B 需要通信时，线程 A 首先会把自己本地内存中修改后的 x 值刷新到主内存中，此时主内存中的 x 值变为了 1。随后，线程 B 到主内存中去读取线程 A 更新后的 x 值，此时线程 B 的本地内存的 x 值也变为了 1。</p>
+<p>从整体来看，这两个步骤实质上是线程 A 在向线程 B 发送消息，而且这个通信过程必须要经过主内存。JMM 通过控制主内存与每个线程的本地内存之间的交互，来为 java 程序员提供内存可见性保证。</p>
+<h2 id="happens-before-规则"><a href="#happens-before-规则" class="headerlink" title="happens-before 规则"></a><code>happens-before</code> 规则</h2><p>从 jdk5 开始，java 使用新的 <code>JSR-133</code> 内存模型，基于 <code>happens-before</code> 的概念来阐述操作之间的内存可见性。</p>
+<p>在 JMM 中，如果一个操作的执行结果需要对另一个操作可见，那么这两个操作之间必须要存在 <code>happens-before</code> 关系，这个的两个操作既可以在同一个线程，也可以在不同的两个线程中。</p>
+<p>与程序员密切相关的 happens-before 规则如下：</p>
+<ol>
+<li>程序顺序规则：一个线程中的每个操作，happens-before 于该线程中任意的后续操作。</li>
+<li>监视器锁规则：对一个锁的解锁操作，happens-before 于随后对这个锁的加锁操作。</li>
+<li>volatile 域规则：对一个 volatile 域的写操作，happens-before 于任意线程后续对这个 volatile 域的读。</li>
+<li>传递性规则：如果 A happens-before B，且 B happens-before C，那么 A happens-before C。</li>
+</ol>
+<p>注意：两个操作之间具有 happens-before 关系，并不意味前一个操作必须要在后一个操作之前执行！仅仅要求前一个操作的执行结果，对于后一个操作是可见的，且前一个操作按顺序排在后一个操作之前。</p>
+<p>为了具体说明，请看前面提到过的计算圆面积的示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">double pi  = 3.14;    //A</div><div class="line">double r   = 1.0;     //B</div><div class="line">double area = pi * r * r; //C</div></pre></td></tr></table></figure>
+<p>上面计算圆的面积的示例代码存在三个 happens- before 关系：</p>
+<ol>
+<li>A happens- before B；</li>
+<li>B happens- before C；</li>
+<li>A happens- before C；</li>
+</ol>
+<p>由于 A happens- before B，happens- before 的定义会要求：A 操作执行的结果要对 B 可见，且 A 操作的执行顺序排在 B 操作之前。 但是从程序语义的角度来说，对 A 和 B 做重排序即不会改变程序的执行结果，也还能提高程序的执行性能（允许这种重排序减少了对编译器和处理器优化的束缚）。也就是说，上面这 3 个 happens- before 关系中，虽然 2 和 3 是必需要的，但 1 是不必要的。因此，JMM 把 happens- before 要求禁止的重排序分为了下面两类：</p>
+<ul>
+<li>会改变程序执行结果的重排序。</li>
+<li>不会改变程序执行结果的重排序。</li>
+</ul>
+<p>JMM 对这两种不同性质的重排序，采取了不同的策略：</p>
+<ul>
+<li>对于会改变程序执行结果的重排序，JMM 要求编译器和处理器必须禁止这种重排序。</li>
+<li>对于不会改变程序执行结果的重排序，JMM 对编译器和处理器不作要求（JMM 允许这种重排序）。</li>
+</ul>
+<p>下面是 JMM 的设计示意图：</p>
+<p><img src="/2017/03/26/Java内存模型/JMM设计示意图.png" alt=""></p>
+<h3 id="JMM-内存可见性保证"><a href="#JMM-内存可见性保证" class="headerlink" title="JMM 内存可见性保证"></a>JMM 内存可见性保证</h3><ul>
+<li>单线程程序。单线程程序不会出现内存可见性问题。编译器，runtime 和处理器会共同确保单线程程序的执行结果与该程序在顺序一致性模型中的执行结果相同。</li>
+<li>正确同步的多线程程序。正确同步的多线程程序的执行将具有顺序一致性（程序的执行结果与该程序在顺序一致性内存模型中的执行结果相同）。这是 JMM 关注的重点，JMM 通过限制编译器和处理器的重排序来为程序员提供内存可见性保证。</li>
+<li>未同步 / 未正确同步的多线程程序。JMM 为它们提供了最小安全性保障：线程执行时读取到的值，要么是之前某个线程写入的值，要么是默认值（0，null，false）。</li>
+</ul>
+<p><img src="/2017/03/26/Java内存模型/JMM顺序一致性.png" alt=""></p>
+<p>只要多线程程序是正确同步的，JMM 保证该程序在任意的处理器平台上的执行结果，与该程序在顺序一致性内存模型中的执行结果一致。</p>
+<h1 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h1><h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><p><a href="http://www.infoq.com/cn/articles/java-memory-model-4" target="_blank" rel="external">深入理解 Java 内存模型（四）——volatile</a></p>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p><a href="http://www.infoq.com/cn/articles/java-memory-model-5" target="_blank" rel="external">深入理解 Java 内存模型（五）——锁</a></p>
+<h2 id="final"><a href="#final" class="headerlink" title="final"></a>final</h2><p><a href="http://www.infoq.com/cn/articles/java-memory-model-5" target="_blank" rel="external">深入理解 Java 内存模型（五）——锁</a></p>
+<p>参考资料：</p>
+<p><a href="http://www.infoq.com/cn/articles/java-memory-model-1" target="_blank" rel="external">深入理解 Java 内存模型（一）——基础</a></p>
+<p><a href="http://www.infoq.com/cn/articles/java-memory-model-2" target="_blank" rel="external">深入理解 Java 内存模型（二）——重排序</a></p>
+<p><a href="http://www.infoq.com/cn/articles/java-memory-model-3" target="_blank" rel="external">深入理解 Java 内存模型（三）——顺序一致性</a></p>
+<p><a href="http://www.infoq.com/cn/articles/java-memory-model-4" target="_blank" rel="external">深入理解 Java 内存模型（四）——volatile</a></p>
+<p><a href="http://www.infoq.com/cn/articles/java-memory-model-5" target="_blank" rel="external">深入理解 Java 内存模型（五）——锁</a></p>
+<p><a href="http://www.infoq.com/cn/articles/java-memory-model-6" target="_blank" rel="external">深入理解 Java 内存模型（六）——final</a></p>
+<p><a href="http://www.infoq.com/cn/articles/java-memory-model-7" target="_blank" rel="external">深入理解 Java 内存模型（七）——总结</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/26/Java-实习面试总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/26/Java-实习面试总结/" itemprop="url">Java 实习面试总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-26T12:49:46+08:00">
+                2017-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这是知乎专栏<a href="https://zhuanlan.zhihu.com/p/25725929" target="_blank" rel="external">【编程之路】</a>的一篇文章，感觉不错，收录一下。</p>
+<p>看完之后，深觉自己还有很多不足，最近的学习也很乱，感觉没有章法。后面会按这个列表逐一地解决。</p>
+<h2 id="Java-基础"><a href="#Java-基础" class="headerlink" title="Java 基础"></a>Java 基础</h2><ul>
+<li>java 内存模型</li>
+<li>多态（重载重写）</li>
+<li>object 方法</li>
+<li>类访问权限</li>
+<li>sleep、notify、wait 联系、区别</li>
+<li>String、stringbuffer、stringbuilder 联系、区别、源码</li>
+<li>Volatile 原理、源码、与 syn 区别</li>
+<li>线程间通信方式</li>
+<li>线程的各种状态</li>
+<li>等等等等</li>
+</ul>
+<h2 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h2><h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><ul>
+<li>ArrayList</li>
+<li>LinkedList</li>
+<li>Vector</li>
+</ul>
+<p>三者区别，联系，源码</p>
+<h4 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h4><ul>
+<li>HashSet</li>
+<li>LinkedHashSet</li>
+<li>TreeSet</li>
+</ul>
+<p>基于什么实现，内部数据结构，适用场景，源码</p>
+<h4 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h4><ul>
+<li>HashMap</li>
+<li>weakHashMao</li>
+<li>LinkedHashMap</li>
+<li>TreeMap</li>
+</ul>
+<p>HashMap 与 hashtable 的区别</p>
+<p>内部实现原理、源码、适用场景</p>
+<h2 id="并发包"><a href="#并发包" class="headerlink" title="并发包"></a>并发包</h2><h4 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h4><ul>
+<li>原理、源码、与 hashmap 的区别</li>
+</ul>
+<h4 id="CopyOnWriteArrayList-set"><a href="#CopyOnWriteArrayList-set" class="headerlink" title="CopyOnWriteArrayList (set)"></a>CopyOnWriteArrayList (set)</h4><ul>
+<li>什么情况加锁、什么情况不加锁、适用场景</li>
+</ul>
+<h4 id="ArrayblockingQueue-Linked"><a href="#ArrayblockingQueue-Linked" class="headerlink" title="ArrayblockingQueue (Linked)"></a>ArrayblockingQueue (Linked)</h4><ul>
+<li>两者区别，take、put、offer、poll 方法原理、源码</li>
+</ul>
+<h4 id="AtomicInteger-long-boolean"><a href="#AtomicInteger-long-boolean" class="headerlink" title="AtomicInteger (long boolean)"></a>AtomicInteger (long boolean)</h4><ul>
+<li>功能</li>
+</ul>
+<h4 id="CountDownLatch"><a href="#CountDownLatch" class="headerlink" title="CountDownLatch"></a>CountDownLatch</h4><ul>
+<li>功能、场景</li>
+</ul>
+<h4 id="CyclicBarrier"><a href="#CyclicBarrier" class="headerlink" title="CyclicBarrier"></a>CyclicBarrier</h4><ul>
+<li>功能、场景</li>
+</ul>
+<h4 id="FutureTask-Callable"><a href="#FutureTask-Callable" class="headerlink" title="FutureTask (Callable)"></a>FutureTask (Callable)</h4><ul>
+<li>源码、场景</li>
+</ul>
+<h4 id="ReentantLock"><a href="#ReentantLock" class="headerlink" title="ReentantLock"></a>ReentantLock</h4><ul>
+<li>与 syn 的区别、好处、场景</li>
+</ul>
+<h4 id="Condition"><a href="#Condition" class="headerlink" title="Condition"></a>Condition</h4><ul>
+<li>与 wait、notify 的区别、好处</li>
+</ul>
+<h4 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a>Semaphore</h4><ul>
+<li>好处、场景</li>
+</ul>
+<h4 id="ReentrantReadWriteLock"><a href="#ReentrantReadWriteLock" class="headerlink" title="ReentrantReadWriteLock"></a>ReentrantReadWriteLock</h4><ul>
+<li>读写分离的好处、适用场景、源码</li>
+</ul>
+<h4 id="Executors"><a href="#Executors" class="headerlink" title="Executors"></a>Executors</h4><ul>
+<li>线程池种类、各个作用、适用场景</li>
+</ul>
+<h4 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h4><ul>
+<li>重载方法的参数、各参数作用、源码</li>
+</ul>
+<h2 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h2><h4 id="JVM-五大区"><a href="#JVM-五大区" class="headerlink" title="JVM 五大区"></a>JVM 五大区</h4><ul>
+<li>每个区的存储、作用</li>
+</ul>
+<h4 id="JVM-内存模型"><a href="#JVM-内存模型" class="headerlink" title="JVM 内存模型"></a>JVM 内存模型</h4><ul>
+<li>类加载机制</li>
+<li>双亲委派模型</li>
+</ul>
+<h4 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h4><ul>
+<li>常用 gc 算法</li>
+<li>收集器种类、适用场景</li>
+<li>fullGC、MinorGC 触发条件</li>
+</ul>
+<h4 id="JVM-优化"><a href="#JVM-优化" class="headerlink" title="JVM 优化"></a>JVM 优化</h4><ul>
+<li><p>可视化工具使用</p>
+</li>
+<li><p>日志查询</p>
+</li>
+<li><p>各项参数设置</p>
+</li>
+<li><p>四种引用</p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="IO-流"><a href="#IO-流" class="headerlink" title="IO 流"></a>IO 流</h2><h4 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h4><ul>
+<li>字节流：类型、适用场景</li>
+<li>字符流：类型、适用场景</li>
+</ul>
+<h4 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h4><ul>
+<li>类型、适用场景</li>
+<li>三大组件的联系、使用</li>
+<li>内存情况</li>
+</ul>
+<h2 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h2><ul>
+<li>zookeeper</li>
+<li>kafka</li>
+<li>redis 集群</li>
+<li>storm</li>
+<li>hadoop</li>
+<li>spark</li>
+<li>solr cloud</li>
+</ul>
+<p>挑一两个组件深入理解下就好</p>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h4 id="三范式"><a href="#三范式" class="headerlink" title="三范式"></a>三范式</h4><h4 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h4><ul>
+<li>原理、实现</li>
+</ul>
+<h4 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h4><ul>
+<li>原理、实现</li>
+</ul>
+<h4 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h4><ul>
+<li>类型</li>
+<li>使用</li>
+<li>可能引起的问题</li>
+</ul>
+<h4 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h4><ul>
+<li>InnoDB</li>
+<li>MyISAM</li>
+</ul>
+<p>区别、联系、锁机制、适用场景</p>
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><ul>
+<li>类型</li>
+<li>使用</li>
+<li>什么样的字段适合做索引</li>
+</ul>
+<h4 id="SQL-优化"><a href="#SQL-优化" class="headerlink" title="SQL 优化"></a>SQL 优化</h4><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h4 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h4><ul>
+<li>结构、流程、源码</li>
+</ul>
+<h4 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h4><ul>
+<li>生命周期</li>
+<li>三种实现方式</li>
+</ul>
+<h4 id="springMVC"><a href="#springMVC" class="headerlink" title="springMVC"></a>springMVC</h4><ul>
+<li>使用</li>
+<li>请求流程</li>
+</ul>
+<h4 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h4><ul>
+<li>IOC/AOP 原理、源码、联系</li>
+<li>两种动态代理实现</li>
+</ul>
+<h4 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h4><ul>
+<li>使用</li>
+<li>、$ 区别</li>
+<li>一级、二级缓存</li>
+</ul>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><ul>
+<li>单例模式</li>
+<li>工厂模式</li>
+<li>观察者模式</li>
+<li>适配器模式</li>
+<li>模仿方法模式</li>
+<li>策略模式</li>
+<li>责任链模式</li>
+<li>装饰者模式</li>
+</ul>
+<p>常用的八种掌握就行，原理，使用<br>单例、工厂、观察者重点</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h4 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h4><ul>
+<li>平衡二叉树</li>
+<li>二叉查找树</li>
+<li>红黑树</li>
+<li>完全二叉树</li>
+<li>满二叉树</li>
+</ul>
+<p>概念、适用场景、时间复杂度、好处坏处</p>
+<h4 id="B-树"><a href="#B-树" class="headerlink" title="B 树"></a>B 树</h4><ul>
+<li>B-Tree</li>
+<li>B+Tree</li>
+</ul>
+<p>两者的联系、区别、适用场景</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><ul>
+<li>直接插入排序</li>
+<li>二分插入排序</li>
+<li>希尔插入排序</li>
+<li>冒泡排序</li>
+<li>快排</li>
+<li>选择排序</li>
+<li>堆排序</li>
+<li>归并排序</li>
+</ul>
+<ol>
+<li>各种排序的思想</li>
+<li>实现复杂度</li>
+<li>稳定性如何</li>
+<li>可以手写</li>
+</ol>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4><ul>
+<li>三次握手、四次挥手、各种状态、状态改变</li>
+<li>和 UDP 的区别</li>
+</ul>
+<h4 id="IO-模型"><a href="#IO-模型" class="headerlink" title="IO 模型"></a>IO 模型</h4><ul>
+<li>同步、异步、阻塞、非阻塞概念</li>
+<li>模型种类、各自特点、适用场景</li>
+<li>如何使用</li>
+</ul>
+<h2 id="Linux-基础"><a href="#Linux-基础" class="headerlink" title="Linux 基础"></a>Linux 基础</h2><ul>
+<li>常用命令</li>
+<li>管道符</li>
+<li>查看日志相关命令</li>
+<li>CPU 使用命令</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/17/剑指offer通关大作战/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/17/剑指offer通关大作战/" itemprop="url">剑指offer通关大作战</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T20:26:10+08:00">
+                2017-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在看《剑指offer》，书中讲解和源码都是用 C++ 和 C# 实现的，所以打算自己用 Java 实现一遍。</p>
 <p>基本上每天都会刷几题。</p>
-<p><a href="https://github.com/yunz93/TestForOffer" target="_blank" rel="external">【github 地址】</a> 有兴趣的 Javaer 可以 fork 一下，大家共同学习，有好的实现方法还请多多指教。^=^</p></div><p class="readmore"><a href="/2017/03/17/剑指offer通关大作战/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2017/03/16/设计模式初涉三-工厂模式/">设计模式初涉三-工厂模式</a></h2><div class="post-meta">2017-03-16</div><div class="post-content"><p>前面两篇设计模式写的不清晰，感觉还是欠实战，需要整个项目做一做。</p>
+<p><a href="https://github.com/yunz93/TestForOffer" target="_blank" rel="external">【github 地址】</a> 有兴趣的 Javaer 可以 fork 一下，大家共同学习，有好的实现方法还请多多指教。^=^</p>
+<p>刷着刷着，发现牛课上有剑指Offer的专题，而且在 OJ 上刷题的效果比较好，自己本地写的测试用例可能不全面，所以。。。这边就放弃了，专心牛课刷题吧。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/16/设计模式初涉三-工厂模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/16/设计模式初涉三-工厂模式/" itemprop="url">设计模式初涉三-工厂模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-16T22:41:11+08:00">
+                2017-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前面两篇设计模式写的不清晰，感觉还是欠实战，需要整个项目做一做。</p>
 <p>好吧，开始今天这篇，讲第二个创建者模式——工厂模式。</p>
 <p>前些天室友面阿里的实习生，被问到了这个，回答的不怎么好。希望我这篇文章能说明白。</p>
-<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><p>工厂模式，顾名思义，就是工厂的模式。</p></div><p class="readmore"><a href="/2017/03/16/设计模式初涉三-工厂模式/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2017/03/14/设计模式初涉二-单例模式/">设计模式初涉二——单例模式</a></h2><div class="post-meta">2017-03-14</div><div class="post-content"><blockquote>
+<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><p>工厂模式，顾名思义，就是工厂的模式。</p>
+<p>工厂是做什么的？生产产品的。</p>
+<p>工厂是如何生产产品的？这就是工厂的生产模式。</p>
+<p>工厂模式类似于工厂的生产模式。</p>
+<p>工厂模式的原话是：</p>
+<blockquote>
+<p>Define an interface for creating an object, but let subclasses decide which class to instantiate.</p>
+<p>Factory Method lets a class defer instantiation to subclasses.</p>
+<p>定义一个用于创建对象的接口，让子类决定实例化哪个类。</p>
+<p>工厂方法使一个类的实例化延迟到其子类。</p>
+</blockquote>
+<p>怎么理解呢？举个通俗的例子。</p>
+<p>奥迪是个汽车厂商，它旗下有奥迪A6、A8等多款车型，但它并不生产具体的汽车，它是一个品牌，也就是一个接口。奥迪在中国有子类，例如上海奥迪、北京奥迪，它们负责实际制造A6、A8等车辆，也就是说车辆的实体化被延迟到了奥迪的子类中实现。</p>
+<p>这个模式中，奥迪厂家是个抽象工厂，上海奥迪和背景奥迪是具体工厂，奥迪车是抽象产品，奥迪A6、A8则是具体产品。</p>
+<p>这就是工厂模式。</p>
+<p>工厂模式可分为：</p>
+<ul>
+<li>简单工厂</li>
+<li>工厂方法</li>
+<li>抽象工厂</li>
+</ul>
+<p>如何理解这三种模式的区别呢？见下图。</p>
+<p><img src="/2017/03/16/设计模式初涉三-工厂模式/工厂模式.png" alt="工厂模式"></p>
+<p>是不是很容易理解了？</p>
+<h3 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h3><p>一个工厂类处于对产品实例化的中心位置，没有抽象工厂，直接就是奥迪直接上手生产汽车，这样确实好的，奥迪亲自负责每一个产品的生产，质量有保障==。</p>
+<p>但它能生产A6、A8，但是出到A9的话，它就得升级自己场内设施，修改工厂类。奥迪表示好累，其实我本来只要提供设计图纸的就好了嘛！干嘛亲力亲为？</p>
+<p>简单工厂对“开闭原则”的支持力度不够。</p>
+<h3 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h3><p>是简单工厂模式的升级版，把工厂给抽象出来。奥迪说我干不动了，我要找个生产汽车的厂子来给我生产奥迪汽车，我只提供设计图纸（接口）。</p>
+<p>好了，2017年要推出新车型A10了，奥迪在自己总部把方案一设计，上海奥迪制造厂你直接按图纸来做就可以了。</p>
+<p>好了，开始干活了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 奥迪：我来提供图纸</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AudiFactory</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> Audi <span class="title">createCar</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// audi 抽象类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Audi</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">carSpeed</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">carPrice</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">carColor</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 奥迪上海制造厂: 奥迪大佬我来干活了</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AudiShanghaiFactory</span> <span class="keyword">implements</span> <span class="title">AudiFactory</span> </span>&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Audi <span class="title">createCar</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AudiA8();   <span class="comment">// 我生产了一辆A8，666</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// A8：我价格最高，颜色最美，速度最快</span></div><div class="line"><span class="function"><span class="keyword">public</span> class <span class="title">AudiA8</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">AudiA8</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.carColor();</div><div class="line">    <span class="keyword">this</span>.carSpeed();</div><div class="line">    <span class="keyword">this</span>.carPrice();</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">carSpeed</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"A8 速度 180"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">carPrice</span><span class="params">()</span></span>&#123;</div><div class="line">  	System.out.println(<span class="string">"A8 价格 100万"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">carColor</span><span class="params">()</span></span>&#123;</div><div class="line">  	System.out.println(<span class="string">"A8 颜色 黑"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>怎么样？很好理解吧！</p>
+<h3 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h3><p>抽象工厂模式又是工厂方法模式的升级版，既然大家的工厂都抽象了，那我得在种类上盖过你啊。</p>
+<p>工厂方法模式针对的是一个产品等级结构，抽象工厂模式则需要面对多个产品等级结构。</p>
+<p>怎么理解呢？</p>
+<p>工厂方法模式中，奥迪只提供了汽车生产图纸，上海奥迪制造厂根据图纸造出了A8，北京奥迪制造厂造出了B8。</p>
+<p>而抽象工厂模式中，奥迪不止提供了汽车生产图纸，还提供了卡车，卡丁车的生产图纸，上海奥迪制造厂不仅生产了A8，还生产了卡丁车A7，卡车A9，北京奥迪制造厂不仅生产了B8，还生产了卡丁车B7，卡车B9。</p>
+<p>其实《Java设计模式》中的例子更易理解。Dota2游戏中，天辉军团可以召唤力量型英雄，敏捷型英雄，智力型英雄，夜魇军团也可以，但双方的各型英雄角色又各不相同。</p>
+<p>英雄制造厂是个抽象工厂，它提供了三种英雄的抽象产品的设计图纸，天辉军团和夜魇军团作为两个具体工厂，可以根据三种抽象产品生产出不同的英雄（具体产品）。</p>
+<p>这种解释是不是棒呆！</p>
+<p>代码就不贴了，工厂方法模式的代码改一下就可以了。</p>
+<p>原创博文，转载注明来源</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/14/设计模式初涉二-单例模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/14/设计模式初涉二-单例模式/" itemprop="url">设计模式初涉二——单例模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T18:03:59+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
 <p>单例模式——最简单的设计模式</p>
 </blockquote>
 <h2 id="何为设计模式？"><a href="#何为设计模式？" class="headerlink" title="何为设计模式？"></a>何为设计模式？</h2><blockquote>
-<p>设计模式（Design Pattern）是一套被反复使用、多数人知晓、经过分类编目的优秀代码设计经验的总结。</p></div><p class="readmore"><a href="/2017/03/14/设计模式初涉二-单例模式/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2017/03/14/设计模式初涉一/">设计模式初涉一</a></h2><div class="post-meta">2017-03-14</div><div class="post-content"><blockquote>
+<p>设计模式（Design Pattern）是一套被反复使用、多数人知晓、经过分类编目的优秀代码设计经验的总结。</p>
+</blockquote>
+<p>设计模式所贯彻的原理是：面向接口编程，而非面向实现。其目标原则是：降低代码耦合，增强灵活性。</p>
+<p>常见的设计模式可概括为23种，按特点可划分为三大类：创建型，结构型以及行为型。</p>
+<p><img src="/2017/03/14/设计模式初涉二-单例模式/分类.png" alt="设计模式分类"></p>
+<p>如你所见，设计模式种类实在很多，一一详解，任重道远。我们本篇主要从简单的理论方面聊聊创建型的几种模式。想要真正理解和使用设计模式，还需要在项目的实践中慢慢体会。</p>
+<p>每种设计模式，根据一种其适用场景，进行阐述。其中涉及我的理解也许有些谬误的地方，欢迎指正，不胜感激。</p>
+<h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><p>创建型模式是用来创建对象的模式，抽象了实例化的过程，帮助一个系统独立于其关联对象的创建、组合和表达方式。</p>
+<ul>
+<li>将系统所使用的具体类的信息封装起来。</li>
+<li>隐藏类的实例是如何被创建和组织的。</li>
+</ul>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><blockquote>
+<p>Ensure a class has only one instance, and provide a global point of access to it.</p>
+<p>确保一个类只有一个实例，并提供一个访问它的全局访问点。</p>
+</blockquote>
+<p>单例模式是最简单的一种设计模式。主要作用是确保一个类只有一个实例存在。</p>
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>我们知道，一个类的对象的产生是由类构造函数来完成的。如果一个类对外提供了<code>public</code>的构造方法，那么外界就可以任意创建该类的对象。所以，如果想限制对象的产生，一个办法就是将构造函数变为私有的 (至少是受保护的)，使外面的类不能通过引用来产生对象。同时为了保证类的可用性，就必须提供一个自己的对象以及访问这个对象的静态方法。</p>
+<blockquote>
+<p>单例模式实现方式有两种：</p>
+<ul>
+<li>饿汉式</li>
+<li>懒汉式</li>
+</ul>
+</blockquote>
+<p>本章节参考了<a href="http://www.hollischuang.com/archives/1373" target="_blank" rel="external">HollisChuang’s Blog</a>，作者的博客使我收益颇多，感谢！</p>
+<h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line">  <span class="comment">// 在类内部实例化一个实例</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();</div><div class="line">  <span class="comment">// 构造函数私有化，以保证外界无法直接实例化</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">  <span class="comment">// 通过该方法获得实例对象</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> instance;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上面代码中可以看出，只要类被加载，即进行对象实例化。</p>
+<p>测试用例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonClient</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        SimpleSingleton simpleSingleton1 = SimpleSingleton.getInstance();</div><div class="line">        SimpleSingleton simpleSingleton2 = SimpleSingleton.getInstance();</div><div class="line">        System.out.println(simpleSingleton1==simpleSingleton2);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">true</span></div></pre></td></tr></table></figure>
+<p>可知，两次调用生成的是同一个实例。</p>
+<p>饿汉式存在一个问题，即类加载时对象就会实例化，但也许这个实例本来就不会被用到，这就造成了无谓的消耗。为了解决这个问题，有两个方法。</p>
+<h4 id="使用静态内部类"><a href="#使用静态内部类" class="headerlink" title="使用静态内部类"></a>使用静态内部类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticInnerClassSingleton</span> </span>&#123;</div><div class="line">  <span class="comment">// 在静态内部类中初始化实例对象</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> StaticInnerClassSingleton INSTANCE = <span class="keyword">new</span> StaticInnerClassSingleton();</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 构造函数私有化，以保证外界无法直接实例化</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">  <span class="comment">// 通过该方法获得实例对象</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> StaticInnerClassSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> SingletonHolder.INSTANCE;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方式同样利用了<code>classloder</code> 的机制来保证初始化<code>instance</code>时只有一个线程，它跟饿汉式不同的是（很细微的差别）：饿汉式是只要<code>Singleton</code>类被装载了，那么<code>instance</code>就会被实例化（没有达到 <code>lazy loading</code> 效果），而这种方式是<code>Singleton</code>类被装载了，<code>instance</code>不一定被初始化。因为<code>SingletonHolder</code>类没有被主动使用，只有显示通过调用<code>getInstance</code>方法时，才会显示装载<code>SingletonHolder</code>类，从而实例化instance。</p>
+<h4 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line">  <span class="comment">//定义实例</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</div><div class="line">  <span class="comment">//私有构造方法</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">  <span class="comment">//对外提供获取实例的静态方法</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//在对象被使用的时候才实例化</span></div><div class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</div><div class="line">      instance = <span class="keyword">new</span> Singleton();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> instance;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>懒汉式，顾名思义，懒！只有当该类第一次被引用时，才会进行对象实例化。</p>
+<p>很明显，懒汉式没有了饿汉式上述的缺点，但引入了一个新的问题：线程安全问题。</p>
+<p>在多线程情况下，如果多个线程同时进入<code>if</code>语句，就会创建两个不一样的对象，这样就违背了单例模式。</p>
+<p>那么如何解决这个问题呢？很简单，加锁！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SynchronizedSingleton</span> </span>&#123;</div><div class="line">  <span class="comment">//定义实例</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> SynchronizedSingleton instance;</div><div class="line">  <span class="comment">//私有构造方法</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SynchronizedSingleton</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">  <span class="comment">//对外提供获取实例的静态方法</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> SynchronizedSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//在对象被使用的时候才实例化</span></div><div class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</div><div class="line">      instance = <span class="keyword">new</span> SynchronizedSingleton();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> instance;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方法解决了线程同步的问题，但是效率很低，因为它对整个方法加锁了。对于非第一次创建对象的情况，不需要进入<code>if</code>语句，可以直接返回<code>instance</code>，也就根本不需要同步。</p>
+<p>解决方法呢？缩小锁的范围。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line">  <span class="comment">//定义实例</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> SynchronizedSingleton instance;</div><div class="line">  <span class="comment">//私有构造方法</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SynchronizedSingleton</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">  <span class="comment">//对外提供获取实例的静态方法</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SynchronizedSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//在对象被使用的时候才实例化</span></div><div class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</div><div class="line">      <span class="keyword">synchronized</span>()</div><div class="line">      instance = <span class="keyword">new</span> SynchronizedSingleton();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> instance;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>内存中仅有一个实例，减小了内存开支。</li>
+<li>只生成一个实例，减少了系统的性能开销。</li>
+<li>可以避免对系统资源的多重占用。</li>
+<li>可以在系统设置全局访问点，优化和共享资源访问。</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>单例模式无法创建子类，且扩展困难。</li>
+<li>单例模式对测试不利。</li>
+<li>单例模式与单一职责原则有冲突。</li>
+</ul>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>如果要求一个类有且仅有一个实例，但出现多个实例时会在成不良反应，则此时可以采用单例模式。</p>
+<p>典型应用场景有：</p>
+<ul>
+<li>要求生成唯一序列号的环境</li>
+<li>整个项目中需要一个共享访问点或共享数据</li>
+<li>创建一个对象需要消耗的资源过多</li>
+<li>需要定义大量的静态常量和静态方法的环境</li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>需要注意序列化和克隆对实例唯一性的影响。如果一个单例的类实现了<code>Serializable</code>或<code>Clonable</code>接口，则有可能被反序列化或克隆出一个新的实例，从而破坏唯一实例要求。因此单例类通常不要实现 <code>Serializable</code>或<code>Clonable</code>接口。</p>
+<p>参见博文<a href="http://www.hollischuang.com/archives/1144" target="_blank" rel="external">单例与序列化那点事</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/14/设计模式初涉一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/14/设计模式初涉一/" itemprop="url">设计模式初涉一</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T16:03:59+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
 <p>最近在刷题的时候总是遇到设计模式相关的题，以前看过一点但不系统，所以准备细致来学一遍。</p>
 </blockquote>
-<h2 id="何为设计模式？"><a href="#何为设计模式？" class="headerlink" title="何为设计模式？"></a>何为设计模式？</h2><blockquote></div><p class="readmore"><a href="/2017/03/14/设计模式初涉一/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2017/03/11/Git-学习/">Git 学习</a></h2><div class="post-meta">2017-03-11</div><div class="post-content"><blockquote>
+<h2 id="何为设计模式？"><a href="#何为设计模式？" class="headerlink" title="何为设计模式？"></a>何为设计模式？</h2><blockquote>
+<p>设计模式（Design Pattern）是一套被反复使用、多数人知晓、经过分类编目的优秀代码设计经验的总结。</p>
+</blockquote>
+<p>设计模式所贯彻的原理是：面向接口编程，而非面向实现。其目标原则是：降低代码耦合，增强灵活性。</p>
+<p>常见的设计模式可概括为23种，按特点可划分为三大类：创建型，结构型以及行为型。</p>
+<p><img src="/2017/03/14/设计模式初涉一/分类.png" alt="设计模式分类"></p>
+<p>如你所见，设计模式种类实在很多，一一详解，任重道远。我们本篇主要从简单的理论方面聊聊创建型的几种模式。想要真正理解和使用设计模式，还需要在项目的实践中慢慢体会。</p>
+<p>每种设计模式，根据一种其适用场景，进行阐述。其中涉及我的理解也许有些谬误的地方，欢迎指正，不胜感激。</p>
+<h2 id="六大原则"><a href="#六大原则" class="headerlink" title="六大原则"></a>六大原则</h2><p><img src="/2017/03/14/设计模式初涉一/六大原则.png" alt="六大原则"></p>
+<h3 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h3><blockquote>
+<p>There should never be more than one reason for a class to change.</p>
+<p>一个类应当只有一个引起它变化的原因。即一个类只有一个职责。</p>
+</blockquote>
+<p>专注，保证对象的高内聚；单一，保证对象的细粒度。</p>
+<p>举个简单的例子来说，一个音乐播放器app中，我们在 MusicPlayer 类中定义一组音乐播放的方法，open、play、close等，如果这时我们再在其中定义音乐上传下载的方法，很明显就违反了单一职责原则。</p>
+<p>Java EE 的分层框架就很好地体现了单一职责原则。</p>
+<h3 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h3><blockquote>
+<p>If for each object o1 of type S there is an object o2 of type T such that all programs P defined in terms of S, the behavior of P is unchanged when o1 is substituted for o2 then T is a subtype of S.</p>
+<p>如果对一个类型为 S 地对象 o1，都有类型为 T 的对象 o2，使得以 S 定义的所有程序 P 中所有的对象 o1 都替换成 02 时，程序 P 的行为没有发生变化，那么类型 T 是是类型 S 的子类型。</p>
+</blockquote>
+<p>里氏替换原则要求凡是适用基类的地方，子类一定适用，因此子类必须具备基类的全部接口，而且可能更宽。Java 编译器在编译时，会检查程序是否符合里氏替换原则。</p>
+<p>该原则为实现良好的继承定义了规范：</p>
+<ul>
+<li>子类必须完全实现父类的方法。</li>
+<li>子类可以拥有自己的个性。</li>
+<li>子类覆盖或实现父类的方法时输入参数可以被放大。</li>
+<li>子类覆盖或实现父类的方法时输出结果可以被缩小。</li>
+</ul>
+<p>利用里氏替换原则可以很好的理解多态中<strong>父类引用指向子类对象</strong>的概念。</p>
+<h3 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h3><blockquote>
+<p>High level modules should not be depend upon low level modules.Both should depend upon abstractions. Abstractions should not depend upon details. Details should depend upon abstractions.</p>
+<p>高层模块不应该依赖底层模块，两者都应依赖其抽象。</p>
+<p>抽象不应依赖细节。</p>
+<p>细节应该依赖于抽象。（细节就是具体实现类）</p>
+</blockquote>
+<p>即实现类之间不发生直接的依赖关系，其依赖关系通过接口或抽象类产生。</p>
+<p>依赖倒置原则更精确来说就是“面向接口编程”——OOD的精髓之一。可以减少类间的耦合性，提高系统稳定性，降低并发开发引起的风险。</p>
+<h3 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h3><blockquote>
+<p>The dependency of one class to another one should depend on the smallest possible interface.</p>
+<p>类间的依赖关系应当建立在最小的接口之上。</p>
+</blockquote>
+<p>例如，一个电商网站，未登录状态下只有查询订单的功能，登录状态下，拥有查询、添加和删除订单的功能，后台管理员拥有添加、查询、修改、删除订单的功能，这时候应当适用三个不同的接口进行隔离。使得每个应用都建立在最小接口之上。</p>
+<p>接口隔离需要进行精心的设计，提高设计的灵活性，并降低项目的风险。</p>
+<h3 id="迪米特原则"><a href="#迪米特原则" class="headerlink" title="迪米特原则"></a>迪米特原则</h3><blockquote>
+<p>又叫最小知识原则。</p>
+</blockquote>
+<ul>
+<li>只与你直接的朋友通信。</li>
+<li>不要和陌生人说话。</li>
+<li>每个软件单元对其他单位都应只有最少的了解。</li>
+</ul>
+<p>如果两个类不必发生彼此直接通信，那么这两个类就不应当发生直接的相互作用。</p>
+<p>如果你想和陌生人说话，你可让你的朋友代为转达。</p>
+<h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><blockquote>
+<p>Software entities should not be open for extension, but closed for modification.</p>
+<p>软件应当对拓展开放，对修改关闭。</p>
+</blockquote>
+<p>在设计一个模块的时候，应当使这个模块可以在不被修改的前提下进行扩展。</p>
+<p>在面向对象的编程中，开闭原则谁最基础的原则，其他原则都是开闭原则的具体形态。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/11/Git-学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/11/Git-学习/" itemprop="url">Git 学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-11T20:14:55+08:00">
+                2017-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
 <p>这几天折腾 hexo 的时候，解决了一件拖了很久的事情，就是把 git 基础系统地学了一遍。</p>
 </blockquote>
-<p>所依据的教程是廖雪峰老师的博客：<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/" target="_blank" rel="external">Git 教程</a>，写的确实浅显易懂。git 本身的使用很简单，但还是需要多使用，方能熟练。</p></div><p class="readmore"><a href="/2017/03/11/Git-学习/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2017/03/11/Linux下-hexo及github-pages-安装配置/">Linux下 hexo及github-pages 安装配置</a></h2><div class="post-meta">2017-03-11</div><div class="post-content"><blockquote>
+<p>所依据的教程是廖雪峰老师的博客：<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/" target="_blank" rel="external">Git 教程</a>，写的确实浅显易懂。git 本身的使用很简单，但还是需要多使用，方能熟练。</p>
+<p>为了防止遗忘以及方便查询，我根据廖雪峰老师的博客，做了一张思维导图，以备留用。</p>
+<blockquote>
+<p>也许会有一些不严谨的地方，后面用的过程中也会适当修改。</p>
+</blockquote>
+<p><img src="/2017/03/11/Git-学习/Git.png" alt="git 教程"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/11/Linux下-hexo及github-pages-安装配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/11/Linux下-hexo及github-pages-安装配置/" itemprop="url">Linux下 hexo及github-pages 安装配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-11T17:39:33+08:00">
+                2017-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
 <p>最近在学习linux，想把 hexo 环境搬到linux上，安装过程中遇到了不少坑，记录一下。结合了很多人的博客教程，不一一说明了，非常感谢。</p>
-<p>说明一下，我使用的是 Bash on Ubuntu on Windows，所以有些坑应该只有我会遇到==。一般人在Ubuntu的环境下应该会容易很多。</p></div><p class="readmore"><a href="/2017/03/11/Linux下-hexo及github-pages-安装配置/">阅读更多</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://blog.yunz.space"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Java-Web/" style="font-size: 15px;">Java Web</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/JavaWeb/" style="font-size: 15px;">JavaWeb</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/Java-NIO/" style="font-size: 15px;">Java NIO</a> <a href="/tags/java基础/" style="font-size: 15px;">java基础</a> <a href="/tags/Hibernate/" style="font-size: 15px;">Hibernate</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/Java-web/" style="font-size: 15px;">Java web</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/06/字节码相关/">字节码相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/07/详解动态规划/">详解动态规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/01/网上订餐系统的设计与实现/">网上订餐系统的设计与实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/25/Hibernate学习笔记/">Hibernate学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/20/MavenSSH/">MavenSSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/14/Hibernate-Unknown-entity-错误/">Hibernate Unknown entity 异常</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/设计模式-建造者模式-原型模式/">设计模式-建造者模式&原型模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/Java-NIO/">Java NIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/30/Java流水账/">Java流水账</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/JavaWeb基础-JSP/">JavaWeb基础-JSP</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">学习之路.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<p>说明一下，我使用的是 Bash on Ubuntu on Windows，所以有些坑应该只有我会遇到==。一般人在Ubuntu的环境下应该会容易很多。</p>
+</blockquote>
+<p>windows 下请参考这篇教程：很详细 <a href="http://blog.csdn.net/jzooo/article/details/46781805" target="_blank" rel="external"><a href="http://blog.csdn.net/jzooo/article/details/46781805" target="_blank" rel="external">零基础免费搭建个人博客-hexo+github </a></a></p>
+<h2 id="准备条件："><a href="#准备条件：" class="headerlink" title="准备条件："></a>准备条件：</h2><h3 id="1-安装-Node-js-和-npm"><a href="#1-安装-Node-js-和-npm" class="headerlink" title="1. 安装 Node.js 和 npm"></a>1. 安装 Node.js 和 npm</h3><p><img src="/2017/03/11/Linux下-hexo及github-pages-安装配置/node.png" alt="node"></p>
+<p>linux 下安装 Node.js 有以下三种方法：</p>
+<ul>
+<li><p>下载已编译好的源码，即<code>Linux Binaries</code>，根据自己电脑类型下载后缀为<code>.tar.xz</code>的压缩文件，自行解压</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yunz@MAHE-PC ~/apps&gt; cd node-v6.<span class="number">10.0</span>-linux-x64/bin/</div><div class="line">./node -v</div></pre></td></tr></table></figure>
+<p>因为是已编译好的文件，所以此时bin文件夹中已经有了node和npm，但是是非全局的，我们需要将其设置为全局的。</p>
+<p>设置全局有两种方法：</p>
+<ul>
+<li><p>软连接</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yunz@MAHE-PC ~/apps&gt; sudo ln -s /home/yunz/apps/node-v6.<span class="number">10.0</span>-linux-x64/bin/node /usr/local/bin/node</div><div class="line">yunz@MAHE-PC ~/apps&gt; sudo ln -s /home/yunz/apps/node-v6.<span class="number">10.0</span>-linux-x64/bin/npm /usr/local/bin/npm</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置环境变量</p>
+<p>在 node 目录下执行 pwd 获取 node 所在的目录，要把这个目录添加到 PATH 环境变量，修改<code>/etc/profile</code>文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PATH=<span class="variable">$PATH:</span>/home/yunz/apps/node-v6.<span class="number">10.0</span>-linux-x64/bin/</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>设置完成以后即可再全局使用 node 和 npm 命令。</p>
+<p>​</p>
+</li>
+<li><p>自行下载源码进行编译（麻烦）</p>
+<p>这里可以参考<a href="https://my.oschina.net/blogshi/blog/260953" target="_blank" rel="external">Linux 下 Nodejs 安装</a></p>
+</li>
+</ul>
+<ul>
+<li><p>apt-get install node.js （不推荐）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install nodejs</div><div class="line">sudo apt-get install npm</div></pre></td></tr></table></figure>
+<p>这个方法很坑，安装的 node.js 不是最新版，不建议使用。</p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="2-安装-git"><a href="#2-安装-git" class="headerlink" title="2. 安装 git"></a>2. 安装 git</h2><p>Ubuntu bash 自带 git，这一步可以跳过。windows上参考文章开始处推荐的教程。</p>
+<p>git 的基本使用教程，推荐<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/" target="_blank" rel="external">廖雪峰的Git 教程</a>。</p>
+<h2 id="3-安装-hexo"><a href="#3-安装-hexo" class="headerlink" title="3. 安装 hexo"></a>3. 安装 hexo</h2><p>安装 hexo 经常会出现网络问题，因为 qiang 的原因，所以推荐使用淘宝的npm镜像，或者自备梯子。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</div></pre></td></tr></table></figure>
+<p>使用官方镜像安装 hexo</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo-cli</div></pre></td></tr></table></figure>
+<p>使用淘宝镜像安装 hexo</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cnpm install -g hexo-cli</div></pre></td></tr></table></figure>
+<p>然后等待安装完成即可。</p>
+<p>这里我遇到了两个问题，其实是一个问题，即 npm 安装 cnpm 和 hexo 以后，均无法使用该命令。这里需要像前面第一步一样，设置一下二者的全局。估计是 Bash on Ubuntu on Windows 的问题。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yunz@MAHE-PC ~/apps&gt; sudo ln -s /home/yunz/apps/node-v6.<span class="number">10.0</span>-linux-x64/bin/cnpm /usr/local/bin/cnpm</div><div class="line">yunz@MAHE-PC ~/apps&gt; sudo ln -s /home/yunz/apps/node-v6.<span class="number">10.0</span>-linux-x64/bin/hexo /usr/local/bin/hexo</div></pre></td></tr></table></figure>
+<h2 id="4-运行-hexo"><a href="#4-运行-hexo" class="headerlink" title="4.  运行 hexo"></a>4.  运行 hexo</h2><ul>
+<li><p>创建一个 hexo 项目blog    </p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp hexo</div><div class="line">hexo init blog</div></pre></td></tr></table></figure>
+</li>
+<li><p>编辑<code>_config.yml</code>配置博客基本信息</p>
+<p>这里需要注意 deploy 的配置</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy: </div><div class="line">  type: git</div><div class="line">  repository: https://github.com/username/username.github.io.git</div><div class="line">  // repository: git@github.com:username/username.github.io.git 推荐这种</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装 hexo git 插件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cnpm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
+</li>
+<li><p>写一篇新的文章</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new <span class="string">"Hello hexo"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>发布文章</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo d -g</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="5-绑定域名"><a href="#5-绑定域名" class="headerlink" title="5. 绑定域名"></a>5. 绑定域名</h2><p>注册域名这一步就不说了。</p>
+<p>在 github pages 的 repository 中根文件夹下新建 CNAME 文件，文件中写上你自己的域名。</p>
+<blockquote>
+<p>但这种方式每次 hexo 部署的时候，CNAME文件都会被冲掉，每次都要重写，肯定不可行。</p>
+<p>解决方法：在 hexo 文件夹的 source 文件夹中建立 CNAME 文件。</p>
+</blockquote>
+<p>配置域名解析，以万网为例。推荐<a href="http://www.cnblogs.com/penglei-it/p/hexo_domain_name.html" target="_blank" rel="external">这篇博客</a></p>
+<p>值得注意的是，如果你想把博客绑定到子域名上，例如 <code>blog.yunz.space</code>。CNAME 文件中的值应为 <code>blog.yunz.space</code>，然后再域名解析处添加 如下记录：</p>
+<p><img src="/2017/03/11/Linux下-hexo及github-pages-安装配置/cname.png" alt=""></p>
+<p>好了，大功告成！</p>
+<p><img src="/2017/03/11/Linux下-hexo及github-pages-安装配置/blog.png" alt="blog"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Yunz" />
+          <p class="site-author-name" itemprop="name">Yunz</p>
+           
+              <p class="site-description motion-element" itemprop="description">编程、技术、生活</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yunz</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
