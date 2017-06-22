@@ -256,123 +256,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/28/JavaWeb基础-JSP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yunz">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yunz's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/28/JavaWeb基础-JSP/" itemprop="url">JavaWeb基础-JSP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T20:21:41+08:00">
-                2017-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>花了点时间，整理了一下 JSP 的基础内容，也算复习了一下。</p></blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/28/JavaWeb基础-JSP/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/27/Java集合-基础知识梳理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1078,7 +961,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SynchronizedSingleton</span> </span>&#123;</div><div class="line">  <span class="comment">//定义实例</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> SynchronizedSingleton instance;</div><div class="line">  <span class="comment">//私有构造方法</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SynchronizedSingleton</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">  <span class="comment">//对外提供获取实例的静态方法</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> SynchronizedSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//在对象被使用的时候才实例化</span></div><div class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</div><div class="line">      instance = <span class="keyword">new</span> SynchronizedSingleton();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> instance;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这种方法解决了线程同步的问题，但是效率很低，因为它对整个方法加锁了。对于非第一次创建对象的情况，不需要进入<code>if</code>语句，可以直接返回<code>instance</code>，也就根本不需要同步。</p>
 <p>解决方法呢？缩小锁的范围。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line">  <span class="comment">//定义实例</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> SynchronizedSingleton instance;</div><div class="line">  <span class="comment">//私有构造方法</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SynchronizedSingleton</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">  <span class="comment">//对外提供获取实例的静态方法</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SynchronizedSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//在对象被使用的时候才实例化</span></div><div class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</div><div class="line">      <span class="keyword">synchronized</span>()</div><div class="line">      instance = <span class="keyword">new</span> SynchronizedSingleton();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> instance;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line">  <span class="comment">//定义实例</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> SynchronizedSingleton instance;</div><div class="line">  <span class="comment">//私有构造方法</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SynchronizedSingleton</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">  <span class="comment">//对外提供获取实例的静态方法</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SynchronizedSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//在对象被使用的时候才实例化</span></div><div class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</div><div class="line">      <span class="keyword">synchronized</span>(Singleton.class)&#123;</div><div class="line">        <span class="keyword">if</span>(instance == <span class="keyword">null</span>)</div><div class="line">          instance = <span class="keyword">new</span> SynchronizedSingleton();</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> instance;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
 <li>内存中仅有一个实例，减小了内存开支。</li>
 <li>只生成一个实例，减少了系统的性能开销。</li>
@@ -1549,7 +1432,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
