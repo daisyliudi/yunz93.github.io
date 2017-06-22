@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/通信过程.png">
 <meta property="og:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/JMM设计示意图.png">
 <meta property="og:image" content="http://blog.yunz.space/2017/03/26/Java内存模型/JMM顺序一致性.png">
-<meta property="og:updated_time" content="2017-06-15T15:35:34.041Z">
+<meta property="og:updated_time" content="2017-06-22T14:30:16.021Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 内存模型">
 <meta name="twitter:description" content="一直想写这篇文章，想通过这篇文章深刻地认识一下 Java 的内存模型。可是每次写到一半就放弃了。基础功力太弱，感觉虚得很。今天这篇文章，放弃了自己完整阐述的想法，通过资料整合的方式来进行。
@@ -342,11 +342,11 @@
 <p>Java 内存模型（JMM，Java Memory Model），JMM 定义了 Java 虚拟机在计算机内存（RAM）中的工作方式。JVM 是整个计算机虚拟模型，所以 JMM 是隶属于 JVM 的。</p>
 <p>理解 JMM，是学习并发编程的基础。JMM 定义了多线程之间共享变量的可见性以及如何在需要的时候对共享变量进行同步。</p>
 <h2 id="关于并发编程"><a href="#关于并发编程" class="headerlink" title="关于并发编程"></a>关于并发编程</h2><p>并发编程有两个关键问题：如何进行线程间的通信和同步？</p>
-<h4 id="线程间通信机制"><a href="#线程间通信机制" class="headerlink" title="线程间通信机制"></a>线程间通信机制</h4><ul>
+<h3 id="线程间通信机制"><a href="#线程间通信机制" class="headerlink" title="线程间通信机制"></a>线程间通信机制</h3><ul>
 <li>共享内存：线程之间共享程序的公共状态，线程之间通过写 - 读内存中的公共状态来隐式进行通信。</li>
 <li>消息传递：线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信。</li>
 </ul>
-<h4 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h4><p>同步是指程序用于控制不同线程之间操作发生相对顺序的机制。</p>
+<h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>同步是指程序用于控制不同线程之间操作发生相对顺序的机制。</p>
 <p>在共享内存并发模型里，同步是显式进行的。程序员必须显式指定某个方法或某段代码需要在线程之间互斥执行。</p>
 <p>在消息传递的并发模型里，由于消息的发送必须在消息的接收之前，因此同步是隐式进行的。</p>
 <p>讲 Java 内存模型之前，我们首先需要理解几个相关的概念。</p>
@@ -542,14 +542,14 @@
 </ul>
 <p>下面是 JMM 的设计示意图：</p>
 <p><img src="/2017/03/26/Java内存模型/JMM设计示意图.png" alt=""></p>
-<h3 id="JMM-内存可见性保证"><a href="#JMM-内存可见性保证" class="headerlink" title="JMM 内存可见性保证"></a>JMM 内存可见性保证</h3><ul>
+<h2 id="JMM-内存可见性保证"><a href="#JMM-内存可见性保证" class="headerlink" title="JMM 内存可见性保证"></a>JMM 内存可见性保证</h2><ul>
 <li>单线程程序。单线程程序不会出现内存可见性问题。编译器，runtime 和处理器会共同确保单线程程序的执行结果与该程序在顺序一致性模型中的执行结果相同。</li>
 <li>正确同步的多线程程序。正确同步的多线程程序的执行将具有顺序一致性（程序的执行结果与该程序在顺序一致性内存模型中的执行结果相同）。这是 JMM 关注的重点，JMM 通过限制编译器和处理器的重排序来为程序员提供内存可见性保证。</li>
 <li>未同步 / 未正确同步的多线程程序。JMM 为它们提供了最小安全性保障：线程执行时读取到的值，要么是之前某个线程写入的值，要么是默认值（0，null，false）。</li>
 </ul>
 <p><img src="/2017/03/26/Java内存模型/JMM顺序一致性.png" alt=""></p>
 <p>只要多线程程序是正确同步的，JMM 保证该程序在任意的处理器平台上的执行结果，与该程序在顺序一致性内存模型中的执行结果一致。</p>
-<h1 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h1><h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><p><a href="http://www.infoq.com/cn/articles/java-memory-model-4" target="_blank" rel="external">深入理解 Java 内存模型（四）——volatile</a></p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><p><a href="http://www.infoq.com/cn/articles/java-memory-model-4" target="_blank" rel="external">深入理解 Java 内存模型（四）——volatile</a></p>
 <h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p><a href="http://www.infoq.com/cn/articles/java-memory-model-5" target="_blank" rel="external">深入理解 Java 内存模型（五）——锁</a></p>
 <h2 id="final"><a href="#final" class="headerlink" title="final"></a>final</h2><p><a href="http://www.infoq.com/cn/articles/java-memory-model-5" target="_blank" rel="external">深入理解 Java 内存模型（五）——锁</a></p>
 <p>参考资料：</p>
@@ -734,7 +734,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于并发编程"><span class="nav-number">1.</span> <span class="nav-text">关于并发编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程间通信机制"><span class="nav-number">1.0.1.</span> <span class="nav-text">线程间通信机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步"><span class="nav-number">1.0.2.</span> <span class="nav-text">同步</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#现代计算机内存架构"><span class="nav-number">2.</span> <span class="nav-text">现代计算机内存架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令重排序"><span class="nav-number">3.</span> <span class="nav-text">指令重排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存屏障"><span class="nav-number">4.</span> <span class="nav-text">内存屏障</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#as-if-serial-语义"><span class="nav-number">5.</span> <span class="nav-text">as-if-serial 语义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据依赖性"><span class="nav-number">5.1.</span> <span class="nav-text">数据依赖性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#as-if-serial-语义-1"><span class="nav-number">5.2.</span> <span class="nav-text">as-if-serial 语义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序一致性"><span class="nav-number">6.</span> <span class="nav-text">顺序一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据竞争"><span class="nav-number">6.1.</span> <span class="nav-text">数据竞争</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序一致性内存模型"><span class="nav-number">6.2.</span> <span class="nav-text">顺序一致性内存模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java内存抽象模型"><span class="nav-number">7.</span> <span class="nav-text">Java内存抽象模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#happens-before-规则"><span class="nav-number">8.</span> <span class="nav-text">happens-before 规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JMM-内存可见性保证"><span class="nav-number">8.1.</span> <span class="nav-text">JMM 内存可见性保证</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现方式"><span class="nav-number"></span> <span class="nav-text">实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile"><span class="nav-number">1.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁"><span class="nav-number">2.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final"><span class="nav-number">3.</span> <span class="nav-text">final</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于并发编程"><span class="nav-number">1.</span> <span class="nav-text">关于并发编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线程间通信机制"><span class="nav-number">1.1.</span> <span class="nav-text">线程间通信机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">1.2.</span> <span class="nav-text">同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#现代计算机内存架构"><span class="nav-number">2.</span> <span class="nav-text">现代计算机内存架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令重排序"><span class="nav-number">3.</span> <span class="nav-text">指令重排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存屏障"><span class="nav-number">4.</span> <span class="nav-text">内存屏障</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#as-if-serial-语义"><span class="nav-number">5.</span> <span class="nav-text">as-if-serial 语义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据依赖性"><span class="nav-number">5.1.</span> <span class="nav-text">数据依赖性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#as-if-serial-语义-1"><span class="nav-number">5.2.</span> <span class="nav-text">as-if-serial 语义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序一致性"><span class="nav-number">6.</span> <span class="nav-text">顺序一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据竞争"><span class="nav-number">6.1.</span> <span class="nav-text">数据竞争</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序一致性内存模型"><span class="nav-number">6.2.</span> <span class="nav-text">顺序一致性内存模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java内存抽象模型"><span class="nav-number">7.</span> <span class="nav-text">Java内存抽象模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#happens-before-规则"><span class="nav-number">8.</span> <span class="nav-text">happens-before 规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JMM-内存可见性保证"><span class="nav-number">9.</span> <span class="nav-text">JMM 内存可见性保证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现方式"><span class="nav-number">10.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile"><span class="nav-number">11.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁"><span class="nav-number">12.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final"><span class="nav-number">13.</span> <span class="nav-text">final</span></a></li></ol></div>
             
 
           </div>
