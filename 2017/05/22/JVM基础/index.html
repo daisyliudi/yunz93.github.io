@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="算法," />
+  <meta name="keywords" content="JVM," />
 
 
 
@@ -93,25 +93,20 @@
 
 
 
-<meta name="description" content="最近在看《剑指offer》，书中讲解和源码都是用 C++ 和 C# 实现的，所以打算自己用 Java 实现一遍。
-基本上每天都会刷几题。
-【github 地址】 有兴趣的 Javaer 可以 fork 一下，大家共同学习，有好的实现方法还请多多指教。^=^
-刷着刷着，发现牛课上有剑指Offer的专题，而且在 OJ 上刷题的效果比较好，自己本地写的测试用例可能不全面，所以。。。这边就放弃了，专心牛课">
+<meta name="description" content="本文主要写一写 JVM 基础知识，对《深入理解 JVM》一书的梳理。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="剑指offer通关大作战">
-<meta property="og:url" content="http://blog.yunz.space/2017/03/17/剑指offer通关大作战/index.html">
+<meta property="og:title" content="JVM基础">
+<meta property="og:url" content="http://blog.yunz.space/2017/05/22/JVM基础/index.html">
 <meta property="og:site_name" content="Yunz's Blog">
-<meta property="og:description" content="最近在看《剑指offer》，书中讲解和源码都是用 C++ 和 C# 实现的，所以打算自己用 Java 实现一遍。
-基本上每天都会刷几题。
-【github 地址】 有兴趣的 Javaer 可以 fork 一下，大家共同学习，有好的实现方法还请多多指教。^=^
-刷着刷着，发现牛课上有剑指Offer的专题，而且在 OJ 上刷题的效果比较好，自己本地写的测试用例可能不全面，所以。。。这边就放弃了，专心牛课">
-<meta property="og:updated_time" content="2017-04-05T14:06:57.937Z">
+<meta property="og:description" content="本文主要写一写 JVM 基础知识，对《深入理解 JVM》一书的梳理。">
+<meta property="og:image" content="http://blog.yunz.space/2017/05/22/JVM基础/jvm.png">
+<meta property="og:image" content="http://blog.yunz.space/2017/05/22/JVM基础/运行时数据区.png">
+<meta property="og:image" content="http://blog.yunz.space/2017/05/22/JVM基础/共享数据区.jpg">
+<meta property="og:updated_time" content="2017-06-22T14:22:27.144Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="剑指offer通关大作战">
-<meta name="twitter:description" content="最近在看《剑指offer》，书中讲解和源码都是用 C++ 和 C# 实现的，所以打算自己用 Java 实现一遍。
-基本上每天都会刷几题。
-【github 地址】 有兴趣的 Javaer 可以 fork 一下，大家共同学习，有好的实现方法还请多多指教。^=^
-刷着刷着，发现牛课上有剑指Offer的专题，而且在 OJ 上刷题的效果比较好，自己本地写的测试用例可能不全面，所以。。。这边就放弃了，专心牛课">
+<meta name="twitter:title" content="JVM基础">
+<meta name="twitter:description" content="本文主要写一写 JVM 基础知识，对《深入理解 JVM》一书的梳理。">
+<meta name="twitter:image" content="http://blog.yunz.space/2017/05/22/JVM基础/jvm.png">
 
 
 
@@ -139,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.yunz.space/2017/03/17/剑指offer通关大作战/"/>
+  <link rel="canonical" href="http://blog.yunz.space/2017/05/22/JVM基础/"/>
 
 
 
 
 
-  <title>剑指offer通关大作战 | Yunz's Blog</title>
+  <title>JVM基础 | Yunz's Blog</title>
   
 
 
@@ -264,7 +259,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/17/剑指offer通关大作战/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/05/22/JVM基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yunz">
@@ -281,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">剑指offer通关大作战</h1>
+          <h1 class="post-title" itemprop="name headline">JVM基础</h1>
         
 
         <div class="post-meta">
@@ -293,8 +288,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-17T20:26:10+08:00">
-                2017-03-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-22T22:19:34+08:00">
+                2017-05-22
               </time>
             
 
@@ -328,11 +323,42 @@
       
 
       
-        <p>最近在看《剑指offer》，书中讲解和源码都是用 C++ 和 C# 实现的，所以打算自己用 Java 实现一遍。</p>
-<p>基本上每天都会刷几题。</p>
-<p><a href="https://github.com/yunz93/TestForOffer" target="_blank" rel="external">【github 地址】</a> 有兴趣的 Javaer 可以 fork 一下，大家共同学习，有好的实现方法还请多多指教。^=^</p>
-<p>刷着刷着，发现牛课上有剑指Offer的专题，而且在 OJ 上刷题的效果比较好，自己本地写的测试用例可能不全面，所以。。。这边就放弃了，专心牛课刷题吧。</p>
-
+        <p>本文主要写一写 JVM 基础知识，对《深入理解 JVM》一书的梳理。</p>
+<p><img src="/2017/05/22/JVM基础/jvm.png" alt=""></p>
+<a id="more"></a>
+<h2 id="JVM-内存区域"><a href="#JVM-内存区域" class="headerlink" title="JVM 内存区域"></a>JVM 内存区域</h2><p>根据《Java 虚拟机规范》的规定，JVM 所管理的内存区域包括以下几个运行时数据区域：</p>
+<p><img src="/2017/05/22/JVM基础/运行时数据区.png" alt=""></p>
+<h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>一块比较小的内存空间，可以看做是当前线程所执行的字节码的行号指示器。JVM 概念模型中，字节码解释器工作时通过改变计数器的值来获取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖计数器来完成。</p>
+<ul>
+<li>线程私有。每个线程都拥有独立的程序计数器。</li>
+<li>不会 OOM，不需要 GC。</li>
+</ul>
+<h3 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h3><ul>
+<li>线程私有，生命周期与线程相同。</li>
+<li>每个方法执行时都会创建一个栈帧（Stack Frame），用于存储局部变量表、操作数栈、动态链接、方法出口信息。</li>
+<li>方法从调用到执行完成，对应栈帧在虚拟机栈中的入栈到出栈的过程。</li>
+<li>StackOverflowError or OutOfMemoryError</li>
+</ul>
+<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><ul>
+<li>本地方法栈与虚拟机栈作用十分相似，不同点在于，虚拟机栈为 JVM 执行 Java 方法（即字节码）服务，而本地方法栈为 JVM 使用到的 Native 方法服务。 </li>
+<li>StackOverflowError or OutOfMemoryError</li>
+</ul>
+<p><img src="/2017/05/22/JVM基础/共享数据区.jpg" alt=""></p>
+<h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><ul>
+<li>线程共享。</li>
+<li>存放对象实例。所有对象实例及数组都要在堆上分配。</li>
+<li>GC 堆。垃圾收集器管理的主要区域。</li>
+<li>可分为新生代和老年代，再细致一点就是Eden、From Survivor、To Survivor等。</li>
+<li>OOM</li>
+</ul>
+<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><ul>
+<li>线程共享。</li>
+<li>存储已被 JVM 加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</li>
+<li>OOM</li>
+</ul>
+<h2 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h2><p>这部分见我的另一篇博文 <a href="http://blog.yunz.space/2017/03/26/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/#more">Java内存模型</a>，个人觉得写的还行。</p>
+<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p>见文章开头思维导图部分</p>
+<h2 id="JVM-优化"><a href="#JVM-优化" class="headerlink" title="JVM 优化"></a>JVM 优化</h2>
       
     </div>
 
@@ -361,7 +387,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
           
         </div>
       
@@ -374,8 +400,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/16/设计模式初涉三-工厂模式/" rel="next" title="设计模式初涉三-工厂模式">
-                <i class="fa fa-chevron-left"></i> 设计模式初涉三-工厂模式
+              <a href="/2017/05/18/常用排序算法简析及实现/" rel="next" title="常用排序算法简析及实现">
+                <i class="fa fa-chevron-left"></i> 常用排序算法简析及实现
               </a>
             
           </div>
@@ -383,10 +409,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/22/Java-多态/" rel="prev" title="Java 多态">
-                Java 多态 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -433,8 +455,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -487,6 +518,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-内存区域"><span class="nav-number">1.</span> <span class="nav-text">JVM 内存区域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序计数器"><span class="nav-number">1.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟机栈"><span class="nav-number">1.2.</span> <span class="nav-text">虚拟机栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地方法栈"><span class="nav-number">1.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆"><span class="nav-number">1.4.</span> <span class="nav-text">堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区"><span class="nav-number">1.5.</span> <span class="nav-text">方法区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存模型"><span class="nav-number">2.</span> <span class="nav-text">内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">3.</span> <span class="nav-text">垃圾收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-优化"><span class="nav-number">4.</span> <span class="nav-text">JVM 优化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
