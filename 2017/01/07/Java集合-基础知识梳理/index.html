@@ -99,22 +99,22 @@
 本文主要对 Java 集合的基础知识进行梳理，后面陆续会谈一些细节性问题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java集合-基础知识梳理">
-<meta property="og:url" content="http://blog.yunz.space/2017/03/27/Java集合-基础知识梳理/index.html">
+<meta property="og:url" content="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/index.html">
 <meta property="og:site_name" content="Yunz's Blog">
 <meta property="og:description" content="前面那篇面试总结的第二部分强调了Java集合的细节问题，这部分当时只是简单看了下用法，没有思考细节问题，还是得好好分析一下。
 
 本系列文章主要参考李刚《Java程序员的基本素养》和谢宇《Java特种兵》，写得挺好，推荐一下。
 本文主要对 Java 集合的基础知识进行梳理，后面陆续会谈一些细节性问题。">
-<meta property="og:image" content="http://blog.yunz.space/2017/03/27/Java集合-基础知识梳理/Java集合框架.png">
-<meta property="og:image" content="http://blog.yunz.space/2017/03/27/Java集合-基础知识梳理/比较.jpg">
-<meta property="og:updated_time" content="2017-07-09T14:55:10.145Z">
+<meta property="og:image" content="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/Java集合框架.png">
+<meta property="og:image" content="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/比较.jpg">
+<meta property="og:updated_time" content="2017-07-09T15:10:14.419Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java集合-基础知识梳理">
 <meta name="twitter:description" content="前面那篇面试总结的第二部分强调了Java集合的细节问题，这部分当时只是简单看了下用法，没有思考细节问题，还是得好好分析一下。
 
 本系列文章主要参考李刚《Java程序员的基本素养》和谢宇《Java特种兵》，写得挺好，推荐一下。
 本文主要对 Java 集合的基础知识进行梳理，后面陆续会谈一些细节性问题。">
-<meta name="twitter:image" content="http://blog.yunz.space/2017/03/27/Java集合-基础知识梳理/Java集合框架.png">
+<meta name="twitter:image" content="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/Java集合框架.png">
 
 
 
@@ -142,7 +142,7 @@
 
 
 
-  <link rel="canonical" href="http://blog.yunz.space/2017/03/27/Java集合-基础知识梳理/"/>
+  <link rel="canonical" href="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/"/>
 
 
 
@@ -267,7 +267,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/03/27/Java集合-基础知识梳理/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yunz">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-27T20:08:47+08:00">
-                2017-03-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-07T20:08:47+08:00">
+                2017-01-07
               </time>
             
 
@@ -338,7 +338,7 @@
 <p>本文主要对 Java 集合的基础知识进行梳理，后面陆续会谈一些细节性问题。</p>
 <a id="more"></a>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先还是让先我们对 Java 集合的大体框架有初步的认识。如下图所示：</p>
-<p><img src="/2017/03/27/Java集合-基础知识梳理/Java集合框架.png" alt=""></p>
+<p><img src="/2017/01/07/Java集合-基础知识梳理/Java集合框架.png" alt=""></p>
 <ul>
 <li>Collection 接口是集合类的根接口，Java 中没有提供这个接口的直接的实现类。但是却让其被继承产生了两个接口，就是 Set 和 List。Set 中不能包含重复的元素。List 是一个有序的集合，可以包含重复的元素，提供了按索引访问的方式。Array 是 Java 提供的队列实现，有些类似于 List。</li>
 <li>Map 是 Java.util 包中的另一个接口，它和 Collection 接口没有关系，是相互独立的，但是都属于集合类的一部分。Map 包含了 key-value 对。Map 不能包含重复的 key，但是可以包含相同的 value。</li>
@@ -423,7 +423,7 @@
 <li>Set 的三个实现类都是线程不安全的。多线程操作 Set 集合时，需要手动保证同步性。</li>
 </ul>
 <p>好了，说完 Set 让我们开始聊 Map，为什么 Map 会和 Set 放在一起呢？让我们先看一张图</p>
-<p><img src="/2017/03/27/Java集合-基础知识梳理/比较.jpg" alt=""></p>
+<p><img src="/2017/01/07/Java集合-基础知识梳理/比较.jpg" alt=""></p>
 <p>比较 Set 和 Map 部分，发现没有？继承结构很相似。这种相似性肯定是有原因的，这点我们后面会说到。</p>
 <h2 id="Map-集合"><a href="#Map-集合" class="headerlink" title="Map 集合"></a>Map 集合</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><p>Map<k, v=""> 集合是一个接口，和 Collection 集合不同的是，它是双列集合，也就是说它所存储的是键值对。</k,></p>
 <h3 id="特点-5"><a href="#特点-5" class="headerlink" title="特点"></a>特点</h3><ul>
@@ -629,8 +629,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/26/Java内存模型/" rel="next" title="Java 内存模型">
-                <i class="fa fa-chevron-left"></i> Java 内存模型
+              <a href="/2016/12/28/设计模式-建造者模式-原型模式/" rel="next" title="设计模式-建造者模式&原型模式">
+                <i class="fa fa-chevron-left"></i> 设计模式-建造者模式&原型模式
               </a>
             
           </div>
@@ -639,8 +639,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/28/JavaWeb基础-JSP/" rel="prev" title="JavaWeb基础-JSP">
-                JavaWeb基础-JSP <i class="fa fa-chevron-right"></i>
+              <a href="/2017/01/11/Git-学习/" rel="prev" title="Git 学习">
+                Git 学习 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
