@@ -932,7 +932,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> num = <span class="number">80</span>;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">int</span> age = <span class="number">90</span>;</div><div class="line">    String name = <span class="string">"tomCat"</span>;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"猫吃饭"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"猫在睡觉"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">catchMouse</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"猫在抓老鼠"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>测试类 Demo_Test1</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo_Test1</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;	</div><div class="line">		Animal am = <span class="keyword">new</span> Cat();</div><div class="line">		am.eat();</div><div class="line">		am.sleep();</div><div class="line">		am.run();</div><div class="line">      	<span class="comment">//am.catchMouse();这里先注释掉，等会会说明</span></div><div class="line">      	<span class="comment">//System.out.println(am.name);//这里先注释，待会说明</span></div><div class="line">      	System.out.println(am.num);</div><div class="line">      	System.out.println(am.age);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上的三段代码充分体现了多态的三个前提，即：<br><strong>1、存在继承关系</strong><br>Cat 类继承了 Animal 类<br><strong>2、子类要重写父类的方法</strong><br>子类重写 (override) 了父类的两个成员方法 eat()，sleep()。其中 eat() 是非静态的，sleep() 是静态的（static）。<br><strong>3、父类数据类型的引用指向子类对象。</strong><br>测试类 Demo_Test1 中<strong>Animal am = new Cat();</strong> 语句在堆内存中开辟了子类 (Cat) 的对象，并把栈内存中的父类 (Animal) 的引用指向了这个 Cat 对象。<br>到此，满足了 Java 多态的的必要三个前提。<br>————————————————— 华丽的分割线 ———————————————————————-<br>如果再深究一点呢，我们可以看看上面测试类的输出结果，或许对多态会有更深层次的认识。猜一猜上面的结果是什么。<br> <img src="/2017/03/22/Java-多态/多态01.png" alt=""></p>
+<p>以上的三段代码充分体现了多态的三个前提，即：<br><strong>1、存在继承关系</strong><br>Cat 类继承了 Animal 类<br><strong>2、子类要重写父类的方法</strong><br>子类重写 (override) 了父类的两个成员方法 eat()，sleep()。其中 eat() 是非静态的，sleep() 是静态的（static）。<br><strong>3、父类数据类型的引用指向子类对象。</strong><br>测试类 Demo_Test1 中<strong>Animal am = new Cat();</strong> 语句在堆内存中开辟了子类 (Cat) 的对象，并把栈内存中的父类 (Animal) 的引用指向了这个 Cat 对象。<br>到此，满足了 Java 多态的的必要三个前提。</p>
+<p>如果再深究一点呢，我们可以看看上面测试类的输出结果，或许对多态会有更深层次的认识。猜一猜上面的结果是什么。<br> <img src="/2017/03/22/Java-多态/多态01.png" alt=""></p>
 <p>可以看出来：</p>
 <ul>
 <li>子类 Cat 重写了父类 Animal 的非静态成员方法 am.eat(); 的输出结果为：猫吃饭。</li>
@@ -1532,7 +1533,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1545,7 +1546,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
