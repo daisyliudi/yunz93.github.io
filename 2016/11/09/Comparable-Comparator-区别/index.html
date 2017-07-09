@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java基础," />
+  <meta name="keywords" content="Java 基础," />
 
 
 
@@ -99,22 +99,22 @@
 一个对象不支持自己和自己比较（没有实现 Comparable 接口），但是又想对两个对象进行比">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Comparable & Comparator 区别">
-<meta property="og:url" content="http://blog.yunz.space/2016/10/09/Comparable-Comparator-区别/index.html">
+<meta property="og:url" content="http://blog.yunz.space/2016/11/09/Comparable-Comparator-区别/index.html">
 <meta property="og:site_name" content="Yunz's Blog">
 <meta property="og:description" content="简单来说， Comparable 相当于内比较器，一个类继承了 Comparable 接口，就意味着该类支持排序，至于比较的方法，需要重写接口的 compareTo() 方法来实现。
 而 Comparator 可以认为是是一个外比较器，个人认为有两种情况可以使用实现 Comparator 接口的方式：
 
 一个对象不支持自己和自己比较（没有实现 Comparable 接口），但是又想对两个对象进行比">
-<meta property="og:image" content="http://blog.yunz.space/2016/10/09/Comparable-Comparator-区别/result1.png">
-<meta property="og:image" content="http://blog.yunz.space/2016/10/09/Comparable-Comparator-区别/result2.png">
-<meta property="og:updated_time" content="2017-07-09T14:48:15.189Z">
+<meta property="og:image" content="http://blog.yunz.space/2016/11/09/Comparable-Comparator-区别/result1.png">
+<meta property="og:image" content="http://blog.yunz.space/2016/11/09/Comparable-Comparator-区别/result2.png">
+<meta property="og:updated_time" content="2017-07-09T15:00:08.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Comparable & Comparator 区别">
 <meta name="twitter:description" content="简单来说， Comparable 相当于内比较器，一个类继承了 Comparable 接口，就意味着该类支持排序，至于比较的方法，需要重写接口的 compareTo() 方法来实现。
 而 Comparator 可以认为是是一个外比较器，个人认为有两种情况可以使用实现 Comparator 接口的方式：
 
 一个对象不支持自己和自己比较（没有实现 Comparable 接口），但是又想对两个对象进行比">
-<meta name="twitter:image" content="http://blog.yunz.space/2016/10/09/Comparable-Comparator-区别/result1.png">
+<meta name="twitter:image" content="http://blog.yunz.space/2016/11/09/Comparable-Comparator-区别/result1.png">
 
 
 
@@ -142,7 +142,7 @@
 
 
 
-  <link rel="canonical" href="http://blog.yunz.space/2016/10/09/Comparable-Comparator-区别/"/>
+  <link rel="canonical" href="http://blog.yunz.space/2016/11/09/Comparable-Comparator-区别/"/>
 
 
 
@@ -267,7 +267,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2016/10/09/Comparable-Comparator-区别/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2016/11/09/Comparable-Comparator-区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yunz">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-09T22:42:36+08:00">
-                2016-10-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-09T22:42:36+08:00">
+                2016-11-09
               </time>
             
 
@@ -349,7 +349,7 @@
 <p>现在有两个 Person 类的对象，我们如何来比较二者的大小呢？我们可以通过让 Person 实现 Comparable 接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Person</span>&gt;</span></div><div class="line">&#123;</div><div class="line">    String name;</div><div class="line">    <span class="keyword">int</span> age;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> age;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Person p)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.age-p.getAge();</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">    &#123;</div><div class="line">        Person[] people=<span class="keyword">new</span> Person[]&#123;<span class="keyword">new</span> Person(<span class="string">"xujian"</span>, <span class="number">20</span>),<span class="keyword">new</span> Person(<span class="string">"xiewei"</span>, <span class="number">10</span>)&#125;;</div><div class="line">        System.out.println(<span class="string">"排序前"</span>);</div><div class="line">        <span class="keyword">for</span> (Person person : people)</div><div class="line">        &#123;</div><div class="line">            System.out.println(person.getName()+<span class="string">":"</span>+person.getAge());</div><div class="line">        &#125;</div><div class="line">        Arrays.sort(people);</div><div class="line">        System.out.println(<span class="string">"\n排序后"</span>);</div><div class="line">        <span class="keyword">for</span> (Person person : people)</div><div class="line">        &#123;</div><div class="line">            System.out.println(person.getName()+<span class="string">":"</span>+person.getAge());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>程序执行结果为：</p>
-<p><img src="/2016/10/09/Comparable-Comparator-区别/result1.png" alt=""></p>
+<p><img src="/2016/11/09/Comparable-Comparator-区别/result1.png" alt=""></p>
 <h2 id="Comparator"><a href="#Comparator" class="headerlink" title="Comparator"></a>Comparator</h2><p>Comparator 是比较接口，我们如果需要控制某个类的次序，而该类本身不支持排序 (即没有实现 Comparable 接口)，那么我们就可以建立一个“该类的比较器” 来进行排序，这个 “比较器” 只需要实现 Comparator 接口即可。也就是说，我们可以通过实现 Comparator 来新建一个比较器，然后通过这个比较器对类进行排序。该接口定义如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> java.util;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparator</span>&lt;<span class="title">T</span>&gt;</span></div><div class="line"> &#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(T o1, T o2)</span></span>;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span>;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
 <p>注意：</p>
@@ -362,8 +362,8 @@
 <p>现在我们就可以利用这个比较器来对其进行排序：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></div><div class="line">&#123;</div><div class="line">    String name;</div><div class="line">    <span class="keyword">int</span> age;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> age;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">    &#123;</div><div class="line">        Person[] people=<span class="keyword">new</span> Person[]&#123;<span class="keyword">new</span> Person(<span class="string">"xujian"</span>, <span class="number">20</span>),<span class="keyword">new</span> Person(<span class="string">"xiewei"</span>, <span class="number">10</span>)&#125;;</div><div class="line">        System.out.println(<span class="string">"排序前"</span>);</div><div class="line">        <span class="keyword">for</span> (Person person : people)</div><div class="line">        &#123;</div><div class="line">            System.out.println(person.getName()+<span class="string">":"</span>+person.getAge());</div><div class="line">        &#125;</div><div class="line">        Arrays.sort(people,<span class="keyword">new</span> PersonCompartor());</div><div class="line">        System.out.println(<span class="string">"\n排序后"</span>);</div><div class="line">        <span class="keyword">for</span> (Person person : people)</div><div class="line">        &#123;</div><div class="line">            System.out.println(person.getName()+<span class="string">":"</span>+person.getAge());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>程序运行结果为：</p>
-<p><img src="/2016/10/09/Comparable-Comparator-区别/result2.png" alt=""></p>
-<h3 id="Comparable-和-Comparator-区别比较"><a href="#Comparable-和-Comparator-区别比较" class="headerlink" title="Comparable 和 Comparator 区别比较"></a>Comparable 和 Comparator 区别比较</h3><p>Comparable 是排序接口，若一个类实现了 Comparable 接口，就意味着 “该类支持排序”。而 Comparator 是比较器，我们若需要控制某个类的次序，可以建立一个“该类的比较器” 来进行排序。</p>
+<p><img src="/2016/11/09/Comparable-Comparator-区别/result2.png" alt=""></p>
+<h2 id="Comparable-和-Comparator-区别比较"><a href="#Comparable-和-Comparator-区别比较" class="headerlink" title="Comparable 和 Comparator 区别比较"></a>Comparable 和 Comparator 区别比较</h2><p>Comparable 是排序接口，若一个类实现了 Comparable 接口，就意味着 “该类支持排序”。而 Comparator 是比较器，我们若需要控制某个类的次序，可以建立一个“该类的比较器” 来进行排序。</p>
 <p>Comparable 相当于 “内部比较器”，而 Comparator 相当于 “外部比较器”。</p>
 <p>两种方法各有优劣， 用 Comparable 简单， 只要实现 Comparable 接口的对象直接就成为一个可以比较的对象，但是需要修改源代码。 用 Comparator 的好处是不需要修改源代码， 而是另外实现一个比较器， 当某个自定义的对象需要作比较的时候，把比较器和对象一起传递过去就可以比大小了， 并且在 Comparator 里面用户可以自己实现复杂的可以通用的逻辑，使其可以匹配一些比较简单的对象，那样就可以节省很多重复劳动了。</p>
 <p>当然，这不是鼓励用 Comparator，意思是开发者还是要在具体场景下选择最合适的那种比较器而已。</p>
@@ -396,7 +396,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java基础/" rel="tag"># Java基础</a>
+            <a href="/tags/Java-基础/" rel="tag"># Java 基础</a>
           
         </div>
       
@@ -409,14 +409,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/10/22/Java-多态/" rel="next" title="Java 多态">
+                <i class="fa fa-chevron-left"></i> Java 多态
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/11/Linux下-hexo及github-pages-安装配置/" rel="prev" title="Linux下 hexo及github-pages 安装配置">
-                Linux下 hexo及github-pages 安装配置 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/11/Git-学习/" rel="prev" title="Git 学习">
+                Git 学习 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -537,7 +541,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparable"><span class="nav-number">1.</span> <span class="nav-text">Comparable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparator"><span class="nav-number">2.</span> <span class="nav-text">Comparator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Comparable-和-Comparator-区别比较"><span class="nav-number">2.1.</span> <span class="nav-text">Comparable 和 Comparator 区别比较</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparable"><span class="nav-number">1.</span> <span class="nav-text">Comparable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparator"><span class="nav-number">2.</span> <span class="nav-text">Comparator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparable-和-Comparator-区别比较"><span class="nav-number">3.</span> <span class="nav-text">Comparable 和 Comparator 区别比较</span></a></li></ol></div>
             
 
           </div>
