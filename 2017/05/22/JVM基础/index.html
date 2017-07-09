@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://blog.yunz.space/2017/05/22/JVM基础/jvm.png">
 <meta property="og:image" content="http://blog.yunz.space/2017/05/22/JVM基础/运行时数据区.png">
 <meta property="og:image" content="http://blog.yunz.space/2017/05/22/JVM基础/共享数据区.jpg">
-<meta property="og:updated_time" content="2017-06-22T14:22:27.144Z">
+<meta property="og:updated_time" content="2017-07-09T15:23:20.559Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM基础">
 <meta name="twitter:description" content="本文主要写一写 JVM 基础知识，对《深入理解 JVM》一书的梳理。">
@@ -324,8 +324,8 @@
 
       
         <p>本文主要写一写 JVM 基础知识，对《深入理解 JVM》一书的梳理。</p>
-<p><img src="/2017/05/22/JVM基础/jvm.png" alt=""></p>
 <a id="more"></a>
+<p><img src="/2017/05/22/JVM基础/jvm.png" alt=""></p>
 <h2 id="JVM-内存区域"><a href="#JVM-内存区域" class="headerlink" title="JVM 内存区域"></a>JVM 内存区域</h2><p>根据《Java 虚拟机规范》的规定，JVM 所管理的内存区域包括以下几个运行时数据区域：</p>
 <p><img src="/2017/05/22/JVM基础/运行时数据区.png" alt=""></p>
 <h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>一块比较小的内存空间，可以看做是当前线程所执行的字节码的行号指示器。JVM 概念模型中，字节码解释器工作时通过改变计数器的值来获取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖计数器来完成。</p>
