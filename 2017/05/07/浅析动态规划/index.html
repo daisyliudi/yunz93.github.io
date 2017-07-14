@@ -94,28 +94,19 @@
 
 
 <meta name="description" content="几个月前准备动手写一篇《深度解析动态规划》，写了半天，还是觉得没弄懂，遂作罢。
-可是近来刷题却总是遇见动态规划的题目，所以必须得弄懂，深度解析不了，那就退而求其次，浅析一下吧。
-
-何为动态规划？知乎上有这样一个问题：什么是动态规划？动态规划的意义是什么？
-几位 acm 大神都给出了详细的解。大致总结起来就是：动态规划是通过拆分问题，定义问题状态和状态之间的关系，使得问题能够以递推（或者说分治）的">
+可是近来刷题却总是遇见动态规划的题目，所以必须得弄懂，深度解析不了，那就退而求其次，浅析一下吧。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析动态规划">
 <meta property="og:url" content="http://blog.yunz.space/2017/05/07/浅析动态规划/index.html">
 <meta property="og:site_name" content="Yunz's Blog">
 <meta property="og:description" content="几个月前准备动手写一篇《深度解析动态规划》，写了半天，还是觉得没弄懂，遂作罢。
-可是近来刷题却总是遇见动态规划的题目，所以必须得弄懂，深度解析不了，那就退而求其次，浅析一下吧。
-
-何为动态规划？知乎上有这样一个问题：什么是动态规划？动态规划的意义是什么？
-几位 acm 大神都给出了详细的解。大致总结起来就是：动态规划是通过拆分问题，定义问题状态和状态之间的关系，使得问题能够以递推（或者说分治）的">
+可是近来刷题却总是遇见动态规划的题目，所以必须得弄懂，深度解析不了，那就退而求其次，浅析一下吧。">
 <meta property="og:image" content="http://blog.yunz.space/2017/05/07/浅析动态规划/digui.jpg">
-<meta property="og:updated_time" content="2017-07-14T15:16:31.643Z">
+<meta property="og:updated_time" content="2017-07-14T15:19:39.926Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析动态规划">
 <meta name="twitter:description" content="几个月前准备动手写一篇《深度解析动态规划》，写了半天，还是觉得没弄懂，遂作罢。
-可是近来刷题却总是遇见动态规划的题目，所以必须得弄懂，深度解析不了，那就退而求其次，浅析一下吧。
-
-何为动态规划？知乎上有这样一个问题：什么是动态规划？动态规划的意义是什么？
-几位 acm 大神都给出了详细的解。大致总结起来就是：动态规划是通过拆分问题，定义问题状态和状态之间的关系，使得问题能够以递推（或者说分治）的">
+可是近来刷题却总是遇见动态规划的题目，所以必须得弄懂，深度解析不了，那就退而求其次，浅析一下吧。">
 <meta name="twitter:image" content="http://blog.yunz.space/2017/05/07/浅析动态规划/digui.jpg">
 
 
@@ -337,6 +328,7 @@
 <p>几个月前准备动手写一篇《深度解析动态规划》，写了半天，还是觉得没弄懂，遂作罢。</p>
 <p>可是近来刷题却总是遇见动态规划的题目，所以必须得弄懂，深度解析不了，那就退而求其次，浅析一下吧。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="何为动态规划？"><a href="#何为动态规划？" class="headerlink" title="何为动态规划？"></a>何为动态规划？</h2><p>知乎上有这样一个问题：<a href="https://www.zhihu.com/question/23995189" target="_blank" rel="external">什么是动态规划？动态规划的意义是什么？</a></p>
 <p>几位 acm 大神都给出了详细的解。大致总结起来就是：动态规划是通过<strong>拆分问题，</strong>定义问题状态和状态之间的关系，使得问题能够以递推（或者说分治）的方式去解决。</p>
 <p>这段话字面意思很好理解，拆分和递推嘛。只要学会将一个问题拆分成几个子问题，然后根据几个子问题的解，推出该问题的解。这就是动态规划。</p>
