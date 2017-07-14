@@ -611,7 +611,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/05/07/详解动态规划/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/05/07/浅析动态规划/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yunz">
@@ -630,7 +630,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/07/详解动态规划/" itemprop="url">详解动态规划</a></h1>
+                <a class="post-title-link" href="/2017/05/07/浅析动态规划/" itemprop="url">浅析动态规划</a></h1>
         
 
         <div class="post-meta">
@@ -642,7 +642,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-07T11:46:53+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-07T22:14:07+08:00">
                 2017-05-07
               </time>
             
@@ -679,7 +679,163 @@
       
         
           
-            
+            <blockquote>
+<p>几个月前准备动手写一篇《深度解析动态规划》，写了半天，还是觉得没弄懂，遂作罢。</p>
+<p>可是近来刷题却总是遇见动态规划的题目，所以必须得弄懂，深度解析不了，那就退而求其次，浅析一下吧。</p>
+</blockquote>
+<h2 id="何为动态规划？"><a href="#何为动态规划？" class="headerlink" title="何为动态规划？"></a>何为动态规划？</h2><p>知乎上有这样一个问题：<a href="https://www.zhihu.com/question/23995189" target="_blank" rel="external">什么是动态规划？动态规划的意义是什么？</a></p>
+<p>几位 acm 大神都给出了详细的解。大致总结起来就是：动态规划是通过<strong>拆分问题，</strong>定义问题状态和状态之间的关系，使得问题能够以递推（或者说分治）的方式去解决。</p>
+<p>这段话字面意思很好理解，拆分和递推嘛。只要学会将一个问题拆分成几个子问题，然后根据几个子问题的解，推出该问题的解。这就是动态规划。</p>
+<h2 id="跳台阶问题"><a href="#跳台阶问题" class="headerlink" title="跳台阶问题"></a>跳台阶问题</h2><p>以经典递归入门题：<a href="http://www.lintcode.com/zh-cn/problem/climbing-stairs/" target="_blank" rel="external">跳台阶</a>为例。</p>
+<blockquote>
+<p>假设你正在爬楼梯，需要n步你才能到达顶部。但每次你只能爬一步或者两步，你能有多少种不同的方法爬到楼顶部？</p>
+</blockquote>
+<p>有编程常识的人，第一反应肯定是Fibonacci 数列。因为上n级台阶，最后一步可能上一步，也可能上两步，所以上n级台阶的方法数f(n) = f(n-1) + f(n-2)。</p>
+<p>而 f(1) = 1, f(2) = 2，很明显是Fibonacci 数列，递归算法的教科书例子。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">F(<span class="number">1</span>) = <span class="number">1</span>;</div><div class="line">F(<span class="number">2</span>) = <span class="number">2</span>; </div><div class="line">F(n) = F(n-<span class="number">1</span>)+F(n-<span class="number">2</span>)（n&gt;=<span class="number">3</span>）</div></pre></td></tr></table></figure>
+<p>所以我们很快就可以写出以下递归代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="keyword">if</span> (n == <span class="number">1</span> || n == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (n == <span class="number">2</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">  		<span class="keyword">return</span> climbStairs(n-<span class="number">1</span>) + climbstairs(n-<span class="number">2</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>上面的代码的结果无疑是正确的，但在LintCode上是无法通过的，因为递归时间复杂度太高，超时了。</p>
+<h2 id="备忘录算法"><a href="#备忘录算法" class="headerlink" title="备忘录算法"></a>备忘录算法</h2><p>上面递归的算法，很容易得到优化的算法，因为递归的过程中，我们重复的进行了大量的运算。</p>
+<p><img src="/2017/05/07/浅析动态规划/digui.jpg" alt=""></p>
+<p>如图标识的都是重复计算的节点，很明显我们可以通过缓存的方式，将已经计算的结果保存在起来，避免重复计算。</p>
+<p>这就是备忘录算法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n, HashMap&lt;Integer, Integer&gt; map)</span> </span>&#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="keyword">if</span> (n == <span class="number">1</span> || n == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (n == <span class="number">2</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">  		<span class="keyword">if</span> (map.contains(n)) &#123;</div><div class="line">          <span class="keyword">return</span> map.get(n);</div><div class="line">  		&#125; <span class="keyword">else</span> &#123;</div><div class="line">          <span class="keyword">int</span> value = climbStairs(n-<span class="number">1</span>) + climbstairs(n-<span class="number">2</span>);</div><div class="line">          map.put(n, value);</div><div class="line">          <span class="keyword">return</span> value;</div><div class="line">  		&#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="进一步优化"><a href="#进一步优化" class="headerlink" title="进一步优化"></a>进一步优化</h2><p>备忘录算法的空间复杂度和时间复杂度都为 O(N)。</p>
+<p>而实际上，我们根据递推关系可以知道，并不需要将所有f(n)全记录下来。f(n)只依赖于f(n-1)和f(n-2)，因此我们只需要两个变量来记录f(n-1)和f(n-2)就可以了。</p>
+<p>于是，算法可以进一步简化为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="keyword">if</span> (n == <span class="number">1</span> || n == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (n == <span class="number">2</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> first = <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> second = <span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> third = <span class="number">0</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++) &#123;</div><div class="line">            third = first + second;</div><div class="line">            first = second;</div><div class="line">            second = third;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> third;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>first 表示 f(n-2) 的结果，second 表示 f(n-1) 的结果，third 表示 f(n) 的结果。</p>
+<p>到这里，我们总算写出了这个简单问题的动态规划算法。利用简洁的自底向上的递推方式，实现空间和时间上的最优化。</p>
+<h2 id="三要素"><a href="#三要素" class="headerlink" title="三要素"></a>三要素</h2><p>好的，现在让我们来分析一下，动态规划的三要素。</p>
+<ul>
+<li>最优子结构</li>
+<li>边界</li>
+<li>状态转移公式</li>
+</ul>
+<p>跳台阶的问题是要求解跳上 n 级台阶有多少种方式 F(N)，而这个问题可以分解为求跳上 n-1 级台阶的方法数和 n-2 级台阶的方法数之和。F(N-1) 和 F(n-2)就是该问题的最优子结构。</p>
+<p>而当 n=1 和 n=2时，我们可以直接得出结果，F(1) 和 F(2) 就是问题的边界。如果一个问题没有边界，就没办法得到有限的结果。</p>
+<p>F(N) = F(N-1) + F(N-2) 则是状态转移方程，是动态规划算法的核心，它决定了问题每一个阶段和下一个阶段的关系。</p>
+<p>求解动态规划问题的核心，就在于寻找出三要素。</p>
+<h2 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h2><p>虽然这部分似乎有应试之嫌，我觉得还是有必要写一下，找工作对付笔试嘛==</p>
+<p>动态规划的解题步骤就是确定三要素的过程。</p>
+<ol>
+<li>首先我们要确定问题的维数。通常来说，有几个对象就是几维的，例如上面跳台阶的问题明显是一维的，而最长公共序列之类的问题，涉及到两个序列的，通常是二维的。</li>
+<li>根据题目维数，生成一个相应维数的数组。</li>
+<li>根据边界条件，初始化数组边界。</li>
+<li>分析最优子结构和状态转移方程。</li>
+<li>根据状态转移方程和数组边界，递推出整个 dp 数组的内容。</li>
+<li>得到问题的解。</li>
+</ol>
+<h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>似乎上面解题过程略抽象，所以我这里用经典的<a href="http://www.lintcode.com/zh-cn/problem/backpack/" target="_blank" rel="external">背包问题</a>为范例。</p>
+<blockquote>
+<p>给出n个物品的体积A[i]和其价值V[i]，将他们装入一个大小为m的背包，最多能装入的总价值有多大？</p>
+<p>例如，有编号分别为a,b,c,d,e的五件物品，它们的重量分别是2,2,6,5,4，它们的价值分别是6,3,5,4,6，现在给你个承重为10的背包，如何让背包里装入的物品具有最大的价值总和？</p>
+</blockquote>
+<p>分析这个问题，过程如下：</p>
+<p>首先，很明显这是个二维问题，体积和价值。</p>
+<p>二维问题，需要初始化两个维度的边界。边界条件很明显，如果背包空间为 0 ，最大装入价值为 0；如果物品为 0 ，最大装入价值为 0。通常边界条件可以通过优化去除一些冗余的部分。</p>
+<p>然后，我们来分析其最优子结构。该问题的目标是求解能装入的最大总价值，例如对物品 e 的处理有两种选择，如果空间足够装入物品e，装入或者不装。</p>
+<p>如果装入，最优子结构为背包大小为 6, 物品 a,b,c,d 能装入背包的最大价值 + e.value。</p>
+<p>如果不装，最优子结构为背包大小为 10, 物品 a,b,c,d 能装入背包的最大价值。</p>
+<p>所以得到以下状态转移公式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">F[i][j] = MAX(F[i-<span class="number">1</span>][j], F[i-<span class="number">1</span>][j-A[i]]+V[i]) (j &gt;= A[i])</div><div class="line">  </div><div class="line">其中F[i-<span class="number">1</span>][j]表示前i-<span class="number">1</span>件物品中选取若干件物品放入剩余空间为j的背包中所能得到的最大价值；</div><div class="line"></div><div class="line">而F[i-<span class="number">1</span>][j-A[i]]+V[i]表示前i-<span class="number">1</span>件物品中选取若干件物品放入剩余空间为 j-A[i] 的背包中所能取得的最大价值加上第i件物品的价值。</div></pre></td></tr></table></figure>
+<p>根据上面的分析，很容易写出以下的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">backPackII</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span>[] A, <span class="keyword">int</span> V[])</span> </span>&#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="keyword">if</span> (A == <span class="keyword">null</span> || <span class="number">0</span> == A.length || m == <span class="number">0</span> || V == <span class="keyword">null</span> || <span class="number">0</span> == V.length)  </div><div class="line">               <span class="keyword">return</span> <span class="number">0</span>;  </div><div class="line">               </div><div class="line">          <span class="keyword">int</span> len = A.length;  </div><div class="line">          <span class="keyword">int</span>[][]  sum = <span class="keyword">new</span> <span class="keyword">int</span>[len][m + <span class="number">1</span>];  </div><div class="line">          </div><div class="line">  		<span class="comment">// 初始化 dp 数组</span></div><div class="line">  		<span class="comment">// 空间为 0</span></div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;  </div><div class="line">               sum[i][<span class="number">0</span>] = <span class="number">0</span>;  </div><div class="line">          &#125;  </div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m + <span class="number">1</span>; j++)&#123;  </div><div class="line">               <span class="keyword">if</span>(j &gt;= A[<span class="number">0</span>])&#123;  </div><div class="line">                    sum[<span class="number">0</span>][j] = V[<span class="number">0</span>];  </div><div class="line">               &#125;  </div><div class="line">          &#125;</div><div class="line">          <span class="comment">// 从底向上的利用状态转移方程进行递推</span></div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++)&#123;  </div><div class="line">               <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; m + <span class="number">1</span>; j++)&#123;  </div><div class="line">                    <span class="keyword">if</span>(j &gt;= A[i])&#123;  </div><div class="line">                         sum[i][j] = Math.max(sum[i-<span class="number">1</span>][j], sum[i-<span class="number">1</span>][j-A[i]] + V[i]);  </div><div class="line">                    &#125;<span class="keyword">else</span>&#123;  </div><div class="line">                         sum[i][j] = sum[i-<span class="number">1</span>][j];  </div><div class="line">                    &#125;  </div><div class="line">               &#125;  </div><div class="line">          &#125;</div><div class="line">          </div><div class="line">          <span class="keyword">return</span> sum[len-<span class="number">1</span>][m];</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>DP 矩阵如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">14</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">13</td>
+<td style="text-align:center">14</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">15</td>
+</tr>
+</tbody>
+</table>
+<p>容易得到，最大装入价值为15。</p>
+<p>其他动态规划问题，做类似分析，同样可求解。</p>
+
           
         
       
@@ -1495,7 +1651,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
