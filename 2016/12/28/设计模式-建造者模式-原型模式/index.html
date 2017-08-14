@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="设计模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="每天还是得写点东西，不要让自己松懈下来。哒哒哒！  今天讲什么呢？补一下设计模式的部分吧，今天说说创建型模式剩下的两种：建造者模式&amp;amp;原型模式。">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式-建造者模式&amp;原型模式">
+<meta property="og:url" content="http://blog.yunz.space/2016/12/28/设计模式-建造者模式-原型模式/index.html">
+<meta property="og:site_name" content="Yunz&#39;s Blog">
+<meta property="og:description" content="每天还是得写点东西，不要让自己松懈下来。哒哒哒！  今天讲什么呢？补一下设计模式的部分吧，今天说说创建型模式剩下的两种：建造者模式&amp;amp;原型模式。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.yunz.space/2016/12/28/设计模式-建造者模式-原型模式/builder.jpg">
+<meta property="og:image" content="http://blog.yunz.space/2016/12/28/设计模式-建造者模式-原型模式/prototype.gif">
+<meta property="og:image" content="http://blog.yunz.space/2016/12/28/设计模式-建造者模式-原型模式/clone.png">
+<meta property="og:image" content="http://blog.yunz.space/2016/12/28/设计模式-建造者模式-原型模式/q_clone.png">
+<meta property="og:image" content="http://blog.yunz.space/2016/12/28/设计模式-建造者模式-原型模式/s_clone.jpg">
+<meta property="og:updated_time" content="2017-08-14T07:44:23.498Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式-建造者模式&amp;原型模式">
+<meta name="twitter:description" content="每天还是得写点东西，不要让自己松懈下来。哒哒哒！  今天讲什么呢？补一下设计模式的部分吧，今天说说创建型模式剩下的两种：建造者模式&amp;amp;原型模式。">
+<meta name="twitter:image" content="http://blog.yunz.space/2016/12/28/设计模式-建造者模式-原型模式/builder.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    tabs: ,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.yunz.space/2016/12/28/设计模式-建造者模式-原型模式/"/>
+
+
+
+
+
+  <title>设计模式-建造者模式&原型模式 | Yunz's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yunz's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点点</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2016/12/28/设计模式-建造者模式-原型模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yunz's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式-建造者模式&原型模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-28T19:00:14+08:00">
+                2016-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>每天还是得写点东西，不要让自己松懈下来。哒哒哒！</p>
+</blockquote>
+<p>今天讲什么呢？补一下设计模式的部分吧，今天说说创建型模式剩下的两种：建造者模式&amp;原型模式。</p>
+<a id="more"></a>
+<h2 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h2><p>先看定义</p>
+<blockquote>
+<p>Separate the construction of a complex objext from its representaion so that the same construction process can create different representations.</p>
+<p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+</blockquote>
+<p>怎么理解呢？举个简单的例子。现在大家都离不开手机对吧，手机行业发展到目前的程度，所有手机的装配过程应该都差不多，那为什么不同品牌的手机差别很大呢，因为配置不同。</p>
+<p>同样的装配过程，生产出了不同的手机，这就是典型的建造者模式。</p>
+<h3 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h3><p>建造者模式通常包括下面几个角色：</p>
+<ul>
+<li>builder：给出一个抽象接口，以规范产品对象的各个组成成分的建造。这个接口规定要实现复杂对象的哪些部分的创建，并不涉及具体的对象部件的创建。</li>
+<li>ConcreteBuilder：实现 Builder 接口，针对不同的商业逻辑，具体化复杂对象的各部分的创建。 在建造过程完成后，提供产品的实例。</li>
+<li>Director：调用具体建造者来创建复杂对象的各个部分，在指导者中不涉及具体产品的信息，只负责保证对象各部分完整创建或按某种顺序创建。</li>
+<li>Product：要创建的复杂对象。</li>
+</ul>
+<p>结构图</p>
+<p><img src="/2016/12/28/设计模式-建造者模式-原型模式/builder.jpg" alt=""></p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>我们以手机生产为例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 手机抽象类</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CellPhone</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> String cpu;   <span class="comment">// cpu</span></div><div class="line">    <span class="keyword">private</span> String ram;   <span class="comment">// 内存</span></div><div class="line">    <span class="keyword">private</span> String screen;<span class="comment">// 屏幕</span></div><div class="line">    <span class="keyword">private</span> String battery; <span class="comment">// 电池</span></div><div class="line">    <span class="keyword">private</span> String others; <span class="comment">// 其他</span></div><div class="line">  ... 省略get/set方法</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Mate9产品类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mate9</span> <span class="keyword">extends</span> <span class="title">CellPhone</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mate9</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"这是华为Mate9"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"具体配置： CPU： "</span> + <span class="keyword">this</span>.getCpu() + <span class="string">"\n 内存： "</span> + <span class="keyword">this</span>.getRam()</div><div class="line">                + <span class="string">"\n 屏幕大小： "</span> + <span class="keyword">this</span>.getScreen() + <span class="string">"\n 电池容量： "</span> + <span class="keyword">this</span>.getBattery()</div><div class="line">                + <span class="string">"\n 其他： "</span> + <span class="keyword">this</span>.getOthers();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//MX6产品类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mx6Pro</span> <span class="keyword">extends</span> <span class="title">CellPhone</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mx6Pro</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"这是魅族Pro6"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"具体配置： CPU： "</span> + <span class="keyword">this</span>.getCpu() + <span class="string">"\n 内存： "</span> + <span class="keyword">this</span>.getRam()</div><div class="line">                + <span class="string">"\n 屏幕大小： "</span> + <span class="keyword">this</span>.getScreen() + <span class="string">"\n 电池容量： "</span> + <span class="keyword">this</span>.getBattery()</div><div class="line">                + <span class="string">"\n 其他： "</span> + <span class="keyword">this</span>.getOthers();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 手机建造者 抽象</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CellPhoneBuilder</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildCPU</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRam</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildScreen</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildBattery</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildOthers</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> CellPhone <span class="title">getPhone</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Mate9建造者 具体</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mate9Build</span> <span class="keyword">implements</span> <span class="title">CellPhoneBuilder</span> </span>&#123;</div><div class="line">    CellPhone mate9 = <span class="keyword">new</span> Mate9();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildCPU</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setCpu(<span class="string">"麒麟935"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRam</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setRam(<span class="string">"使用3G内存"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildScreen</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setScreen(<span class="string">"6英寸IPS屏幕"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildBattery</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setBattery(<span class="string">"4100毫安超大电池"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildOthers</span><span class="params">()</span> </span>&#123;</div><div class="line">        mate9.setOthers(<span class="string">"采用后背指纹按压技术"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CellPhone <span class="title">getPhone</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mate9;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// MX6建造者 具体</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mx6ProBuild</span> <span class="keyword">implements</span> <span class="title">CellPhoneBuilder</span> </span>&#123;</div><div class="line">    CellPhone mx6Pro = <span class="keyword">new</span> Mx6Pro();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildCPU</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setCpu(<span class="string">"三星9660"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRam</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setRam(<span class="string">"4G内存"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildScreen</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setScreen(<span class="string">"5.5寸superAmoled屏幕"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildBattery</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setBattery(<span class="string">"3300毫安大电池"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildOthers</span><span class="params">()</span> </span>&#123;</div><div class="line">        mx6Pro.setOthers(<span class="string">"前置指纹按压识别"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CellPhone <span class="title">getPhone</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mx6Pro;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 手机建造指导者</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CellPhoneDirector</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> CellPhoneBuilder cellPhoneBuilder;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Mate9 <span class="title">buildMate9</span><span class="params">()</span> </span>&#123;</div><div class="line">        cellPhoneBuilder = <span class="keyword">new</span> Mate9Build();</div><div class="line">        cellPhoneBuilder.buildCPU();</div><div class="line">        cellPhoneBuilder.buildRam();</div><div class="line">        cellPhoneBuilder.buildScreen();</div><div class="line">        cellPhoneBuilder.buildBattery();</div><div class="line">        cellPhoneBuilder.buildOthers();</div><div class="line">        <span class="keyword">return</span> (Mate9)cellPhoneBuilder.getPhone();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Mx6Pro <span class="title">buildMx6Pro</span><span class="params">()</span> </span>&#123;</div><div class="line">        cellPhoneBuilder = <span class="keyword">new</span> Mx6ProBuild();</div><div class="line">        cellPhoneBuilder.buildCPU();</div><div class="line">        cellPhoneBuilder.buildRam();</div><div class="line">        cellPhoneBuilder.buildScreen();</div><div class="line">        cellPhoneBuilder.buildBattery();</div><div class="line">        cellPhoneBuilder.buildOthers();</div><div class="line">        <span class="keyword">return</span> (Mx6Pro)cellPhoneBuilder.getPhone();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 测试</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CellPhoneTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        CellPhoneDirector director = <span class="keyword">new</span> CellPhoneDirector();</div><div class="line">        <span class="comment">// 华为手机定制生产</span></div><div class="line">        System.out.println(<span class="string">"开始制造华为手机："</span>);</div><div class="line">        Mate9 mate9 = director.buildMate9();</div><div class="line">        System.out.println(mate9);</div><div class="line">        <span class="comment">// 魅族手机定制生产</span></div><div class="line">        System.out.println(<span class="string">"开始制造魅族手机： "</span>);</div><div class="line">        Mx6Pro mx6Pro = director.buildMx6Pro();</div><div class="line">        System.out.println(mx6Pro);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 结果</span></div><div class="line">开始制造华为手机：</div><div class="line">这是华为Mate9</div><div class="line">具体配置： CPU： 麒麟<span class="number">935</span></div><div class="line"> 内存： 使用<span class="number">3</span>G内存</div><div class="line"> 屏幕大小： <span class="number">6</span>英寸IPS屏幕</div><div class="line"> 电池容量： <span class="number">4100</span>毫安超大电池</div><div class="line"> 其他： 采用后背指纹按压技术</div><div class="line">开始制造魅族手机： </div><div class="line">这是魅族Pro6</div><div class="line">具体配置： CPU： 三星<span class="number">9660</span></div><div class="line"> 内存： <span class="number">4</span>G内存</div><div class="line"> 屏幕大小： <span class="number">5.5</span>寸superAmoled屏幕</div><div class="line"> 电池容量： <span class="number">3300</span>毫安大电池</div><div class="line"> 其他： 前置指纹按压识别</div></pre></td></tr></table></figure>
+<p>建造者模式和工厂模式非常相似，建造者模式注重零部件的组装过程，而工厂方法模式更注重零部件的创建过程。两者也有结合使用：比如众神造人，女娲利用建造者模式负责把灵魂、耳目、手臂等组合成一个完整的人，而皇帝、桑林等人各自利用工厂方法模式创造出灵魂，耳目，手臂等。女娲不必考虑灵魂、耳目、手臂是什么样子的，怎么创造出来的，这就成为了一个由建造者模式和工厂方法模式组合而成的系统。</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>封装性，使用建造者模式可以使客户端不必知道产品的内部组成的细节</li>
+<li>建造者独立，易于扩展</li>
+<li>便于控制细节风险，由于具体建造者是独立的，因此可以对建造者过程逐步细化，而不对其他模块产生影响</li>
+</ul>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
+<li>当采用相同的方法，不同的执行顺序会产生不同的结果时</li>
+<li>多个部件或零件都可以装配到一个对象中，但产生的运行结果又不相同时</li>
+<li>当产品类非常复杂，或者产品类中的方法调用顺序不同产生不同的效能时</li>
+<li>创建一些复杂的对象时，这些对象的内部组成构件间的建造顺序是稳定的，但是对象的内部组成构件面临着复杂的变化。</li>
+<li>要创建的复杂对象的算法，独立于该对象的组成部分，也独立于组成部分的装配方法时。</li>
+</ul>
+<h2 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h2><p>照例先看定义</p>
+<blockquote>
+<p>Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.</p>
+<p>用原型对象指定创建对象的种类，并且通过复制这些原型创建新的对象。</p>
+</blockquote>
+<p>微信的群功能大家肯定都用过，尤其是逢年过节的时候群发祝福短信，最忌讳别人发现是群发的，显得没有诚意。因此微信群发有个贴心的功能，就是根据备注，在消息前面添加上每个人的姓名，这样就显得诚意满满了。</p>
+<p>这里就很类似于原型模式了，以祝福短信为原型创建了N条祝福短信发给N个好友。</p>
+<h3 id="角色-1"><a href="#角色-1" class="headerlink" title="角色"></a>角色</h3><ul>
+<li><p>客户（Client）角色：使用原型对象的客户程序</p>
+</li>
+<li><p>抽象原型（Prototype）角色：规定了具体原型对象必须实现的接口</p>
+</li>
+<li><p>具体原型（ConcretePrototype）：从抽象原型派生而来，是客户程序使用的对象，即被复制的对象。此角色需要实现抽象原型角色所要求的接口。</p>
+<p>​</p>
+</li>
+</ul>
+<p><img src="/2016/12/28/设计模式-建造者模式-原型模式/prototype.gif" alt=""></p>
+<p>Java 内置了克隆机制。Object 类具有一个 clone() 方法，能够实现对象的克隆，使一个类支持克隆只需两步：</p>
+<ul>
+<li>实现 Cloneable 接口</li>
+<li>覆盖 Object 的 clone() 方法</li>
+</ul>
+<p>因此，在 Java 中实现原型模式非常简单。</p>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>以群发邮件为例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 邮件原型</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mail</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String receicer;  <span class="comment">// 收件人</span></div><div class="line">    <span class="keyword">private</span> String subject;   <span class="comment">// 邮件标题</span></div><div class="line">    <span class="keyword">private</span> String appellation; <span class="comment">// 称谓</span></div><div class="line">    <span class="keyword">private</span> String context;     <span class="comment">// 邮件内容</span></div><div class="line">    <span class="keyword">private</span> String tail;       <span class="comment">//  邮件尾部</span></div><div class="line"></div><div class="line">    <span class="comment">// 构造函数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mail</span> <span class="params">(String subject, String context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.subject = subject;</div><div class="line">        <span class="keyword">this</span>.context = context;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 克隆方法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Mail <span class="title">clone</span><span class="params">()</span> </span>&#123;</div><div class="line">        Mail mail = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            mail = (Mail)<span class="keyword">super</span>.clone();</div><div class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> mail;</div><div class="line">    &#125;</div><div class="line">  ...<span class="comment">// 省略get/set方法</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 测试类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendMailDemo</span> </span>&#123;</div><div class="line">    Map students = <span class="keyword">new</span> LinkedHashMap();</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Mail mail = <span class="keyword">new</span> Mail(<span class="string">"参加座谈会"</span>, <span class="string">"2017年4月6号，233教室开会，所有人必须到场，不得迟到。"</span>);</div><div class="line">        mail.setTail(<span class="string">"请各位同学相互通知"</span>);</div><div class="line">        SendMailDemo sendMailDemo = <span class="keyword">new</span> SendMailDemo();</div><div class="line">        Map student = sendMailDemo.getStudents();</div><div class="line">        <span class="keyword">for</span> (Object name:student.keySet()) &#123;</div><div class="line">            Mail cloneMail = mail.clone();</div><div class="line">            cloneMail.setAppellation(name.toString());</div><div class="line">            cloneMail.setReceicer(student.get(name).toString());</div><div class="line">            sendMailDemo.sendMail(cloneMail);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sendMail</span><span class="params">(Mail mail)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"标题： "</span> + mail.getSubject() + <span class="string">"\t 收件人： "</span> + mail.getReceicer()</div><div class="line">        + <span class="string">"\n 正文： "</span> + mail.getContext() + <span class="string">"... ... 已发送！"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Map <span class="title">getStudents</span><span class="params">()</span> </span>&#123;</div><div class="line">        students.put(<span class="string">"李一"</span>, <span class="string">"liyi@gmail.com"</span>);</div><div class="line">        students.put(<span class="string">"王二"</span>, <span class="string">"wanger@gmail.com"</span>);</div><div class="line">        students.put(<span class="string">"张三"</span>, <span class="string">"zhangsan@gmail.com"</span>);</div><div class="line">        students.put(<span class="string">"李四"</span>, <span class="string">"lisi@gmail.com"</span>);</div><div class="line">        students.put(<span class="string">"赵武"</span>, <span class="string">"zhaowu@gmail.com"</span>);</div><div class="line">        <span class="keyword">return</span> students;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 结果</span></div><div class="line">标题： 参加座谈会	 收件人： liyi<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div><div class="line">标题： 参加座谈会	 收件人： wanger<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div><div class="line">标题： 参加座谈会	 收件人： zhangsan<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div><div class="line">标题： 参加座谈会	 收件人： lisi<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div><div class="line">标题： 参加座谈会	 收件人： zhaowu<span class="meta">@gmail</span>.com</div><div class="line"> 正文： <span class="number">2017</span>年<span class="number">4</span>月<span class="number">6</span>号，<span class="number">233</span>教室开会，所有人必须到场，不得迟到。... ... 已发送！</div></pre></td></tr></table></figure>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>性能优良：原型模式是对内存中二进制流的拷贝，要比直接new一个对象性能好，特别是当一个循环体中产生大量对象是，原型模式可以更好的体现其优点。</li>
+<li>逃避构造函数的约束。</li>
+</ul>
+<h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
+<li>资源优化场景，类初始化时需要消耗非常多的资源。</li>
+<li>性能和安全性要求的场景，如果通过new产生一个对象需要非常繁琐的数据准备和访问权限，则可以考虑使用原型模式。</li>
+<li>一个对象多个修改者的场景，一个对象需要提供给其他对象访问，而且各个调用者可能都需要修改其值时，可以考虑使用原型模式拷贝多个对象供调用者使用。</li>
+</ul>
+<p>在实际项目中，原型模式很少单独出现，一般是和工厂方法模式一起出现。原型模式通过clone()创建一个对象，然后由工厂方法提供给调用者。</p>
+<h3 id="深拷贝-amp-浅拷贝"><a href="#深拷贝-amp-浅拷贝" class="headerlink" title="深拷贝&amp;浅拷贝"></a>深拷贝&amp;浅拷贝</h3><h4 id="原型模式的原理图："><a href="#原型模式的原理图：" class="headerlink" title="原型模式的原理图："></a>原型模式的原理图：</h4><p><img src="/2016/12/28/设计模式-建造者模式-原型模式/clone.png" alt=""></p>
+<h4 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h4><p>被拷贝对象的所有变量都含有与原对象相同的值，而且对其他对象的引用仍然是指向原来的对象。即浅拷贝只负责当前对象实例，对引用的对象不做拷贝。<br>浅复制后的对象和对象副本的情况：</p>
+<p><img src="/2016/12/28/设计模式-建造者模式-原型模式/q_clone.png" alt=""></p>
+<h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><p>被拷贝对象的所有的变量都含有与原来对象相同的值，除了那些引用其他对象的变量。那些引用其他对象的变量将指向一个被拷贝的新对象，而不再是原有那些被引用对象。即 深拷贝把要拷贝的对象所引用的对象也都拷贝了一次，而这种对被引用到的对象拷贝叫做间接拷贝。<br>深复制的对象和对象副本的情况：</p>
+<p><img src="/2016/12/28/设计模式-建造者模式-原型模式/s_clone.jpg" alt=""></p>
+<p>深拷贝要深入到多少层，是一个不确定的问题。<br>在决定以深拷贝的方式拷贝一个对象的时候，必须决定对间接拷贝的对象是采取浅拷贝还是深拷贝还是继续采用深拷贝。<br>因此，在采取深拷贝时，需要决定多深才算深。此外，在深拷贝的过程中，很可能会出现循环引用的问题。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><p>使用原型模式复制对象不会调用类的构造方法。因为对象的复制是通过调用 Object 类的 clone 方法来完成的，它直接在内存中复制数据，因此不会调用到类的构造方法。不但构造方法中的代码不会执行，甚至连访问权限都对原型模式无效。还记得单例模式吗？单例模式中，只要将构造方法的访问权限设置为 private 型，就可以实现单例。但是 clone 方法直接无视构造方法的权限，所以，单例模式与原型模式是冲突的，在使用时要特别注意。</p>
+</li>
+<li><p>深拷贝与浅拷贝。Object 类的 clone 方法只会拷贝对象中的基本的数据类型，对于数组、容器对象、引用对象等都不会拷贝，这就是浅拷贝。如果要实现深拷贝，必须将原型模式中的数组、容器对象、引用对象等另行拷贝。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Prototype</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;  </div><div class="line">    <span class="keyword">private</span> ArrayList list = <span class="keyword">new</span> ArrayList();  </div><div class="line">    <span class="function"><span class="keyword">public</span> Prototype <span class="title">clone</span><span class="params">()</span></span>&#123;  </div><div class="line">        Prototype prototype = <span class="keyword">null</span>;  </div><div class="line">        <span class="keyword">try</span>&#123;  </div><div class="line">            prototype = (Prototype)<span class="keyword">super</span>.clone();  </div><div class="line">            prototype.list = (ArrayList) <span class="keyword">this</span>.list.clone();  </div><div class="line">        &#125;<span class="keyword">catch</span>(CloneNotSupportedException e)&#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> prototype;   </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>​        由于 ArrayList 不是基本类型，所以成员变量 list，不会被拷贝，需要我们自己实现深拷贝，幸运的是 Java 提供的大部分的容器类都实现了 Cloneable 接口。所以实现深拷贝并不是特别困难。</p>
+<p><strong>PS：深拷贝与浅拷贝问题中，会发生深拷贝的有 java 中的 8 中基本类型以及他们的封装类型，另外还有 String 类型。其余的都是浅拷贝。</strong></p>
+<p>ok，至此创建者模式全部说完，后面会讲一下几种重点设计模式，不会再一个个聊了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/20/设计模式初涉三-工厂模式/" rel="next" title="设计模式初涉三-工厂模式">
+                <i class="fa fa-chevron-left"></i> 设计模式初涉三-工厂模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/07/Java集合-基础知识梳理/" rel="prev" title="Java集合-基础知识梳理">
+                Java集合-基础知识梳理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Yunz" />
+          <p class="site-author-name" itemprop="name">Yunz</p>
+           
+              <p class="site-description motion-element" itemprop="description">编程、技术、生活</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yunz93" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/mahe3" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/mahe93" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-circle-o"></i>
+                  
+                    
+                      zhihu
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#建造者模式"><span class="nav-number">1.</span> <span class="nav-text">建造者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#角色"><span class="nav-number">1.1.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">1.2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.3.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">1.4.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型模式"><span class="nav-number">2.</span> <span class="nav-text">原型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#角色-1"><span class="nav-number">2.1.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-1"><span class="nav-number">2.2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点-1"><span class="nav-number">2.3.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景-1"><span class="nav-number">2.4.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深拷贝-amp-浅拷贝"><span class="nav-number">2.5.</span> <span class="nav-text">深拷贝&浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原型模式的原理图："><span class="nav-number">2.5.1.</span> <span class="nav-text">原型模式的原理图：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浅拷贝"><span class="nav-number">2.5.2.</span> <span class="nav-text">浅拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#深拷贝"><span class="nav-number">2.5.3.</span> <span class="nav-text">深拷贝</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">2.6.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yunz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+    由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+  </div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">
+    主题 &mdash;
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+      NexT.Pisces
+    </a>
+  </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

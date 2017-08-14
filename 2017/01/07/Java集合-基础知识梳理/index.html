@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前面那篇面试总结的第二部分强调了Java集合的细节问题，这部分当时只是简单看了下用法，没有思考细节问题，还是得好好分析一下。  本系列文章主要参考李刚《Java程序员的基本素养》和谢宇《Java特种兵》，写得挺好，推荐一下。 本文主要对 Java 集合的基础知识进行梳理，后面陆续会谈一些细节性问题。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java集合-基础知识梳理">
+<meta property="og:url" content="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/index.html">
+<meta property="og:site_name" content="Yunz&#39;s Blog">
+<meta property="og:description" content="前面那篇面试总结的第二部分强调了Java集合的细节问题，这部分当时只是简单看了下用法，没有思考细节问题，还是得好好分析一下。  本系列文章主要参考李刚《Java程序员的基本素养》和谢宇《Java特种兵》，写得挺好，推荐一下。 本文主要对 Java 集合的基础知识进行梳理，后面陆续会谈一些细节性问题。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/Java集合框架.png">
+<meta property="og:image" content="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/比较.jpg">
+<meta property="og:updated_time" content="2017-08-14T07:44:23.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java集合-基础知识梳理">
+<meta name="twitter:description" content="前面那篇面试总结的第二部分强调了Java集合的细节问题，这部分当时只是简单看了下用法，没有思考细节问题，还是得好好分析一下。  本系列文章主要参考李刚《Java程序员的基本素养》和谢宇《Java特种兵》，写得挺好，推荐一下。 本文主要对 Java 集合的基础知识进行梳理，后面陆续会谈一些细节性问题。">
+<meta name="twitter:image" content="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/Java集合框架.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    tabs: ,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/"/>
+
+
+
+
+
+  <title>Java集合-基础知识梳理 | Yunz's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yunz's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点点</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/01/07/Java集合-基础知识梳理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yunz's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java集合-基础知识梳理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-07T20:08:47+08:00">
+                2017-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>前面那篇面试总结的第二部分强调了Java集合的细节问题，这部分当时只是简单看了下用法，没有思考细节问题，还是得好好分析一下。</p>
+</blockquote>
+<p>本系列文章主要参考李刚《Java程序员的基本素养》和谢宇《Java特种兵》，写得挺好，推荐一下。</p>
+<p>本文主要对 Java 集合的基础知识进行梳理，后面陆续会谈一些细节性问题。</p>
+<a id="more"></a>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先还是让先我们对 Java 集合的大体框架有初步的认识。如下图所示：</p>
+<p><img src="/2017/01/07/Java集合-基础知识梳理/Java集合框架.png" alt=""></p>
+<ul>
+<li>Collection 接口是集合类的根接口，Java 中没有提供这个接口的直接的实现类。但是却让其被继承产生了两个接口，就是 Set 和 List。Set 中不能包含重复的元素。List 是一个有序的集合，可以包含重复的元素，提供了按索引访问的方式。Array 是 Java 提供的队列实现，有些类似于 List。</li>
+<li>Map 是 Java.util 包中的另一个接口，它和 Collection 接口没有关系，是相互独立的，但是都属于集合类的一部分。Map 包含了 key-value 对。Map 不能包含重复的 key，但是可以包含相同的 value。</li>
+<li>Iterator，所有的集合类，都实现了 Iterator 接口，这是一个用于遍历集合中元素的接口，主要包含以下四种方法：<ul>
+<li>boolean hasNext() 是否还有下一个元素。</li>
+<li>Object next() 返回下一个元素。</li>
+<li>void remove() 删除当前元素。</li>
+<li>void forEachRemaining(Consumer action)  Java8新增的默认方法，可以使用 Lambda 表达式来遍历集合元素。</li>
+</ul>
+</li>
+</ul>
+<h3 id="集合的特点"><a href="#集合的特点" class="headerlink" title="集合的特点"></a>集合的特点</h3><ul>
+<li>集合中的每一个元素都是对象，存储的实际上是对象的引用。</li>
+<li>集合长度可扩展，并且是自动的。</li>
+<li>根据数据结构的不同，集合分为很多种，每一种都有各自的特点。</li>
+<li>集合的最上层是 Collection 接口，集合最基本的增删改查方法均在该接口中有所体现。</li>
+<li>集合中如果没有使用泛型，则默认存储的是 Object 类，所有的对象均向上转型存入集合，取出使用时需要向下转型，并可能有类型转换异常。所以建议配合泛型使用集合。</li>
+</ul>
+<h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><ul>
+<li><p>添加<br>boolean  add(E e)<br>boolean  addAll(Collection&lt;? extends E&gt; c)</p>
+</li>
+<li><p>删除<br>boolean  remove(Object o)<br>boolean  removeAll(Collection&lt;?&gt; c)<br>boolean  retainAll(Collection&lt;?&gt; c)</p>
+</li>
+<li><p>判断是否包含<br>boolean  contains(Object o)<br>boolean  containsAll(Collection&lt;?&gt; c)</p>
+</li>
+<li><p>清空<br>void  clear()</p>
+</li>
+<li><p>获取迭代器<br>Iterator<e>  iterator()</e></p>
+</li>
+<li><p>判断空和获取大小<br>boolean  isEmpty()<br>int  size()</p>
+</li>
+<li><p>将集合转换为数组</p>
+<p>Object[] toArray()</p>
+</li>
+</ul>
+<p>先分别简单介绍一下 Set 和Map 集合。</p>
+<h2 id="Set-集合"><a href="#Set-集合" class="headerlink" title="Set 集合"></a>Set 集合</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>Set 集合中的元素是唯一的，不可重复（取决于 hashCode 和 equals 方法），也就是说具有唯一性。<br>Set 集合中元素不保证存取顺序，并不存在索引。</p>
+<h3 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h3><p>Collection</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">|--Set：元素唯一，不保证存取顺序，只可以用迭代器获取元素。</div><div class="line"></div><div class="line">    |--HashSet：哈希表结构，非线程安全，查询速度较快。元素唯一性取决于 hashCode 和 equals 方法。</div><div class="line">    </div><div class="line">        |--LinkedHashSet：带有双向链表的哈希表结构，非线程安全，保持存取顺序，保持了查询速度较快特点。</div><div class="line">        </div><div class="line">    |--TreeSet：平衡排序二叉树（红黑树）结构，非线程安全，按自然排序或比较器存入元素以保证元素有序。</div><div class="line">                元素唯一性取决于 ComparaTo 方法或 Comparator 比较器。</div></pre></td></tr></table></figure>
+<h3 id="常用方法-1"><a href="#常用方法-1" class="headerlink" title="常用方法"></a>常用方法</h3><p>Set 集合的方法和 Collection 集合的方法几乎一致。</p>
+<h2 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h2><h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>元素具有唯一性，取决于 hashCode 和 equals 方法。</li>
+<li>元素不保证存取顺序。</li>
+<li>由于采用哈希表数据结构，所以查询较快。</li>
+<li>与 List 一样，建议使用多态的方式，创建 HashSet 集合并使用 Set 接口方法。</li>
+</ul>
+<h3 id="关于-hashCode-和-equals-方法"><a href="#关于-hashCode-和-equals-方法" class="headerlink" title="关于 hashCode 和 equals 方法"></a>关于 hashCode 和 equals 方法</h3><ul>
+<li>在以哈希表为数据结构的容器中，其存放地址取决于 hashCode 方法计算的值，如果 hashCode 的值相同，则用 equals 方法判断是否相同，如果都相同则判定为相同元素。</li>
+<li>在以哈希表为数据结构的容器使用过程中，已经加入的元素不可以变更 hashCode 方法所依赖的域的值，否则会导致元素 hashCode 值已变化，但是其在容器中的位置却没有变化，后果是接下来的 remove 等操作将因为无法找到该元素而移除失败，进一步导致内存泄露。</li>
+</ul>
+<p>HashSet 集合判断两个元素相等的标准是：两个对象通过 equals() 方法比较相等，并且 hashCode() 方法返回值也相等。</p>
+<h2 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h2><h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>HashSet 集合具有的优点 LinkedHashSet 集合都具有。</li>
+<li>LinkedHashSet 集合在 HashSet 查询速度快的前提下，能够保持元素存取顺序。</li>
+</ul>
+<h2 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h2><h3 id="特点-3"><a href="#特点-3" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>元素具有唯一性，取决于 Comparable.compareTo 方法或比较器 Comparator。</li>
+<li>元素不保证存取顺序。</li>
+<li><strong>由于采用平衡排序二叉树，所以保存的元素均有序。</strong></li>
+<li>与 List 一样，建议使用多态的方式，创建 TreeSet 集合并使用 Set 接口方法。</li>
+<li>创建 TreeSet 集合时，必须保证元素已经实现 Comparable 接口或者传入比较器 Comparator。</li>
+</ul>
+<h3 id="比较器"><a href="#比较器" class="headerlink" title="比较器"></a>比较器</h3><ol>
+<li><p>Comparable 接口</p>
+<p>自定义类如果实现该接口，那么重写该接口唯一的方法 compareTo(E)，可以让该类具有可比较性。</p>
+</li>
+<li><p>Comparator 接口</p>
+<p>实现该接口的类被称之为比较器，一般只具有一个方法，就是重写的这个接口的 compare(E o1, E o2) 方法，实现两个对象之间的比较。</p>
+<p>TreeSet 集合判断两个对象相等的唯一标准是：两个对象通过 compareTo() 方法比较返回值是否为 0，如果是，则认为它们相等。</p>
+</li>
+</ol>
+<p><strong>如果希望 TreeSet 正常工作，TreeSet 只能添加同一类型的对象。</strong></p>
+<h2 id="EnumSet"><a href="#EnumSet" class="headerlink" title="EnumSet"></a>EnumSet</h2><h3 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>EnumSet 是专门为枚举类设计的集合类，其中所有元素必须是指定枚举类型的枚举值。</li>
+<li>EnumSet 在内部以位向量的形式存储，运行效率高。</li>
+<li>EnumSet 不允许加入 null 元素。</li>
+</ul>
+<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><ul>
+<li>HashSet 的性能总是优于 TreeSet，因为 TreeSet 需要额外的红黑树来维护集合元素的次序。</li>
+<li>LinkedHashSet 对于普通的插入删除操作要慢于 HashSet，因为要维护链表，但也因此遍历更快。</li>
+<li>EnumSet 性能最优，但只能保存同一枚举类的枚举值为集合元素。</li>
+<li>Set 的三个实现类都是线程不安全的。多线程操作 Set 集合时，需要手动保证同步性。</li>
+</ul>
+<p>好了，说完 Set 让我们开始聊 Map，为什么 Map 会和 Set 放在一起呢？让我们先看一张图</p>
+<p><img src="/2017/01/07/Java集合-基础知识梳理/比较.jpg" alt=""></p>
+<p>比较 Set 和 Map 部分，发现没有？继承结构很相似。这种相似性肯定是有原因的，这点我们后面会说到。</p>
+<h2 id="Map-集合"><a href="#Map-集合" class="headerlink" title="Map 集合"></a>Map 集合</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><p>Map<k, v=""> 集合是一个接口，和 Collection 集合不同的是，它是双列集合，也就是说它所存储的是键值对。</k,></p>
+<h3 id="特点-5"><a href="#特点-5" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>Map 集合存储的是键值对，其中键要求唯一。</li>
+<li>Map 集合的键对应一个值，值不要求唯一，但是一个键不能对应对个值。</li>
+<li>Map 集合没有 Iterator 迭代器，如果需要迭代需要转化为单列集合间接迭代。</li>
+</ul>
+<h3 id="继承关系-1"><a href="#继承关系-1" class="headerlink" title="继承关系"></a>继承关系</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Map</div><div class="line"></div><div class="line">|--Hashtable：哈希表结构，不保证存取顺序，不允许 null 键或者 null 值，线程安全，效率较低，已被 HashMap 替代</div><div class="line"></div><div class="line">	|--Propertise：键值对均是 String 类型的 Map 集合，包括直接对流操作的方法，专为配置文件而生</div><div class="line"></div><div class="line">|--HashMap：哈希表结构，不保证存取顺序，允许 null 键和 null 值，非线程安全，效率较高</div><div class="line"></div><div class="line">	|--LinkedHashMap：带双向链表的哈希表结构，保持存取顺序，允许 null 键和 null 值，非线程安全，效率较高。</div><div class="line"></div><div class="line">|--TreeMap：平衡排序二叉树（红黑树）结构，按自然排序或比较器存入元素以保证元素有序，非线程安全。</div></pre></td></tr></table></figure>
+<p>元素唯一性取决于 ComparaTo 方法或 Comparator 比较器。</p>
+<h3 id="常用方法-2"><a href="#常用方法-2" class="headerlink" title="常用方法"></a>常用方法</h3><p>Map 集合的方法一部分和 Set 集合类似。</p>
+<ul>
+<li>添加键值对<br>V  put(K key, V value)</li>
+<li>根据键获取值<br>V  get(Object key)</li>
+<li>判断是否包含键或者值<br>boolean  containsKey(Object key)<br>boolean  containsValue(Object value)</li>
+<li>删除对应键值对<br>V  remove(Object key)<br>default boolean  remove(Object key, Object value)</li>
+<li>替换新值<br>default V  replace(K key, V value) // 返回老值<br>default boolean  replace(K key, V oldValue, V newValue)</li>
+<li>获取 entrySet（包含所有键值对的 Map 对象的 Set 集合）<br>Set<map.entry<k,v>&gt;  entrySet()</map.entry<k,v></li>
+<li>获取包含所有键的 Set 集合<br>Set<k>  keySet()</k></li>
+<li>获取包含所有值的 Collection 集合<br>Collection<v>  values()</v></li>
+</ul>
+<p>Map.Entry 是 Map 接口中的内部接口，因为依托 Map 集合存在而存在，并且由于该接口能够获取 Map 集合中的所有键值对，所以定义在内部。</p>
+<h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><ul>
+<li>使用 entrySet 集合</li>
+<li>使用 keySet 集合</li>
+</ul>
+<h2 id="HashMap-amp-TreeMap"><a href="#HashMap-amp-TreeMap" class="headerlink" title="HashMap &amp; TreeMap"></a>HashMap &amp; TreeMap</h2><h3 id="特点-6"><a href="#特点-6" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>其方法和思想均和 HashSet 以及 TreeSet 高度类似，可以参照。</li>
+<li>HashMap 的键保持唯一性，取决于 hashCode 以及 equals 方法。<br>TreeMap 的键保持唯一性，取决于比较方法和比较器。</li>
+</ul>
+<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><h3 id="特点-7"><a href="#特点-7" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>Properties 集合表示了一个持久的属性集。</li>
+<li>Properties 集合键值对均是 String 类型。</li>
+<li>Properties 集合可以直接从一个流中读取数据，也可以直接保存到一个流中。</li>
+<li>强烈建议 Properties 集合只存储 String 类型的数据，尽管可以利用其父类方法存储其他类型数据。</li>
+</ul>
+<h3 id="常用方法-3"><a href="#常用方法-3" class="headerlink" title="常用方法"></a>常用方法</h3><ul>
+<li><p>添加属性值</p>
+<p>Object  setProperty(String key, String value)</p>
+</li>
+<li><p>获取属性值</p>
+<p>String  getProperty(String key)<br>String  getProperty(String key, String defaultValue)</p>
+</li>
+<li><p>获取所有属性</p>
+<p>Set<string>  stringPropertyNames()</string></p>
+</li>
+<li><p>打印所有属性和属性值</p>
+<p>void  list(PrintStream out)<br>void  list(PrintWriter out)</p>
+</li>
+<li><p>将属性集存储到流中（可以使用 XML 方式）</p>
+<p>void  store(OutputStream out, String comments)<br>void  store(Writer writer, String comments)<br>void  storeToXML(OutputStream os, String comment)<br>void  storeToXML(OutputStream os, String comment, String encoding)</p>
+</li>
+<li><p>从流中读取属性集（可以使用 XML 方式）</p>
+<p>void  load(InputStream inStream)<br>void  load(Reader reader)<br>void  loadFromXML(InputStream in)</p>
+<p>​</p>
+</li>
+</ul>
+<p>现在我们谈谈 Set 和 Map 的关系。</p>
+<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>Set 和 Map 之间的关系非常密切。虽然 Map 中存放的元素是 key-value 对，Set 中放的元素是单个对象，但如果把 key-value 对中的 value 当成 key 的附庸，那么就可以像对待 Set 一样对待 Map 了。</p>
+<p>事实上， Map 提供了一个 Entry 内部类来封装 key-value 对，而计算 Entry 存储时只考虑 Entry 封装的 key。</p>
+<p>从 Java 源码来看，Java 是先实现了 Map，然后通过包装一个所有 value 值都为 null 的 Map 就实现了 Set 集合。</p>
+<h2 id="List-集合"><a href="#List-集合" class="headerlink" title="List 集合"></a>List 集合</h2><h3 id="特点-8"><a href="#特点-8" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>List 集合支持修改方法，该方法 Collection 不具备。</li>
+<li>List 集合中元素按存取顺序存储，即保持存取顺序。</li>
+<li>List 集合是自带索引的，所以除了迭代器获取元素方法外，还可以使用遍历 + get(int index) 方法来获取元素。</li>
+<li>List 集合元素可重复。</li>
+</ul>
+<h3 id="继承关系-2"><a href="#继承关系-2" class="headerlink" title="继承关系"></a>继承关系</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Collection</div><div class="line"></div><div class="line">|--List</div><div class="line"></div><div class="line">	|--ArrayList：数组结构，非线程安全，查询较快，增删较慢。</div><div class="line"></div><div class="line">	|--LinkedList：双向链表结构，非线程安全，增删较快，查询较慢（按序号索引数据需要进行向前或向后遍历）。</div><div class="line"></div><div class="line">	|--Vector：数组结构，线程安全，效率较低，已被 ArrayList 替代。</div><div class="line"></div><div class="line">		|--Stack：栈</div></pre></td></tr></table></figure>
+<h3 id="常用方法-4"><a href="#常用方法-4" class="headerlink" title="常用方法"></a>常用方法</h3><p>由于继承了Collection 接口，所以可以使用 Collection 接口的所有方法。又因为 List 是有序集合，所以额外增加了一些根据索引操作集合的方法。</p>
+<ul>
+<li><p>插入元素</p>
+<p>void  add(int index, E element)<br>boolean  addAll(int index, Collection&lt;? extends E&gt; c)</p>
+</li>
+<li><p>按索引获取元素</p>
+<p>​E  get(int index)</p>
+</li>
+<li><p>获取指定元素的索引</p>
+<p>int  indexOf(Object o)<br>int  lastIndexOf(Object o)</p>
+</li>
+<li><p>获取 ListIterator 迭代器</p>
+<p>ListIterator<e>  listIterator()</e></p>
+</li>
+<li><p>按索引删除元素</p>
+<p>E  remove(int index)</p>
+</li>
+<li><p>修改元素</p>
+<p>E  set(int index, E element)</p>
+</li>
+<li><p>对元素排序，需要元素实现 Comparator 接口以具有可比性</p>
+<p>default void  sort(Comparator&lt;? super E&gt; c)</p>
+</li>
+<li><p>按索引获取子集合</p>
+<p>List<e>  subList(int fromIndex, int toIndex)</e></p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="listIterator-迭代器"><a href="#listIterator-迭代器" class="headerlink" title="listIterator 迭代器"></a>listIterator 迭代器</h2><h3 id="常用方法-5"><a href="#常用方法-5" class="headerlink" title="常用方法"></a>常用方法</h3><ul>
+<li><p>添加元素</p>
+<p>void  add(E e)</p>
+</li>
+<li><p>判断集合中是否有下一个元素</p>
+<p>boolean  hasNext()</p>
+</li>
+<li><p>判断集合中是否有上一个元素</p>
+<p>boolean  hasPrevious()</p>
+</li>
+<li><p>获取下一个元素</p>
+<p>E  next()</p>
+</li>
+<li><p>获取下一个元素的索引</p>
+<p>int  nextIndex()</p>
+</li>
+<li><p>获取上一个元素</p>
+<p>E  previous()</p>
+</li>
+<li><p>获取上一个元素的索引</p>
+<p>int  previousIndex()</p>
+</li>
+<li><p>移除元素</p>
+<p>void  remove()</p>
+</li>
+<li><p>修改元素</p>
+<p>void  set(E e)</p>
+</li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ul>
+<li><p>Iterator 迭代器中只有获取方法，没有增删改方法。而 ListIterator 支持增删改操作，并支持向前遍历。</p>
+</li>
+<li><p>在迭代过程中，使用了集合的方法对元素进行操作，导致迭代器并不知道集合中的变化，引发数据的不确定性。<br>例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (Iterator it = list.iterator(); it.hasNext();) &#123;  </div><div class="line">	<span class="keyword">if</span> (<span class="string">"heima2"</span>.equals(it.next())) &#123;    </div><div class="line">		list.add(<span class="string">"java"</span>);  </div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>报 java.util.ConcurrentModificationException 异常。<br>所以在迭代时，不要使用集合的方法操作元素，可以使用迭代器的方法操作。ListIterator 支持增删改可以解决该问题。<br>注意：该列表迭代器只有 List 接口有，而且这个迭代器可以完成在迭代过程中的增删改查动作。</p>
+</li>
+<li><p>迭代过程中，增删改动作最多只能有 1 个，不可以两个同时进行。否则迭代器迭代序列可能出错，报 java.lang.IllegalStateException 异常。</p>
+</li>
+</ul>
+<h2 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h2><h3 id="特点-9"><a href="#特点-9" class="headerlink" title="特点"></a>特点</h3><p>是 List 接口的实现类，用以替代 Vector 集合，并且具有比后者更高的效率，但是不保证线程安全。</p>
+<h3 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h3><ul>
+<li>List 是接口，ArrayList 是实现类。</li>
+<li>一般使用多态的方式创建集合，如：<br>List<e> list = new ArrayList<e>();<br>这样使得集合具有更高的适用性。</e></e></li>
+</ul>
+<h2 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h2><h3 id="特点-10"><a href="#特点-10" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>是 List 接口的实现类，双向链表结构，所以增删效率较高，可以用以实现队列或栈的数据结构。</li>
+<li>LinkedList 动作特点均可以围绕头和尾展开。</li>
+</ul>
+<h3 id="队列实现"><a href="#队列实现" class="headerlink" title="队列实现"></a>队列实现</h3><p>特点是先进先出 FIFO 数据结构，可以选择头插尾取，也可以选择尾插头取。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> collection.structure;</div><div class="line"> </div><div class="line"><span class="keyword">import</span> java.util.LinkedList;</div><div class="line"><span class="keyword">import</span> java.util.ListIterator;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Queue</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">  <span class="keyword">private</span> LinkedList&lt;E&gt; link;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Queue</span><span class="params">()</span> </span>&#123;</div><div class="line">    link = <span class="keyword">new</span> LinkedList&lt;E&gt;();</div><div class="line">  &#125;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> link.isEmpty();</div><div class="line">  &#125;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> (ListIterator&lt;E&gt; it = link.listIterator(link .size()); it .hasPrevious();) &#123;</div><div class="line">      System.out.println( it.previous());</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enQueue</span><span class="params">(E obj)</span> </span>&#123;</div><div class="line">    link.addFirst( obj);</div><div class="line">  &#125;</div><div class="line"> </div><div class="line">  <span class="function"><span class="keyword">public</span> E <span class="title">deQueue</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> link.removeLast();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="栈实现"><a href="#栈实现" class="headerlink" title="栈实现"></a>栈实现</h3><p>特点是先进后出 FILO 数据结构，可以选择头插头取，也可以选择尾插尾取。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> collection.structure;</div><div class="line"> </div><div class="line"><span class="keyword">import</span> java.util.LinkedList;</div><div class="line"><span class="keyword">import</span> java.util.ListIterator;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Stack</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> LinkedList&lt;E&gt; link;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Stack</span><span class="params">()</span> </span>&#123;</div><div class="line">        link = <span class="keyword">new</span> LinkedList&lt;E&gt;();</div><div class="line">    &#125;</div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> link .isEmpty();</div><div class="line">    &#125;</div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (ListIterator&lt;E&gt; it = link.listIterator(link .size()); it .hasPrevious();) &#123;</div><div class="line">            System. out.println(it .previous());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(E obj)</span> </span>&#123;</div><div class="line">        link.addFirst( obj);</div><div class="line">    &#125;</div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">pop</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> link.removeFirst ();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Vector"><a href="#Vector" class="headerlink" title="Vector"></a>Vector</h2><p>只需要知道其是线程安全的即可，由于比较古老，性能较差，目前已被 ArrayList 取代。</p>
+<p>事实上，即使在需要保证 List 集合线程安全的情况下，我们也不推荐使用 Vector 实现类，Collections 工具类可以将一个 ArrayList 变成线程安全的。</p>
+<h3 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h3><p>Vector 提供了一个 Stack 子类，用于模拟栈。</p>
+<p>由于其继承了 Vector ，所以它也是一个古老的集合类，线程安全但性能较差。目前也已经被 ArrayDeque 取代。</p>
+<h2 id="Deque-集合类"><a href="#Deque-集合类" class="headerlink" title="Deque 集合类"></a>Deque 集合类</h2><h3 id="Deque"><a href="#Deque" class="headerlink" title="Deque"></a>Deque</h3><h3 id="ArrayDeque"><a href="#ArrayDeque" class="headerlink" title="ArrayDeque"></a>ArrayDeque</h3><h3 id="LinkedList-1"><a href="#LinkedList-1" class="headerlink" title="LinkedList"></a>LinkedList</h3><h2 id="线性表性能分析"><a href="#线性表性能分析" class="headerlink" title="线性表性能分析"></a>线性表性能分析</h2><p>一般来说，由于数组以一块连续内存区域来保存所有的数组元素，所以数组在随机访问时性能最好。</p>
+<ul>
+<li>所有内部以数组作为底层实现的集合在随机访问时性能都比较好。</li>
+<li>内部以链表作为底层实现的集合在执行插入、删除操作时有比较好的性能。</li>
+</ul>
+<p>但总体来说，ArrayList 的性能比 LinkedList 的性能要好，因此大部分时候应考虑使用 ArrayList。</p>
+<h2 id="使用建议"><a href="#使用建议" class="headerlink" title="使用建议"></a>使用建议</h2><ul>
+<li>如果需要遍历 List 集合元素，对于 ArrayList、Vector 集合，应该使用随机访问方法（get）来遍历集合元素；对于 LinkedList 集合，则应该采用迭代器（Iterator）来遍历。</li>
+<li>如果经常要执行插入 、删除操作来改变包含大量数据的 List 集合的大小，可以考虑使用 LinkedList。</li>
+<li>如果有多个线程需要同时访问 List 集合元素，可以考虑使用 Collections 工具类将集合包装成线程安全的集合。</li>
+</ul>
+<p>OK，终于写完了，开心！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/28/设计模式-建造者模式-原型模式/" rel="next" title="设计模式-建造者模式&原型模式">
+                <i class="fa fa-chevron-left"></i> 设计模式-建造者模式&原型模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/11/Git-学习/" rel="prev" title="Git 学习">
+                Git 学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Yunz" />
+          <p class="site-author-name" itemprop="name">Yunz</p>
+           
+              <p class="site-description motion-element" itemprop="description">编程、技术、生活</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yunz93" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/mahe3" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/mahe93" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-circle-o"></i>
+                  
+                    
+                      zhihu
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#集合的特点"><span class="nav-number">1.1.</span> <span class="nav-text">集合的特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Collection"><span class="nav-number">2.</span> <span class="nav-text">Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法"><span class="nav-number">2.1.</span> <span class="nav-text">常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-集合"><span class="nav-number">3.</span> <span class="nav-text">Set 集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">3.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继承关系"><span class="nav-number">3.2.</span> <span class="nav-text">继承关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法-1"><span class="nav-number">3.3.</span> <span class="nav-text">常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashSet"><span class="nav-number">4.</span> <span class="nav-text">HashSet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-1"><span class="nav-number">4.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于-hashCode-和-equals-方法"><span class="nav-number">4.2.</span> <span class="nav-text">关于 hashCode 和 equals 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedHashSet"><span class="nav-number">5.</span> <span class="nav-text">LinkedHashSet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-2"><span class="nav-number">5.1.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeSet"><span class="nav-number">6.</span> <span class="nav-text">TreeSet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-3"><span class="nav-number">6.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较器"><span class="nav-number">6.2.</span> <span class="nav-text">比较器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EnumSet"><span class="nav-number">7.</span> <span class="nav-text">EnumSet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-4"><span class="nav-number">7.1.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能分析"><span class="nav-number">8.</span> <span class="nav-text">性能分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map-集合"><span class="nav-number">9.</span> <span class="nav-text">Map 集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述-1"><span class="nav-number">9.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-5"><span class="nav-number">9.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继承关系-1"><span class="nav-number">9.3.</span> <span class="nav-text">继承关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法-2"><span class="nav-number">9.4.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代"><span class="nav-number">9.5.</span> <span class="nav-text">迭代</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap-amp-TreeMap"><span class="nav-number">10.</span> <span class="nav-text">HashMap & TreeMap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-6"><span class="nav-number">10.1.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Properties"><span class="nav-number">11.</span> <span class="nav-text">Properties</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-7"><span class="nav-number">11.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法-3"><span class="nav-number">11.2.</span> <span class="nav-text">常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联系"><span class="nav-number">12.</span> <span class="nav-text">联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List-集合"><span class="nav-number">13.</span> <span class="nav-text">List 集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-8"><span class="nav-number">13.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继承关系-2"><span class="nav-number">13.2.</span> <span class="nav-text">继承关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法-4"><span class="nav-number">13.3.</span> <span class="nav-text">常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#listIterator-迭代器"><span class="nav-number">14.</span> <span class="nav-text">listIterator 迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法-5"><span class="nav-number">14.1.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">14.2.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ArrayList"><span class="nav-number">15.</span> <span class="nav-text">ArrayList</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-9"><span class="nav-number">15.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意-1"><span class="nav-number">15.2.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedList"><span class="nav-number">16.</span> <span class="nav-text">LinkedList</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-10"><span class="nav-number">16.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列实现"><span class="nav-number">16.2.</span> <span class="nav-text">队列实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈实现"><span class="nav-number">16.3.</span> <span class="nav-text">栈实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vector"><span class="nav-number">17.</span> <span class="nav-text">Vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stack"><span class="nav-number">17.1.</span> <span class="nav-text">Stack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deque-集合类"><span class="nav-number">18.</span> <span class="nav-text">Deque 集合类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Deque"><span class="nav-number">18.1.</span> <span class="nav-text">Deque</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayDeque"><span class="nav-number">18.2.</span> <span class="nav-text">ArrayDeque</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedList-1"><span class="nav-number">18.3.</span> <span class="nav-text">LinkedList</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性表性能分析"><span class="nav-number">19.</span> <span class="nav-text">线性表性能分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用建议"><span class="nav-number">20.</span> <span class="nav-text">使用建议</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yunz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+    由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+  </div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">
+    主题 &mdash;
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+      NexT.Pisces
+    </a>
+  </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

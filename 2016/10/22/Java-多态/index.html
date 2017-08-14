@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java 基础," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="博客建了好些天了，不知道写些啥，最近 Java 学得有些头大，转载点东西吧==  本段来源于知乎的一个回答，思路比较清晰，例子也比较好，记录一下。原文链接 &amp;gt;&amp;gt;&amp;gt; https://www.zhihu.com/question/30082151/answer/120520568 何为多态？用一句话概括就是：事物在运行过程中存在不同的状态。 多态的存在有三个前提:  要有继承关系">
+<meta name="keywords" content="Java 基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 多态">
+<meta property="og:url" content="http://blog.yunz.space/2016/10/22/Java-多态/index.html">
+<meta property="og:site_name" content="Yunz&#39;s Blog">
+<meta property="og:description" content="博客建了好些天了，不知道写些啥，最近 Java 学得有些头大，转载点东西吧==  本段来源于知乎的一个回答，思路比较清晰，例子也比较好，记录一下。原文链接 &amp;gt;&amp;gt;&amp;gt; https://www.zhihu.com/question/30082151/answer/120520568 何为多态？用一句话概括就是：事物在运行过程中存在不同的状态。 多态的存在有三个前提:  要有继承关系">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.yunz.space/2016/10/22/Java-多态/多态01.png">
+<meta property="og:image" content="http://blog.yunz.space/2016/10/22/Java-多态/多态Error.png">
+<meta property="og:image" content="http://blog.yunz.space/2016/10/22/Java-多态/多态02.png">
+<meta property="og:updated_time" content="2017-08-14T07:44:23.310Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 多态">
+<meta name="twitter:description" content="博客建了好些天了，不知道写些啥，最近 Java 学得有些头大，转载点东西吧==  本段来源于知乎的一个回答，思路比较清晰，例子也比较好，记录一下。原文链接 &amp;gt;&amp;gt;&amp;gt; https://www.zhihu.com/question/30082151/answer/120520568 何为多态？用一句话概括就是：事物在运行过程中存在不同的状态。 多态的存在有三个前提:  要有继承关系">
+<meta name="twitter:image" content="http://blog.yunz.space/2016/10/22/Java-多态/多态01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    tabs: ,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.yunz.space/2016/10/22/Java-多态/"/>
+
+
+
+
+
+  <title>Java 多态 | Yunz's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yunz's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点点</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2016/10/22/Java-多态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yunz's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 多态</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-22T22:12:55+08:00">
+                2016-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>博客建了好些天了，不知道写些啥，最近 Java 学得有些头大，转载点东西吧==</p>
+</blockquote>
+<p>本段来源于知乎的一个回答，思路比较清晰，例子也比较好，记录一下。原文链接 &gt;&gt;&gt; <a href="https://www.zhihu.com/question/30082151/answer/120520568" target="_blank" rel="external">https://www.zhihu.com/question/30082151/answer/120520568</a></p>
+<h2 id="何为多态？"><a href="#何为多态？" class="headerlink" title="何为多态？"></a>何为多态？</h2><p>用一句话概括就是：<strong>事物在运行过程中存在不同的状态。</strong></p>
+<p>多态的存在有<strong>三个前提</strong>:</p>
+<ul>
+<li><strong>要有继承关系</strong></li>
+<li><strong>子类要重写父类的方法</strong></li>
+<li><strong>父类引用指向子类对象</strong></li>
+</ul>
+<p>但是其中又有很多细节需要注意。首先我们定义两个类，一个父类 Animal，一个子类 Cat。<br><strong>父类 Animal</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> num = <span class="number">10</span>;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">int</span> age = <span class="number">20</span>;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"动物吃饭"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"动物在睡觉"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"动物在奔跑"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>子类 Cat</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> num = <span class="number">80</span>;</div><div class="line">	<span class="keyword">static</span> <span class="keyword">int</span> age = <span class="number">90</span>;</div><div class="line">    String name = <span class="string">"tomCat"</span>;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"猫吃饭"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"猫在睡觉"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">catchMouse</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"猫在抓老鼠"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>测试类 Demo_Test1</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo_Test1</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;	</div><div class="line">		Animal am = <span class="keyword">new</span> Cat();</div><div class="line">		am.eat();</div><div class="line">		am.sleep();</div><div class="line">		am.run();</div><div class="line">      	<span class="comment">//am.catchMouse();这里先注释掉，等会会说明</span></div><div class="line">      	<span class="comment">//System.out.println(am.name);//这里先注释，待会说明</span></div><div class="line">      	System.out.println(am.num);</div><div class="line">      	System.out.println(am.age);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上的三段代码充分体现了多态的三个前提，即：<br><strong>1、存在继承关系</strong><br>Cat 类继承了 Animal 类<br><strong>2、子类要重写父类的方法</strong><br>子类重写 (override) 了父类的两个成员方法 eat()，sleep()。其中 eat() 是非静态的，sleep() 是静态的（static）。<br><strong>3、父类数据类型的引用指向子类对象。</strong><br>测试类 Demo_Test1 中<strong>Animal am = new Cat();</strong> 语句在堆内存中开辟了子类 (Cat) 的对象，并把栈内存中的父类 (Animal) 的引用指向了这个 Cat 对象。<br>到此，满足了 Java 多态的的必要三个前提。</p>
+<p>如果再深究一点呢，我们可以看看上面测试类的输出结果，或许对多态会有更深层次的认识。猜一猜上面的结果是什么。<br> <img src="/2016/10/22/Java-多态/多态01.png" alt=""></p>
+<p>可以看出来：</p>
+<ul>
+<li>子类 Cat 重写了父类 Animal 的非静态成员方法 am.eat(); 的输出结果为：猫吃饭。</li>
+<li>子类重写了父类 (Animal) 的静态成员方法 am.sleep(); 的输出结果为：动物在睡觉</li>
+<li>未被子类（Cat）重写的父类（Animal）方法 am.run() 输出结果为：动物在奔跑</li>
+<li>System.out.println(am.num);   //输出结果为10</li>
+<li>System.out.println(am.age);    //输出结果为20</li>
+</ul>
+<p>那么我们可以根据以上情况总结出多态成员访问的特点：</p>
+<ul>
+<li><p><strong>成员变量</strong></p>
+<p>编译看左边 (父类)，运行看左边 (父类)。</p>
+</li>
+<li><p><strong>成员方法</strong></p>
+<p>编译看左边 (父类)，运行看右边 (子类)。动态绑定</p>
+</li>
+<li><p><strong>静态方法</strong></p>
+<p>编译看左边 (父类)，运行看左边 (父类)。<br>(静态和类相关，算不上重写，所以，访问还是左边的)</p>
+</li>
+<li><p><strong>只有非静态的成员方法, 编译看左边, 运行看右边 </strong></p>
+</li>
+</ul>
+<p>————————————————— 华丽的分割线 ———————————————————————-<br>那么多态有什么弊端呢？有的，即多态后不能使用子类特有的属性和方法。往上面的代码看，子类 Cat 有一个特有的属性 String name = “tomCat”; 并且还有一个特有的抓老鼠的方法 catchMouse()。但是在测试类（Demo_Test）中，我们尝试调用子类特有的方法 catchMouse() 和打印子类特有的成员属性 String name = “tomCat”; 就会报错。<br><img src="/2016/10/22/Java-多态/多态Error.png" alt=""></p>
+<p><strong>原因就是多态的弊端，就是：不能使用子类特有的成员属性和子类特有的成员方法。</strong></p>
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><p>如果在代码执行过程中还想使用 Cat 类中特有的属性 String name 和它特有的成员方法 catchMouse() 了怎么办呢？</p>
+<p>那我们就可以把这个父类引用指向了子类对象的家伙 am 再强制变回 Cat 类型。这样 am 就是 Cat 类型的引用了，指向的也是 Cat 对象了，自然也能使用 Cat 类的一切属性和一切的成员方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo01</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        Animal am = <span class="keyword">new</span> Cat();</div><div class="line">        am.eat();</div><div class="line">        am.sleep();</div><div class="line">        am.run();</div><div class="line"><span class="comment">//	am.catchMouse();</span></div><div class="line"><span class="comment">//	System.out.println(am.name);</span></div><div class="line">        System.out.println(am.num);</div><div class="line">        System.out.println(am.age);</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"------------------------------"</span>);</div><div class="line">        Cat ct = (Cat)am;</div><div class="line">        ct.eat();</div><div class="line">        ct.sleep();</div><div class="line">        ct.run();</div><div class="line">        ct.catchMouse();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="/2016/10/22/Java-多态/多态02.png" alt=""></p>
+<p>很明显，执行强转语句 <code>Cat ct = (Cat)am;</code> 之后，ct 就指向最开始在堆内存中创建的那个 Cat 类型的对象了。这就是多态的魅力吧，虽然它有缺点，但是它确实十分灵活，减少多余对象的创建，不用说为了使用子类的某个方法又去重新再堆内存中开辟一个新的子类对象。</p>
+<p>以上。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java-基础/" rel="tag"># Java 基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/11/Linux下-hexo及github-pages-安装配置/" rel="next" title="Linux下 hexo及github-pages 安装配置">
+                <i class="fa fa-chevron-left"></i> Linux下 hexo及github-pages 安装配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/09/Comparable-Comparator-区别/" rel="prev" title="Comparable & Comparator 区别">
+                Comparable & Comparator 区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Yunz" />
+          <p class="site-author-name" itemprop="name">Yunz</p>
+           
+              <p class="site-description motion-element" itemprop="description">编程、技术、生活</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yunz93" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/mahe3" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/mahe93" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-circle-o"></i>
+                  
+                    
+                      zhihu
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#何为多态？"><span class="nav-number">1.</span> <span class="nav-text">何为多态？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制类型转换"><span class="nav-number">2.</span> <span class="nav-text">强制类型转换</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yunz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+    由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+  </div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">
+    主题 &mdash;
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+      NexT.Pisces
+    </a>
+  </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
