@@ -1423,16 +1423,14 @@
 
       
         
-          
-            <p>本文用来记录 Java Web 学习过程中遇到的错误以及相应的解决方法。</p>
-<h2 id="Address-already-in-use-JVM-Bind"><a href="#Address-already-in-use-JVM-Bind" class="headerlink" title="Address already in use: JVM_Bind"></a>Address already in use: JVM_Bind</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>这个错误是在我换新电脑，把原来的项目搬移到新电脑上运行的时候遇到的。</p>
-<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>tomcat 默认端口为8080端口，很明显这个端口被占用了。</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>cmd 中查看 8080 端口的占用情况 : <code>netstat -aon|findstr &quot;8080&quot;</code></p>
-<p>然后根据查询到的进程 PID ，找对应的进程：<code>tasklist|findstr &quot;PID&quot;</code></p>
-<p>发现  utorrent 占用了该端口，我们结束该进程就可以了。</p>
-<p>## </p>
-
-          
+          <p>本文用来记录 Java Web 学习过程中遇到的错误以及相应的解决方法。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/02/Java-Web错误记录/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

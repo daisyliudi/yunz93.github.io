@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="本文用来记录 Java Web 学习过程中遇到的错误以及相应的解决方法。 Address already in use: JVM_Bind问题描述这个错误是在我换新电脑，把原来的项目搬移到新电脑上运行的时候遇到的。 问题分析tomcat 默认端口为8080端口，很明显这个端口被占用了。 解决方法cmd 中查看 8080 端口的占用情况 : netstat -aon|findstr &amp;quot;80">
+<meta name="description" content="本文用来记录 Java Web 学习过程中遇到的错误以及相应的解决方法。">
 <meta name="keywords" content="Java Web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java Web 错误记录">
 <meta property="og:url" content="http://blog.yunz.space/2017/03/02/Java-Web错误记录/index.html">
 <meta property="og:site_name" content="Yunz&#39;s Blog">
-<meta property="og:description" content="本文用来记录 Java Web 学习过程中遇到的错误以及相应的解决方法。 Address already in use: JVM_Bind问题描述这个错误是在我换新电脑，把原来的项目搬移到新电脑上运行的时候遇到的。 问题分析tomcat 默认端口为8080端口，很明显这个端口被占用了。 解决方法cmd 中查看 8080 端口的占用情况 : netstat -aon|findstr &amp;quot;80">
+<meta property="og:description" content="本文用来记录 Java Web 学习过程中遇到的错误以及相应的解决方法。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-15T14:07:29.841Z">
+<meta property="og:updated_time" content="2017-08-15T14:22:01.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Web 错误记录">
-<meta name="twitter:description" content="本文用来记录 Java Web 学习过程中遇到的错误以及相应的解决方法。 Address already in use: JVM_Bind问题描述这个错误是在我换新电脑，把原来的项目搬移到新电脑上运行的时候遇到的。 问题分析tomcat 默认端口为8080端口，很明显这个端口被占用了。 解决方法cmd 中查看 8080 端口的占用情况 : netstat -aon|findstr &amp;quot;80">
+<meta name="twitter:description" content="本文用来记录 Java Web 学习过程中遇到的错误以及相应的解决方法。">
 
 
 
@@ -383,6 +383,7 @@
 
       
         <p>本文用来记录 Java Web 学习过程中遇到的错误以及相应的解决方法。</p>
+<a id="more"></a>
 <h2 id="Address-already-in-use-JVM-Bind"><a href="#Address-already-in-use-JVM-Bind" class="headerlink" title="Address already in use: JVM_Bind"></a>Address already in use: JVM_Bind</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>这个错误是在我换新电脑，把原来的项目搬移到新电脑上运行的时候遇到的。</p>
 <h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>tomcat 默认端口为8080端口，很明显这个端口被占用了。</p>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>cmd 中查看 8080 端口的占用情况 : <code>netstat -aon|findstr &quot;8080&quot;</code></p>
