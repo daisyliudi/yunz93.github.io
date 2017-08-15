@@ -1,7 +1,8 @@
 ---
 title: Java 多态
 date: 2016-10-22 22:12:55
-tags: Java 基础
+tags: 多态
+categories: Java基础
 ---
 
 > 博客建了好些天了，不知道写些啥，最近 Java 学得有些头大，转载点东西吧==

@@ -1,7 +1,8 @@
 ---
 title: Git 学习
 date: 2017-01-11 20:14:55
-tags: git
+tags: Git
+categories: 教程
 ---
 
 > 这几天折腾 hexo 的时候，解决了一件拖了很久的事情，就是把 git 基础系统地学了一遍。

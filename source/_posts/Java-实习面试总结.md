@@ -1,7 +1,8 @@
 ---
 title: Java 实习面试总结
 date: 2017-03-26 12:49:46
-tags: java
+tags: Java
+categories: 面试
 ---
 
 这是知乎专栏[【编程之路】](https://zhuanlan.zhihu.com/p/25725929)的一篇文章，感觉不错，收录一下。

@@ -1,7 +1,8 @@
 ---
 title: Linux下 hexo及github-pages 安装配置
 date: 2016-10-11 17:39:33
-tags: linux
+tags: hexo
+categories: 教程
 ---
 
 

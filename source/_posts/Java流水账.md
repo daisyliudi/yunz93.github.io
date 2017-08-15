@@ -1,7 +1,8 @@
 ---
 title: Java流水账
 date: 2017-03-30 16:57:47
-tags: java基础
+tags: Java
+categories: Java基础
 ---
 
 > 学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。

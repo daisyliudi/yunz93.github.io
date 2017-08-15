@@ -1,7 +1,8 @@
 ---
 title: Java NIO
 date: 2017-04-05 21:08:13
-tags: Java NIO
+tags: NIO
+categories: Java基础
 ---
 
 > 一个节过得都完全忘记学习了，这么嗨下去药丸，还是要加油干！@

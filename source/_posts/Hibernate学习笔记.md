@@ -1,7 +1,8 @@
 ---
 title: Hibernate学习笔记
 date: 2017-04-25 22:51:22
-tags: Java web
+tags: Hibernate
+categories: Java Web
 ---
 
 本文用以总结一下Hibernate基础知识。

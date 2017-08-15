@@ -1,7 +1,8 @@
 ---
 title: MavenSSH
 date: 2017-04-20 22:42:48
-tags: Java Web
+tags: Maven
+categories: 教程
 ---
 
 > 折腾了两天，终于弄懂了在IntelliJ idea 里用maven来配置SSH项目的流程了，记录一下，话说我是不是有一个月没写过博客了==

@@ -2,6 +2,7 @@
 title: Hibernate Unknown entity 异常
 date: 2017-04-14 00:19:51
 tags: Hibernate
+categories: Java Web
 ---
 
 > Hibernate 版本更新有点快啊，还老是改API，版本兼容问题很严重啊！

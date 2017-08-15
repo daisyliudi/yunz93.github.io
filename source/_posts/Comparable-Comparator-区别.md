@@ -1,7 +1,8 @@
 ---
 title: Comparable & Comparator 区别
 date: 2016-11-09 22:42:36
-tags: Java 基础
+tags: Java
+categories: Java基础
 ---
 
 简单来说， Comparable 相当于内比较器，一个类继承了 Comparable 接口，就意味着该类支持排序，至于比较的方法，需要重写接口的 compareTo() 方法来实现。

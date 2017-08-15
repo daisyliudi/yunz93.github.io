@@ -2,6 +2,7 @@
 title: JVM基础
 date: 2017-05-22 22:19:34
 tags: JVM
+categories: JVM
 ---
 
 本文主要写一写 JVM 基础知识，对《深入理解 JVM》一书的梳理。
