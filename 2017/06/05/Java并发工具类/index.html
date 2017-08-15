@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="并发," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="每次看校招Java岗位要求里面写，有高并发开发经验优先，我都很好奇，拥有高并发开发经验？学校的学生怎么接触到高并发开发环境？只看过几本书，校招简历里写熟悉高并发是不是有点作死？ 知乎上有这么一个问题：https://www.zhihu.com/question/21177474 大概说的是，如果暂时接触不到具体的高并发环境，可以先读些大牛的博客，了解BAT之类的公司处理高并发的业务逻辑；自己动手">
+<meta name="keywords" content="并发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java并发工具类">
+<meta property="og:url" content="http://blog.yunz.space/2017/06/05/Java并发工具类/index.html">
+<meta property="og:site_name" content="Yunz&#39;s Blog">
+<meta property="og:description" content="每次看校招Java岗位要求里面写，有高并发开发经验优先，我都很好奇，拥有高并发开发经验？学校的学生怎么接触到高并发开发环境？只看过几本书，校招简历里写熟悉高并发是不是有点作死？ 知乎上有这么一个问题：https://www.zhihu.com/question/21177474 大概说的是，如果暂时接触不到具体的高并发环境，可以先读些大牛的博客，了解BAT之类的公司处理高并发的业务逻辑；自己动手">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.yunz.space/2017/06/05/Java并发工具类/CountDownLatchDemo.png">
+<meta property="og:image" content="http://blog.yunz.space/2017/06/05/Java并发工具类/CyclicBarrierDemo.png">
+<meta property="og:image" content="http://blog.yunz.space/2017/06/05/Java并发工具类/SemaphoreDemo.png">
+<meta property="og:image" content="http://blog.yunz.space/2017/06/05/Java并发工具类/ExchangerDemo.png">
+<meta property="og:updated_time" content="2017-08-15T13:52:49.676Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java并发工具类">
+<meta name="twitter:description" content="每次看校招Java岗位要求里面写，有高并发开发经验优先，我都很好奇，拥有高并发开发经验？学校的学生怎么接触到高并发开发环境？只看过几本书，校招简历里写熟悉高并发是不是有点作死？ 知乎上有这么一个问题：https://www.zhihu.com/question/21177474 大概说的是，如果暂时接触不到具体的高并发环境，可以先读些大牛的博客，了解BAT之类的公司处理高并发的业务逻辑；自己动手">
+<meta name="twitter:image" content="http://blog.yunz.space/2017/06/05/Java并发工具类/CountDownLatchDemo.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.yunz.space/2017/06/05/Java并发工具类/"/>
+
+
+
+
+
+  <title>Java并发工具类 | Yunz's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yunz's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点点</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/06/05/Java并发工具类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yunz's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java并发工具类</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-05T11:05:54+08:00">
+                2017-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/并发/" itemprop="url" rel="index">
+                    <span itemprop="name">并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>每次看校招Java岗位要求里面写，有高并发开发经验优先，我都很好奇，拥有高并发开发经验？学校的学生怎么接触到高并发开发环境？只看过几本书，校招简历里写熟悉高并发是不是有点作死？</p>
+<p>知乎上有这么一个问题：<a href="https://www.zhihu.com/question/21177474" target="_blank" rel="external">https://www.zhihu.com/question/21177474</a></p>
+<p>大概说的是，如果暂时接触不到具体的高并发环境，可以先读些大牛的博客，了解BAT之类的公司处理高并发的业务逻辑；自己动手写些小demo，了解常用并发工具类的使用；了解如何模拟高并发环境；</p>
+</blockquote>
+<p>本文写一些常用的并发工具类的使用。</p>
+<a id="more"></a>
+<h2 id="CountDownLatch"><a href="#CountDownLatch" class="headerlink" title="CountDownLatch"></a>CountDownLatch</h2><p>CountDownLatch是一个同步倒数计数器。CountDownLatch允许一个或多个线程等待其他线程完成操作。</p>
+<p>CountDownLatch对象内部存有一个整数作为计数器。调用countDown()方法就将计数器减1，当计数到达0时，则所有等待者会停止等待。</p>
+<p>计数器的操作是原子性的。</p>
+<h3 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h3><h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><blockquote>
+<p>CountDownLatch(int count)           //  构造方法参数指定了计数的次数。</p>
+</blockquote>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><blockquote>
+<p>void await()                //  使当前线程在锁存器倒计数至0之前一直等待，除非线程被中断。</p>
+<p>boolean await(long timeout, TimeUnit unit)             //  使当前线程在锁存器倒计数至0之前一直等待，除非线程被中断或超出了指定的等待时间。</p>
+<p>void countDown()                  // 计数减1。当计数为0，则释放所有等待的线程。</p>
+<p>long getCount()                      // 返回当前计数。</p>
+<p>String toString()                     // 返回标识此锁存器及其状态的字符串。</p>
+</blockquote>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>用给定的计数初始化 CountDownLatch实例。每调用一次countDown()方法，计数器减1。计数器大于0 时，await()方法会阻塞其他线程继续执行。 利用该特性，可以让主线程等待子线程的结束。</p>
+<p>需要注意的是，一旦CountDownLatch的计数到0，则无法再将该计数无法被重置。即该计数器只能使用一次。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>有三个工人在为老板干活。老板有一个习惯，当三个工人把一天的活都干完了的时候，他就来检查所有工人所干的活。如下代码设计两个类，Worker代表工人，Boss代表老板。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountDownLatchTest2</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        ExecutorService executor = Executors.newCachedThreadPool();</div><div class="line">        CountDownLatch latch = <span class="keyword">new</span> CountDownLatch(<span class="number">3</span>);    <span class="comment">// 同步倒数计数器。</span></div><div class="line"></div><div class="line">        Worker w1 = <span class="keyword">new</span> Worker(latch, <span class="string">"张三"</span>);</div><div class="line">        Worker w2 = <span class="keyword">new</span> Worker(latch, <span class="string">"李四"</span>);</div><div class="line">        Worker w3 = <span class="keyword">new</span> Worker(latch, <span class="string">"王五"</span>);</div><div class="line">        Boss boss = <span class="keyword">new</span> Boss(latch);</div><div class="line"></div><div class="line">        executor.execute(w3);    <span class="comment">// 工人工作。</span></div><div class="line">        executor.execute(w2);</div><div class="line">        executor.execute(w1);</div><div class="line">        executor.execute(boss);    <span class="comment">// 老板工作。</span></div><div class="line"></div><div class="line">        executor.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Worker</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> CountDownLatch downLatch;</div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Worker</span><span class="params">(CountDownLatch downLatch, String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.downLatch = downLatch;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.doWork();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            TimeUnit.SECONDS.sleep(<span class="keyword">new</span> Random().nextInt(<span class="number">10</span>));  <span class="comment">// 工作时长。</span></div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(<span class="keyword">this</span>.name + <span class="string">"活干完了！"</span>);</div><div class="line">        <span class="keyword">this</span>.downLatch.countDown();  <span class="comment">// 计数减1。</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doWork</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="keyword">this</span>.name + <span class="string">"正在工作"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Boss</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> CountDownLatch downLatch;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Boss</span><span class="params">(CountDownLatch downLatch)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.downLatch = downLatch;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"老板正在等所有的工人干完活......"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">this</span>.downLatch.await();    <span class="comment">// 当计数不为0时，线程永远阻塞。为0则继续执行。</span></div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"工人活都干完了，老板开始检查了！"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p><img src="/2017/06/05/Java并发工具类/CountDownLatchDemo.png" alt=""></p>
+<p>可以看到，boss 线程一直阻塞，直到所有 worker 线程运行结束。</p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>CountDownLatch 实例本质与 Thread 的 join 方法相同。但 join 方法仅可以支持当前线程等待一个线程的结束，若需要等待多个线程，则需要逐个线程的调用join方法，非常麻烦。CountDwonLatch可以很方便的实现一个线程等待多个线程。</p>
+<h2 id="CyclicBarrier"><a href="#CyclicBarrier" class="headerlink" title="CyclicBarrier"></a>CyclicBarrier</h2><p>CyclicBarrier 用于让一组线程运行并互相等待，直到共同到达一个公共屏障点 (common barrier point，又被称为同步点)，被屏障拦截的所有线程就会继续执行。</p>
+<p>CyclicBarrier 与 CountDownLatch的功能非常类似。但一个 CyclicBarrier 实例在释放等待线程后可以继续使用。让下一批线程在屏障点等待。但 CountDownLatch 实例只能被使用一次。所以CyclicBarrier被称为循环的 barrier。</p>
+<p>典型的比如公司的人员利用集体郊游，先各自从家出发到公司集合，再同时出发游玩，在指定地点集合。</p>
+<p>CyclicBarrier表示大家彼此在某处等待，集合好后才开始出发，分散活动后又在指定地点集合碰面。</p>
+<h3 id="常用-API"><a href="#常用-API" class="headerlink" title="常用 API"></a>常用 API</h3><h4 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h4><blockquote>
+<p>CyclicBarrier(int parties)             创建CyclicBarrier对象，<em>parties</em> 表示屏障拦截的线程数量。</p>
+<p>CyclicBarrier(int parties, Runnable barrierAction)         创建 CyclicBarrier对象，该构造方法提供了一个 Runnable  参数，在一组线程中的最后一个线程到达之后，执行 Runnable中 的程序，再之后释放正在等待的线程。Runnable在屏障点上只运行一次。</p>
+</blockquote>
+<h4 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h4><blockquote>
+<p>int await()            // 通知CyclicBarrier实例，当前线程已经到达屏障点，然后当前线程将被阻塞。</p>
+<p>int await(long timeout, TimeUnit unit)         // 指定当前线程被阻塞的时间。</p>
+<p>int getNumberWaiting()                 // 返回当前在屏障处等待的线程数。</p>
+<p>int getParties()                                 // 返回CyclicBarrier的需要拦截的线程数。</p>
+<p>boolean isBroken()                          // 查询此屏障是否处于损坏状态。</p>
+<p>void reset()                                       // 将屏障重置为其初始状态。</p>
+</blockquote>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>几个学生决定一起锻炼跑步，跑完步以后再一起去吃饭。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CyclicBarrierTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        ExecutorService exec = Executors.newCachedThreadPool();</div><div class="line">        <span class="keyword">final</span> CyclicBarrier barrier = <span class="keyword">new</span> CyclicBarrier(<span class="number">4</span>, <span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"好了，大家可以去吃饭了……"</span>  );</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"要吃饭，必须所有人都到终点，oK?"</span>);</div><div class="line">        System.out.println(<span class="string">"不放弃不抛弃！"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</div><div class="line">            exec.execute(<span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    System.out</div><div class="line">                            .println(Thread.currentThread().getName() + <span class="string">":Go"</span>);</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        Thread.sleep((<span class="keyword">long</span>) (<span class="number">2000</span> * Math.random()));</div><div class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e1) &#123;</div><div class="line">                        e1.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                    System.out.println(Thread.currentThread().getName()</div><div class="line">                            + <span class="string">":我到终点了"</span>);</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        barrier.await();</div><div class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125; <span class="keyword">catch</span> (BrokenBarrierException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    System.out.println(Thread.currentThread().getName()</div><div class="line">                            + <span class="string">":终于可以吃饭啦！"</span>);</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        exec.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h3><p><img src="/2017/06/05/Java并发工具类/CyclicBarrierDemo.png" alt=""></p>
+<p>对于失败的同步尝试，CyclicBarrier 使用了一种要么全部要么全不 (all-or-none) 的破坏模式：如果因为中断、失败或者超时等原因，导致线程过早地离开了屏障点，那么在该屏障点等待的其他所有线程也将通过 BrokenBarrierException（如果它们几乎同时被中断，则用 InterruptedException）以反常的方式离开。</p>
+<h2 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a>Semaphore</h2><p>Semaphore用于控制并发线程数。</p>
+<p>Semaphore实例可以控制当前访问自身的线程个数。使用Semaphore可以控制同时访问资源的线程个数。例如，实现一个文件允许的并发访问数。</p>
+<p>Semaphore维护了一个许可集。“许可”即线程进入临界区的许可，一个临界区可以有多个许可，获取许可的线程即可进入。</p>
+<p>通过 acquire() 获取一个许可，如果线程没有获取到就等待，而 release() 表示释放一个许可。可以把Semaphore看成是一种共享锁。Semaphore允许同一时间多个线程同时访问临界区。</p>
+<p>生活的理解：Semaphore实现的功能就类似银行有五个营业窗口，假如有十个人要办理业务，那么同时能有多少个人去柜台办理呢？同时只能有5个人能够占用，当5个人中的任何一个人完成离开后，其中在等待的另外5个人中又有一个可以占用了。另外等待的5个人中可以是随机获得优先机会，也可以是按照先来后到的顺序获得机会，这取决于构造Semaphore对象时传入的参数选项。</p>
+<p>Semaphore对象也可以实现互斥锁的功能，并且可以是由一个线程获得了”锁”，再由另一个线程释放”锁”，这可应用于死锁恢复的一些场合。</p>
+<p>在一些企业系统中，开发人员经常需要限制未处理的特定资源请求（线程/操作）数量，事实上，限制有时候能够提高系统的吞吐量，因为它们减少了对特定资源的争用。尽管完全可以手动编写限制代码，但使用 Semaphore类可以更轻松地完成此任务，它将帮您执行限制。</p>
+<h3 id="常用-API-1"><a href="#常用-API-1" class="headerlink" title="常用 API"></a>常用 API</h3><blockquote>
+<p>public void acquire()                   // 获取许可</p>
+<p>public void acquireUninterruptibly()</p>
+<p>public boolean tryAcquire()</p>
+<p>public boolean tryAcquire(long timeout, TimeUnit unit)</p>
+<p>public void release()                           // 释放许可。该方法一般调用于finally块中。</p>
+</blockquote>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>一个停车场有 5 个车位，此时有 10 辆车要停靠。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Semaphore parkingSlot;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> carNo;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span><span class="params">(Semaphore parkingSlot, <span class="keyword">int</span> carNo)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.parkingSlot = parkingSlot;</div><div class="line">        <span class="keyword">this</span>.carNo = carNo;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            parkingSlot.acquire();    <span class="comment">// 车尝试获取"车位"</span></div><div class="line">            parking();</div><div class="line">            sleep(<span class="number">300</span>);</div><div class="line">            leaving();</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            parkingSlot.release();    <span class="comment">// 释放"车位"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">parking</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(String.format(<span class="string">"%d号车泊车"</span>, carNo));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">leaving</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(String.format(<span class="string">"%d号车离开车位"</span>, carNo));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">(<span class="keyword">long</span> millis)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(millis);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SemaphoreTest2</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NUMBER_OF_CARS = <span class="number">10</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NUMBER_OF_PARKING_SLOT = <span class="number">5</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Semaphore parkingSlot = <span class="keyword">new</span> Semaphore(NUMBER_OF_PARKING_SLOT, <span class="keyword">true</span>);    <span class="comment">// "车位",采用FIFO,设置true。</span></div><div class="line"></div><div class="line"></div><div class="line">        ExecutorService service = Executors.newCachedThreadPool();    <span class="comment">// 创建线程池。模拟10辆车"停车"。</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> carNo = <span class="number">1</span>; carNo &lt;= NUMBER_OF_CARS; carNo++) &#123;</div><div class="line">            service.execute(<span class="keyword">new</span> Car(parkingSlot, carNo));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        sleep(<span class="number">3000</span>);</div><div class="line">        service.shutdown();    <span class="comment">// 关闭线程池。</span></div><div class="line"></div><div class="line">        <span class="comment">// 输出剩余可以用的资源数。</span></div><div class="line">        System.out.println(parkingSlot.availablePermits() + <span class="string">" 个停车位可以用!"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">(<span class="keyword">long</span> millis)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(millis);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="结果-2"><a href="#结果-2" class="headerlink" title="结果"></a>结果</h3><p><img src="/2017/06/05/Java并发工具类/SemaphoreDemo.png" alt=""></p>
+<h2 id="Exchanger"><a href="#Exchanger" class="headerlink" title="Exchanger"></a>Exchanger</h2><p>Exchanger用于实现线程间的数据交换。Exchanger提供一个同步点，在同步点上，两个线程使用exchange方法交换彼此数据。如果第一个线程先执行exchange方法，则它会等待第二个线程执行exchange方法。当两个线程同时到达同步点时，这两个线程即可以交换数据。交换完毕后，各自进行以后的程序流程。当两个线程通过Exchanger交换数据的时候，这个交换对于两个线程来说是线程安全的。</p>
+<p>exchange()方法将本线程的数据作为参数，传递给伙伴线程，并且该方法返回伙伴线程提供的数据。</p>
+<p>当在运行不对称的活动时Exchanger很有用，比如当一个线程填充了buffer，另一个线程从buffer中消费数据时，这两个线程可以用Exchanger来交换数据。</p>
+<h3 id="常用-API-2"><a href="#常用-API-2" class="headerlink" title="常用 API"></a>常用 API</h3><h4 id="构造器-1"><a href="#构造器-1" class="headerlink" title="构造器"></a>构造器</h4><blockquote>
+<p>Exchanger()               // 创建一个新的 Exchanger。</p>
+</blockquote>
+<h4 id="方法-2"><a href="#方法-2" class="headerlink" title="方法"></a>方法</h4><blockquote>
+<p>V exchange(V x)         // 等待另一个线程到达此交换点（除非当前线程被中断），然后将给定的对象传送给该线程，并接收该线程的对象。</p>
+<p>V exchange(V x, long timeout, TimeUnit unit)       // 等待另一个线程到达此交换点（除非当前线程被中断，或者超出了指定的等待时间），然后将给定的对象传送给该线程，同时接收该线程的对象。</p>
+</blockquote>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><h3 id="两个线程交互数据"><a href="#两个线程交互数据" class="headerlink" title="两个线程交互数据"></a>两个线程交互数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExchangerTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        ExecutorService service = Executors.newCachedThreadPool();</div><div class="line"></div><div class="line">        <span class="keyword">final</span> Exchanger exchanger = <span class="keyword">new</span> Exchanger();</div><div class="line"></div><div class="line">        service.execute(<span class="keyword">new</span> Runnable()&#123;</div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    String data1 = <span class="string">"zxx"</span>;</div><div class="line">                    System.out.println(<span class="string">"线程"</span> + Thread.currentThread().getName() +</div><div class="line">                            <span class="string">"正在把数据"</span> + data1 +<span class="string">"换出去"</span>);</div><div class="line"></div><div class="line">                    Thread.sleep((<span class="keyword">long</span>)(Math.random()*<span class="number">1000</span>));</div><div class="line"></div><div class="line">                    String data2 = (String)exchanger.exchange(data1);</div><div class="line">                    System.out.println(<span class="string">"线程"</span> + Thread.currentThread().getName() +</div><div class="line">                            <span class="string">"换回的数据为"</span> + data2);</div><div class="line">                &#125; <span class="keyword">catch</span>(Exception e)&#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        service.execute(<span class="keyword">new</span> Runnable()&#123;</div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    String data1 = <span class="string">"lhm"</span>;</div><div class="line">                    System.out.println(<span class="string">"线程"</span> + Thread.currentThread().getName() +</div><div class="line">                            <span class="string">"正在把数据"</span> + data1 +<span class="string">"换出去"</span>);</div><div class="line"></div><div class="line">                    Thread.sleep((<span class="keyword">long</span>)(Math.random()*<span class="number">1000</span>));</div><div class="line"></div><div class="line">                    String data2 = (String)exchanger.exchange(data1);</div><div class="line">                    System.out.println(<span class="string">"线程"</span> + Thread.currentThread().getName() +</div><div class="line">                            <span class="string">"换回的数据为"</span> + data2);</div><div class="line"></div><div class="line">                &#125; <span class="keyword">catch</span>(Exception e)&#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        service.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="/2017/06/05/Java并发工具类/ExchangerDemo.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/并发/" rel="tag"># 并发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/29/谈谈GC/" rel="next" title="谈谈GC">
+                <i class="fa fa-chevron-left"></i> 谈谈GC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/23/中兴提前批笔试面试总结/" rel="prev" title="中兴提前批笔试面试总结">
+                中兴提前批笔试面试总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Yunz" />
+          <p class="site-author-name" itemprop="name">Yunz</p>
+           
+              <p class="site-description motion-element" itemprop="description">编程、技术、生活</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yunz93" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/mahe3" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/mahe93" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-circle-o"></i>
+                  
+                    
+                      zhihu
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mahe.paul93@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CountDownLatch"><span class="nav-number">1.</span> <span class="nav-text">CountDownLatch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用API"><span class="nav-number">1.1.</span> <span class="nav-text">常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造方法"><span class="nav-number">1.1.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">1.1.2.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">1.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">1.3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果"><span class="nav-number">1.4.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">1.5.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CyclicBarrier"><span class="nav-number">2.</span> <span class="nav-text">CyclicBarrier</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用-API"><span class="nav-number">2.1.</span> <span class="nav-text">常用 API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造器"><span class="nav-number">2.1.1.</span> <span class="nav-text">构造器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法-1"><span class="nav-number">2.1.2.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例-1"><span class="nav-number">2.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果-1"><span class="nav-number">2.3.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Semaphore"><span class="nav-number">3.</span> <span class="nav-text">Semaphore</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用-API-1"><span class="nav-number">3.1.</span> <span class="nav-text">常用 API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例-2"><span class="nav-number">3.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果-2"><span class="nav-number">3.3.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exchanger"><span class="nav-number">4.</span> <span class="nav-text">Exchanger</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用-API-2"><span class="nav-number">4.1.</span> <span class="nav-text">常用 API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造器-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">构造器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法-2"><span class="nav-number">4.1.2.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例-3"><span class="nav-number">4.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两个线程交互数据"><span class="nav-number">4.3.</span> <span class="nav-text">两个线程交互数据</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yunz</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
