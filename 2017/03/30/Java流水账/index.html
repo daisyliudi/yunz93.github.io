@@ -94,18 +94,20 @@
 
 
 
-<meta name="description" content="学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。  == 、equals以及hashcode== 比较的是两个对象在 JVM 中的地址 。 equals 用于比较两个对象的值是否相同【不是比地址】，可以通过重写 equals 方法，来设定相等的标准。 Object 类中的 equals 方法和 == 是一样的，没有区别，而 Stri">
+<meta name="description" content="学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java流水账">
 <meta property="og:url" content="http://blog.yunz.space/2017/03/30/Java流水账/index.html">
 <meta property="og:site_name" content="Yunz&#39;s Blog">
-<meta property="og:description" content="学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。  == 、equals以及hashcode== 比较的是两个对象在 JVM 中的地址 。 equals 用于比较两个对象的值是否相同【不是比地址】，可以通过重写 equals 方法，来设定相等的标准。 Object 类中的 equals 方法和 == 是一样的，没有区别，而 Stri">
+<meta property="og:description" content="学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-15T14:04:18.119Z">
+<meta property="og:image" content="http://blog.yunz.space/2017/03/30/Java流水账/next.vs.nextLine.png">
+<meta property="og:updated_time" content="2017-08-27T08:43:50.036Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java流水账">
-<meta name="twitter:description" content="学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。  == 、equals以及hashcode== 比较的是两个对象在 JVM 中的地址 。 equals 用于比较两个对象的值是否相同【不是比地址】，可以通过重写 equals 方法，来设定相等的标准。 Object 类中的 equals 方法和 == 是一样的，没有区别，而 Stri">
+<meta name="twitter:description" content="学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。">
+<meta name="twitter:image" content="http://blog.yunz.space/2017/03/30/Java流水账/next.vs.nextLine.png">
 
 
 
@@ -385,12 +387,27 @@
         <blockquote>
 <p>学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="、equals以及hashcode"><a href="#、equals以及hashcode" class="headerlink" title="== 、equals以及hashcode"></a>== 、equals以及hashcode</h2><p><code>==</code> 比较的是两个对象在 JVM 中的地址 。</p>
 <p><code>equals</code> 用于比较两个对象的值是否相同【不是比地址】，可以通过重写 <code>equals</code> 方法，来设定相等的标准。</p>
 <p><code>Object</code> 类中的 <code>equals</code> 方法和 <code>==</code> 是一样的，没有区别，而 String 类，Integer 类等等一些类，是重写了 equals 方法，才使得 <code>equals</code> 和 <code>==</code> 不同，所以，当自己创建类时，自动继承了 Object 的 equals 方法，要想实现不同的等于比较，必须重写 equals 方法。</p>
 <p>当 <code>equals</code> 方法被重写时，通常有必要重写 <code>hashCode</code> 方法，以维护 <code>hashCode</code> 方法的常规协定，该协定声明相等对象必须具有相等的哈希码。</p>
 <p><a href="http://blog.csdn.net/afgasdg/article/details/6889383" target="_blank" rel="external">参考：hashCode 与 equals 的区别与联系</a></p>
 <p>Hashtable 实现一个哈希表，为了成功地在哈希表中存储和检索对象，用作键的对象必须实现 hashCode 方法和 equals 方法。必须保证 equals 相等的对象，hashCode 也相等。因为哈希表通过 hashCode 检索对象。</p>
+<h2 id="Scanner-next-和nextLine-的区别"><a href="#Scanner-next-和nextLine-的区别" class="headerlink" title="Scanner.next() 和nextLine()的区别"></a>Scanner.next() 和nextLine()的区别</h2><p>这个问题好像很简单，可我却被坑了好多天，现在才发觉过来。好惨！</p>
+<p>起因是我在做牛课的一道算法题的时候，一直70%的通过率，不能ac。</p>
+<p>可我的算法没错啊，于是我去找别人代码来看，发现别人在处理输入的时候使用的是next()，而不是nextLine()。</p>
+<p>于是我也改了一下，啪，过了！</p>
+<p>没有道理呀，于是我找了资料来看，懂了。<a href="http://blog.csdn.net/a_yingxuexin/article/details/51842533" target="_blank" rel="external">http://blog.csdn.net/a_yingxuexin/article/details/51842533</a></p>
+<p>就拿那道算法题举例来说吧，首先输入一个整数n，然后输入n行字符串。</p>
+<p>实际上每次输入n-1行字符串就输出结果了，为什么？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CycleWords</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Scanner in = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        <span class="keyword">while</span>(in.hasNext()) &#123;</div><div class="line">            <span class="keyword">int</span> n = in.nextInt();</div><div class="line">            String[] words = <span class="keyword">new</span> String[n];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++) &#123;</div><div class="line">                words[i] = in.nextLine();</div><div class="line">                System.out.println(<span class="string">"实际输入的是："</span> + words[i]);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">int</span> result = count(words);</div><div class="line">            System.out.println(result);</div><div class="line">        &#125;</div><div class="line">        in.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">count</span><span class="params">(String[] words)</span> </span>&#123;</div><div class="line">        略...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<p><img src="/2017/03/30/Java流水账/next.vs.nextLine.png" alt=""></p>
+<p>可以看到，输入完 “4” 之后，程序直接跳过了第二次输入，输出了空。（实际上是换行）</p>
+<p>因为第一次我们实际上输入了 “4/n”，nextInt()将“4”取值赋给了n，留下了“/n”。这个换行符留下来被当成了第二次的输入，因此出现了上述的结果。==</p>
+<p>这么个小错误，坑了我好多次笔试了，以前一直没发现，不过亡羊补牢时犹未晚。</p>
+<p>所以，next()、nextInt()、nextDouble()等等这些 之后，再用一个in.nextLine()这个来截取上面的一个回车操作，后面的nextLine()在第一次才能起作用，或者直接全使用next()。</p>
 
       
     </div>
@@ -613,7 +630,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#、equals以及hashcode"><span class="nav-number">1.</span> <span class="nav-text">== 、equals以及hashcode</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#、equals以及hashcode"><span class="nav-number">1.</span> <span class="nav-text">== 、equals以及hashcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scanner-next-和nextLine-的区别"><span class="nav-number">2.</span> <span class="nav-text">Scanner.next() 和nextLine()的区别</span></a></li></ol></div>
             
 
           </div>

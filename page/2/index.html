@@ -1284,18 +1284,16 @@
 
       
         
-          
-            <blockquote>
+          <blockquote>
 <p>学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。</p>
 </blockquote>
-<h2 id="、equals以及hashcode"><a href="#、equals以及hashcode" class="headerlink" title="== 、equals以及hashcode"></a>== 、equals以及hashcode</h2><p><code>==</code> 比较的是两个对象在 JVM 中的地址 。</p>
-<p><code>equals</code> 用于比较两个对象的值是否相同【不是比地址】，可以通过重写 <code>equals</code> 方法，来设定相等的标准。</p>
-<p><code>Object</code> 类中的 <code>equals</code> 方法和 <code>==</code> 是一样的，没有区别，而 String 类，Integer 类等等一些类，是重写了 equals 方法，才使得 <code>equals</code> 和 <code>==</code> 不同，所以，当自己创建类时，自动继承了 Object 的 equals 方法，要想实现不同的等于比较，必须重写 equals 方法。</p>
-<p>当 <code>equals</code> 方法被重写时，通常有必要重写 <code>hashCode</code> 方法，以维护 <code>hashCode</code> 方法的常规协定，该协定声明相等对象必须具有相等的哈希码。</p>
-<p><a href="http://blog.csdn.net/afgasdg/article/details/6889383" target="_blank" rel="external">参考：hashCode 与 equals 的区别与联系</a></p>
-<p>Hashtable 实现一个哈希表，为了成功地在哈希表中存储和检索对象，用作键的对象必须实现 hashCode 方法和 equals 方法。必须保证 equals 相等的对象，hashCode 也相等。因为哈希表通过 hashCode 检索对象。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/30/Java流水账/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
