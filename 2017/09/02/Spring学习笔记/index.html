@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Spring 的两大核心思想，IOC和AOP。 每次面试都会有面试官问到这个，虽然会用，但原理说实话理解的不够透彻，每次的回答都不甚明确，需要好好思考一下。  如何理解IoC? 控制反转是一种思想，依赖注入是一种手段。  知乎上有个答案写的较为通俗易懂：https://www.zhihu.com/question/23277575 如何理解？ 当某个Java实例需要另一个Java实例时，传统的方">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习笔记">
+<meta property="og:url" content="http://blog.yunz.space/2017/09/02/Spring学习笔记/index.html">
+<meta property="og:site_name" content="Yunz&#39;s Blog">
+<meta property="og:description" content="Spring 的两大核心思想，IOC和AOP。 每次面试都会有面试官问到这个，虽然会用，但原理说实话理解的不够透彻，每次的回答都不甚明确，需要好好思考一下。  如何理解IoC? 控制反转是一种思想，依赖注入是一种手段。  知乎上有个答案写的较为通俗易懂：https://www.zhihu.com/question/23277575 如何理解？ 当某个Java实例需要另一个Java实例时，传统的方">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.yunz.space/2017/09/02/Spring学习笔记/aop.png">
+<meta property="og:image" content="http://blog.yunz.space/2017/09/02/Spring学习笔记/Struts2.png">
+<meta property="og:updated_time" content="2017-09-02T11:35:45.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习笔记">
+<meta name="twitter:description" content="Spring 的两大核心思想，IOC和AOP。 每次面试都会有面试官问到这个，虽然会用，但原理说实话理解的不够透彻，每次的回答都不甚明确，需要好好思考一下。  如何理解IoC? 控制反转是一种思想，依赖注入是一种手段。  知乎上有个答案写的较为通俗易懂：https://www.zhihu.com/question/23277575 如何理解？ 当某个Java实例需要另一个Java实例时，传统的方">
+<meta name="twitter:image" content="http://blog.yunz.space/2017/09/02/Spring学习笔记/aop.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.yunz.space/2017/09/02/Spring学习笔记/"/>
+
+
+
+
+
+  <title>Spring学习笔记 | Yunz's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yunz's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点点</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.yunz.space/2017/09/02/Spring学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yunz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yunz's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-02T19:18:10+08:00">
+                2017-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Spring 的两大核心思想，IOC和AOP。</p>
+<p>每次面试都会有面试官问到这个，虽然会用，但原理说实话理解的不够透彻，每次的回答都不甚明确，需要好好思考一下。</p>
+</blockquote>
+<h2 id="如何理解IoC"><a href="#如何理解IoC" class="headerlink" title="如何理解IoC?"></a>如何理解IoC?</h2><blockquote>
+<p>控制反转是一种思想，依赖注入是一种手段。</p>
+</blockquote>
+<p>知乎上有个答案写的较为通俗易懂：<a href="https://www.zhihu.com/question/23277575" target="_blank" rel="external">https://www.zhihu.com/question/23277575</a></p>
+<p>如何理解？</p>
+<p>当某个Java实例需要另一个Java实例时，传统的方式是由调用者主动来new 一个被调用者实例。</p>
+<p>但这种方式存在着耦合度过高的问题，不方便修改程序。</p>
+<p>如果我们采用依赖注入的方式，被调用者的实例不需要由调用者主动创建，而是由IOC容器利用反射机制创建，然后注入到调用者中。这种思路就是控制反转。</p>
+<p>IoC容器类似于一个中介机构，所有的类需要在IoC容器中登记信息，表明你是什么，以及你需要什么。这样，程序运行过程中，IoC容器就会把你需要的对象交给你，同时也会把你交给需要你的对象。</p>
+<p><strong>所有的类的创建、销毁都由 spring来控制，也就是说控制对象生存周期的不再是引用它的对象，而是spring。对于某个具体的对象而言，以前是它控制其他对象，现在是所有对象都被spring控制，所以这叫控制反转。</strong></p>
+<h3 id="Bean装配方式"><a href="#Bean装配方式" class="headerlink" title="Bean装配方式"></a>Bean装配方式</h3><ul>
+<li>XML</li>
+<li>Annotation </li>
+<li>自动装配</li>
+</ul>
+<h3 id="依赖注入DI"><a href="#依赖注入DI" class="headerlink" title="依赖注入DI"></a>依赖注入DI</h3><p>三种注入方式：</p>
+<ul>
+<li>构造器注入</li>
+<li>设值注入</li>
+<li>接口注入</li>
+</ul>
+<h2 id="如何理解AOP"><a href="#如何理解AOP" class="headerlink" title="如何理解AOP?"></a>如何理解AOP?</h2><p>思想很简单，就是将重复性的功能性代码与业务代码分离开，集中进行实现，然后在程序运行时，将这些功能性代码织入到指定的位置。</p>
+<p>关于AOP如何实现，见：<a href="http://www.iteye.com/topic/1116696" target="_blank" rel="external">AOP的实现机制</a></p>
+<p><img src="/2017/09/02/Spring学习笔记/aop.png" alt=""></p>
+<h2 id="Spring-MVC-工作原理"><a href="#Spring-MVC-工作原理" class="headerlink" title="Spring MVC 工作原理"></a>Spring MVC 工作原理</h2><ol>
+<li>Spring mvc将所有的请求都提交给DispatcherServlet，它会委托应用系统的其他模块负责对请求 进行真正的处理工作。</li>
+<li>DispatcherServlet查询一个或多个HandlerMapping，找到处理请求的Controller.</li>
+<li>DispatcherServlet请请求提交到目标Controller</li>
+<li>Controller进行业务逻辑处理后，会返回一个ModelAndView</li>
+<li>Dispathcher查询一个或多个ViewResolver视图解析器，找到ModelAndView对象指定的视图对象</li>
+<li>视图对象负责渲染返回给客户端。</li>
+</ol>
+<h2 id="SpringMVC与Struts的区别与联系"><a href="#SpringMVC与Struts的区别与联系" class="headerlink" title="SpringMVC与Struts的区别与联系"></a>SpringMVC与Struts的区别与联系</h2><ol>
+<li><p>框架机制</p>
+<ul>
+<li>Struts2采用Filter（StrutsPrepareAndExecuteFilter）实现，SpringMVC（DispatcherServlet）则采用Servlet实现。</li>
+<li>Filter在容器启动之后即初始化；服务停止以后销毁，晚于Servlet。Servlet在是在调用时初始化，先于Filter调用，服务停止后销毁。</li>
+</ul>
+</li>
+<li><p>拦截机制</p>
+<p>Struts2</p>
+<ul>
+<li>Struts2框架是类级别的拦截，每次请求就会创建一个Action，和Spring整合时Struts2的ActionBean注入作用域是原型模式prototype（否则会出现线程并发问题），然后通过setter，getter吧request数据注入到属性。</li>
+<li>Struts2中，一个Action对应一个request，response上下文，在接收参数时，可以通过属性接收，这说明属性参数是让多个方法共享的。</li>
+<li>Struts2中Action的一个方法可以对应一个url，而其类属性却被所有方法共享，这也就无法用注解或其他方式标识其所属方法了</li>
+</ul>
+<p>SpringMVC</p>
+<ul>
+<li>SpringMVC是方法级别的拦截，一个方法对应一个Request上下文，所以方法直接基本上是独立的，独享request，response数据。而每个方法同时又何一个url对应，参数的传递是直接注入到方法中的，是方法所独有的。处理结果通过ModeMap返回给框架。</li>
+<li>在Spring整合时，SpringMVC的Controller Bean默认单例模式Singleton，所以默认对所有的请求，只会创建一个Controller，有应为没有共享的属性，所以是线程安全的，如果要改变默认的作用域，需要添加@Scope注解修改。</li>
+</ul>
+</li>
+<li><p>性能方面</p>
+<ul>
+<li>SpringMVC实现了零配置，由于SpringMVC基于方法的拦截，有加载一次单例模式bean注入。</li>
+<li>而Struts2是类级别的拦截，每次请求对应实例一个新的Action，需要加载所有的属性值注入，所以，SpringMVC开发效率和性能高于Struts2。</li>
+</ul>
+</li>
+<li><p>拦截机制</p>
+<ul>
+<li>Struts2有自己的拦截Interceptor机制，SpringMVC这是用的是独立的Aop方式，这样导致Struts2的配置文件量还是比SpringMVC大。</li>
+</ul>
+</li>
+<li><p>配置方面</p>
+<ul>
+<li>spring MVC和Spring是无缝的。从这个项目的管理和安全上也比Struts2高（当然Struts2也可以通过不同的目录结构和相关配置做到SpringMVC一样的效果，但是需要xml配置的地方不少）。</li>
+<li>SpringMVC可以认为已经100%零配置。</li>
+</ul>
+</li>
+<li><p>设计思想</p>
+<ul>
+<li>Struts2更加符合OOP的编程思想， SpringMVC就比较谨慎，在servlet上扩展。</li>
+</ul>
+</li>
+<li><p>集成方面</p>
+<ul>
+<li>SpringMVC集成了Ajax，使用非常方便，只需一个注解@ResponseBody就可以实现，然后直接返回响应文本即可，而Struts2拦截器集成了Ajax，在Action中处理时一般必须安装插件或者自己写代码集成进去，使用起来也相对不方便。</li>
+</ul>
+<p>​</p>
+</li>
+</ol>
+<h2 id="拦截器与过滤器的区别"><a href="#拦截器与过滤器的区别" class="headerlink" title="拦截器与过滤器的区别"></a>拦截器与过滤器的区别</h2><ol>
+<li>拦截器是基于Java反射机制的，而过滤器是基于函数回调的。</li>
+<li>过滤器依赖于servlet容器，而拦截器不依赖于servlet容器。</li>
+<li>拦截器只能对Action请求起作用，而过滤器则可以对几乎所有请求起作用。</li>
+<li>拦截器可以访问Action上下文、值栈里的对象，而过滤器不能。</li>
+<li>在Action的生命周期中，拦截器可以多次调用，而过滤器只能在容器初始化时被调用一次。</li>
+</ol>
+<p><img src="/2017/09/02/Spring学习笔记/Struts2.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/26/阿里面试题一/" rel="next" title="阿里面试题一">
+                <i class="fa fa-chevron-left"></i> 阿里面试题一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Yunz" />
+          <p class="site-author-name" itemprop="name">Yunz</p>
+           
+              <p class="site-description motion-element" itemprop="description">编程、技术、生活</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yunz93" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/mahe3" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/mahe93" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-circle-o"></i>
+                  
+                    
+                      zhihu
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mahe.paul93@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何理解IoC"><span class="nav-number">1.</span> <span class="nav-text">如何理解IoC?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean装配方式"><span class="nav-number">1.1.</span> <span class="nav-text">Bean装配方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖注入DI"><span class="nav-number">1.2.</span> <span class="nav-text">依赖注入DI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何理解AOP"><span class="nav-number">2.</span> <span class="nav-text">如何理解AOP?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-MVC-工作原理"><span class="nav-number">3.</span> <span class="nav-text">Spring MVC 工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringMVC与Struts的区别与联系"><span class="nav-number">4.</span> <span class="nav-text">SpringMVC与Struts的区别与联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拦截器与过滤器的区别"><span class="nav-number">5.</span> <span class="nav-text">拦截器与过滤器的区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yunz</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

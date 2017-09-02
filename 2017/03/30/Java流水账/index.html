@@ -103,7 +103,7 @@
 <meta property="og:description" content="学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.yunz.space/2017/03/30/Java流水账/next.vs.nextLine.png">
-<meta property="og:updated_time" content="2017-08-27T08:43:50.036Z">
+<meta property="og:updated_time" content="2017-08-29T12:14:18.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java流水账">
 <meta name="twitter:description" content="学习Java的过程中，经常会有一些细枝末节的概念性问题，很杂但经常很重要，以流水账的形式记录下来，本文长期更新。">
@@ -408,6 +408,24 @@
 <p>因为第一次我们实际上输入了 “4/n”，nextInt()将“4”取值赋给了n，留下了“/n”。这个换行符留下来被当成了第二次的输入，因此出现了上述的结果。==</p>
 <p>这么个小错误，坑了我好多次笔试了，以前一直没发现，不过亡羊补牢时犹未晚。</p>
 <p>所以，next()、nextInt()、nextDouble()等等这些 之后，再用一个in.nextLine()这个来截取上面的一个回车操作，后面的nextLine()在第一次才能起作用，或者直接全使用next()。</p>
+<h2 id="泛型是如何实现的？"><a href="#泛型是如何实现的？" class="headerlink" title="泛型是如何实现的？"></a>泛型是如何实现的？</h2><p>不同的语言在实现泛型时采用的方式不同，C++的模板会在编译时根据参数类型的不同生成不同的代码，而Java的泛型是一种违反型，编译为字节码时参数类型会在代码中被擦除，单独记录在Class文件的attributes域内，而在使用泛型处做类型检查与类型转换。 </p>
+<p>假设参数类型的占位符为T，擦除规则如下：</p>
+<ul>
+<li><t>擦除后变为Obecjt</t></li>
+<li>&lt;? extends A&gt;擦除后变为A</li>
+<li>&lt;？ super A&gt;擦除后变为Object</li>
+</ul>
+<p>上述擦除规则叫做<code>保留上界</code>。</p>
+<p>对于下面这个源程序： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Oliver</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        list.add(<span class="string">"str1"</span>);</div><div class="line">        list.add(<span class="string">"str2"</span>);</div><div class="line">        String str = list.get(<span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译成Oliver.class后反编译的内容：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Oliver</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Oliver</span><span class="params">()</span> </span>&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        ArrayList list = <span class="keyword">new</span> ArrayList();</div><div class="line">        list.add(<span class="string">"str1"</span>);</div><div class="line">        list.add(<span class="string">"str2"</span>);</div><div class="line">        String str = (String) list.get(<span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>由于编译生成的字节码会去掉泛型的类型信息，只要能跳过编译器，就可以往某个泛型集合中加入其它的类型数据。<br>下面代码展示利用反射机制跳过编译器检查： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Oliver</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    	ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    	list.getClass().getMethod(<span class="string">"add"</span>, Object.class).invoke(list, <span class="string">"ssss"</span>);</div><div class="line">    	System.out.println(<span class="string">"list:"</span> + list.get(<span class="number">0</span>));</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出结果： </p>
+<blockquote>
+<p>list:ssss</p>
+</blockquote>
+<p>其他可能遇到的问题，见博客：<a href="http://blog.csdn.net/yi_afly/article/details/52002594" target="_blank" rel="external">Java泛型的实现：原理与问题</a></p>
 
       
     </div>
@@ -527,7 +545,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -538,7 +556,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -549,7 +567,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -630,7 +648,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#、equals以及hashcode"><span class="nav-number">1.</span> <span class="nav-text">== 、equals以及hashcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scanner-next-和nextLine-的区别"><span class="nav-number">2.</span> <span class="nav-text">Scanner.next() 和nextLine()的区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#、equals以及hashcode"><span class="nav-number">1.</span> <span class="nav-text">== 、equals以及hashcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scanner-next-和nextLine-的区别"><span class="nav-number">2.</span> <span class="nav-text">Scanner.next() 和nextLine()的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型是如何实现的？"><span class="nav-number">3.</span> <span class="nav-text">泛型是如何实现的？</span></a></li></ol></div>
             
 
           </div>
